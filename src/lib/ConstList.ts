@@ -2297,9 +2297,9 @@ export namespace RSLst {
 		private _str = '';
 		private _num = NaN;
 
-		_AB = NILAB;
-		_buf = NILArray;
-		_pack = NILPack;
+		private _AB = NILAB;
+		private _buf = NILArray;
+		private _pack = NILPack;
 
 		constructor (N : string, V : string|number|ArrayBuffer|BufPack,Type1='') {
 			let AB : ArrayBuffer;
@@ -2339,7 +2339,7 @@ export namespace RSLst {
 			}
 
 			this._buf = new Uint8Array (this._AB = AB);
-			this._size = this.Buf.length;
+			this._size = this._buf.length;
 			this._type = Type1;
 			this._name = N;
 		}
@@ -2350,9 +2350,9 @@ export namespace RSLst {
 					case '#' : return this._num === Ref._num;
 					case '$' : return this._str === Ref._str;
 					case '[' :
-						let limit = this.Buf.byteLength;
+						let limit = this._size;
 						for (let i = limit; --i >= 0;) {
-							if (this.Buf[i] !== Ref.Buf[i])
+							if (this._buf[i] !== Ref._buf[i])
 								return false;
 						}
 						return true;	// no mismatch, equal.
@@ -2371,8 +2371,8 @@ export namespace RSLst {
 				default : Str += ' ' + this._size.toString () + ' bytes'; break;
 			}
 
-			Str += ' Buf is ' + this.Buf.byteLength.toString () + ' bytes, Chk = ' + ChkBuf (this.Buf).toString ();
-			if (this.Buf === NILArray)
+			Str += ' Buf is ' + this._buf.byteLength.toString () + ' bytes, Chk = ' + ChkBuf (this._buf).toString ();
+			if (this._buf === NILArray)
 				Str += '*** Buf === NILArray!\n';
 
 			return Str;
