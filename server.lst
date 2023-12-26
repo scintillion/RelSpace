@@ -1,0 +1,1545 @@
+
+> sveltekitassessment@0.0.1 dev
+> vite dev
+
+
+  [32m[1mVITE[22m v4.5.1[39m  [2mready in [0m[1m2324[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://localhost:[1m5173[22m/[39m
+[2m  [32m➜[39m  [1mNetwork[22m[2m: use [22m[1m--host[22m[2m to expose[22m
+[2m[32m  ➜[39m[22m[2m  press [22m[1mh[22m[2m to show help[22m
+InitList (FM), NameStr =FM.
+InitList (), NameStr =.
+InitList (Ft), NameStr =Ft.
+InitList (Ct), NameStr =Ct:ConnectType.
+InitList (Lt), NameStr =Lt:ListType.
+InitList (Dt), NameStr =Dt:DataType.
+InitList (Ev), NameStr =Ev:Event.
+InitList (Rt), NameStr =Rt:Return.
+InitList (Td), NameStr =Td:TileDef.
+InitList (Ts), NameStr =Ts:TileSize.
+InitList (Pr), NameStr =Pr:Process.
+InitList (Mt), NameStr =Mt:MessageType.
+InitList (Ac), NameStr =Ac:Action.
+InitList (Lg), NameStr =Lg:Language.
+InitList (Cy), NameStr =Cy:Country.
+InitList (Test), NameStr =Test.
+Functions Assigned!
+Database opened at tile.sqlite3
+---
+---
+---
+---
+---
+Server receives INCOMING Client Request AB bytes = 25
+buildQ QBuf=
+DESC 3 Fields, Buf Type: Details:.
+Prefix =     ,$!T:1,#!I:1,$!Q:1
+  C::$!T=S 
+  C::#!I=0 
+  C::$!Q=D 
+buildQ nValues = 0
+buildQ, adding qStr = DELETE FROM S;
+BufPack.Add Incoming:
+DESC 3 Fields, Buf Type: Details:.
+Prefix =     ,$!T:1,#!I:1,$!Q:1
+  C::$!T=S 
+  C::#!I=0 
+  C::$!Q=D 
+BuildQ = DELETE FROM S; 0 Values
+VSTR=    QueryVals==
+Resulting BuildQ:
+DESC 3 Fields, Buf Type: Details:.
+Prefix =     ,$!T:1,#!I:1,$!Q:14
+  C::$!T=S 
+  C::#!I=0 
+  C::$!Q=DELETE FROM S; 
+ExecQ QUERY=DELETE FROM S;.
+Dumping dbResponse after run
+ObjectIn:Adding entries!
+BufPack.Add Incoming:
+DESC 0 Fields, Buf Type: Details:.
+Prefix =     
+ObjectIn Resultant BP:
+DESC 2 Fields, Buf Type: Details:.
+Prefix =     ,#changes:1,#lastInsertRowid:1
+  D::#changes=16 
+  D::#lastInsertRowid=0 
+{ changes: 16, lastInsertRowid: 0 }
+ServerResult BP:
+DESC 2 Fields, Buf Type: Details:.
+Prefix =     ,#changes:1,#lastInsertRowid:1
+  D::#changes=16 
+  D::#lastInsertRowid=0 
+AB = [object ArrayBuffer] bytes = 36
+ServerAB Bytes Sent to Client= 36
+---
+---
+---
+---
+---
+Server receives INCOMING Client Request AB bytes = 130
+buildQ QBuf=
+DESC 7 Fields, Buf Type: Details:.
+Prefix =     ,$!T:1,#!id:1,$!Q:1,$name:2,$desc:2,$type:4,$str:64
+  C::$!T=S 
+  C::#!id=0 
+  C::$!Q=I 
+  D::$name=FM 
+  D::$desc=FM 
+  D::$type=List 
+  D::$str=FM|Num|Int|Dollar|Ord|Range|Pair|Nums|Member|Set|Str|Strs|Upper| 
+buildQ nValues = 4
+buildQ, adding qStr = INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?);
+BufPack.Add Incoming:
+DESC 7 Fields, Buf Type: Details:.
+Prefix =     ,$!T:1,#!id:1,$!Q:1,$name:2,$desc:2,$type:4,$str:64
+  C::$!T=S 
+  C::#!id=0 
+  C::$!Q=I 
+  D::$name=FM 
+  D::$desc=FM 
+  D::$type=List 
+  D::$str=FM|Num|Int|Dollar|Ord|Range|Pair|Nums|Member|Set|Str|Strs|Upper| 
+BuildQ = INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?); 4 Values
+VSTR=    QueryVals=FM|Num|Int|Dollar|Ord|Range|Pair|Nums|Member|Set|Str|Strs|Upper|  List  FM  FM  =
+Resulting BuildQ:
+DESC 7 Fields, Buf Type: Details:.
+Prefix =     ,$!T:1,#!id:1,$!Q:51,$name:2,$desc:2,$type:4,$str:64
+  C::$!T=S 
+  C::#!id=0 
+  C::$!Q=INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?); 
+  D::$name=FM 
+  D::$desc=FM 
+  D::$type=List 
+  D::$str=FM|Num|Int|Dollar|Ord|Range|Pair|Nums|Member|Set|Str|Strs|Upper| 
+ExecQ QUERY=INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?);.
+Dumping dbResponse after run
+ObjectIn:Adding entries!
+BufPack.Add Incoming:
+DESC 0 Fields, Buf Type: Details:.
+Prefix =     
+ObjectIn Resultant BP:
+DESC 2 Fields, Buf Type: Details:.
+Prefix =     ,#changes:1,#lastInsertRowid:2
+  D::#changes=1 
+  D::#lastInsertRowid=970 
+{ changes: 1, lastInsertRowid: 970 }
+ServerResult BP:
+DESC 2 Fields, Buf Type: Details:.
+Prefix =     ,#changes:1,#lastInsertRowid:2
+  D::#changes=1 
+  D::#lastInsertRowid=970 
+AB = [object ArrayBuffer] bytes = 37
+ServerAB Bytes Sent to Client= 37
+---
+---
+---
+---
+---
+Server receives INCOMING Client Request AB bytes = 95
+buildQ QBuf=
+DESC 7 Fields, Buf Type: Details:.
+Prefix =     ,$!T:1,#!id:1,$!Q:1,$name:0,$desc:0,$type:4,$str:33
+  C::$!T=S 
+  C::#!id=0 
+  C::$!Q=I 
+  D::$name= 
+  D::$desc= 
+  D::$type=List 
+  D::$str=|Number:#|String:$|ArrayBuffer:[| 
+buildQ nValues = 4
+buildQ, adding qStr = INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?);
+BufPack.Add Incoming:
+DESC 7 Fields, Buf Type: Details:.
+Prefix =     ,$!T:1,#!id:1,$!Q:1,$name:0,$desc:0,$type:4,$str:33
+  C::$!T=S 
+  C::#!id=0 
+  C::$!Q=I 
+  D::$name= 
+  D::$desc= 
+  D::$type=List 
+  D::$str=|Number:#|String:$|ArrayBuffer:[| 
+BuildQ = INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?); 4 Values
+VSTR=    QueryVals=|Number:#|String:$|ArrayBuffer:[|  List      =
+Resulting BuildQ:
+DESC 7 Fields, Buf Type: Details:.
+Prefix =     ,$!T:1,#!id:1,$!Q:51,$name:0,$desc:0,$type:4,$str:33
+  C::$!T=S 
+  C::#!id=0 
+  C::$!Q=INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?); 
+  D::$name= 
+  D::$desc= 
+  D::$type=List 
+  D::$str=|Number:#|String:$|ArrayBuffer:[| 
+ExecQ QUERY=INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?);.
+Dumping dbResponse after run
+ObjectIn:Adding entries!
+BufPack.Add Incoming:
+DESC 0 Fields, Buf Type: Details:.
+Prefix =     
+ObjectIn Resultant BP:
+DESC 2 Fields, Buf Type: Details:.
+Prefix =     ,#changes:1,#lastInsertRowid:2
+  D::#changes=1 
+  D::#lastInsertRowid=971 
+{ changes: 1, lastInsertRowid: 971 }
+ServerResult BP:
+DESC 2 Fields, Buf Type: Details:.
+Prefix =     ,#changes:1,#lastInsertRowid:2
+  D::#changes=1 
+  D::#lastInsertRowid=971 
+AB = [object ArrayBuffer] bytes = 37
+ServerAB Bytes Sent to Client= 37
+---
+---
+---
+---
+---
+Server receives INCOMING Client Request AB bytes = 147
+buildQ QBuf=
+DESC 7 Fields, Buf Type: Details:.
+Prefix =     ,$!T:1,#!id:1,$!Q:1,$name:2,$desc:2,$type:4,$str:81
+  C::$!T=S 
+  C::#!id=0 
+  C::$!Q=I 
+  D::$name=Ft 
+  D::$desc=Ft 
+  D::$type=List 
+  D::$str=Ft|#:Num|I:Int|$:Dollar|P:Pair|O:Ord|A:Nums|%:Str|U:Upper|@:Member|R:Range|{:Set| 
+buildQ nValues = 4
+buildQ, adding qStr = INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?);
+BufPack.Add Incoming:
+DESC 7 Fields, Buf Type: Details:.
+Prefix =     ,$!T:1,#!id:1,$!Q:1,$name:2,$desc:2,$type:4,$str:81
+  C::$!T=S 
+  C::#!id=0 
+  C::$!Q=I 
+  D::$name=Ft 
+  D::$desc=Ft 
+  D::$type=List 
+  D::$str=Ft|#:Num|I:Int|$:Dollar|P:Pair|O:Ord|A:Nums|%:Str|U:Upper|@:Member|R:Range|{:Set| 
+BuildQ = INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?); 4 Values
+VSTR=    QueryVals=Ft|#:Num|I:Int|$:Dollar|P:Pair|O:Ord|A:Nums|%:Str|U:Upper|@:Member|R:Range|{:Set|  List  Ft  Ft  =
+Resulting BuildQ:
+DESC 7 Fields, Buf Type: Details:.
+Prefix =     ,$!T:1,#!id:1,$!Q:51,$name:2,$desc:2,$type:4,$str:81
+  C::$!T=S 
+  C::#!id=0 
+  C::$!Q=INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?); 
+  D::$name=Ft 
+  D::$desc=Ft 
+  D::$type=List 
+  D::$str=Ft|#:Num|I:Int|$:Dollar|P:Pair|O:Ord|A:Nums|%:Str|U:Upper|@:Member|R:Range|{:Set| 
+ExecQ QUERY=INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?);.
+Dumping dbResponse after run
+ObjectIn:Adding entries!
+BufPack.Add Incoming:
+DESC 0 Fields, Buf Type: Details:.
+Prefix =     
+ObjectIn Resultant BP:
+DESC 2 Fields, Buf Type: Details:.
+Prefix =     ,#changes:1,#lastInsertRowid:2
+  D::#changes=1 
+  D::#lastInsertRowid=972 
+{ changes: 1, lastInsertRowid: 972 }
+ServerResult BP:
+DESC 2 Fields, Buf Type: Details:.
+Prefix =     ,#changes:1,#lastInsertRowid:2
+  D::#changes=1 
+  D::#lastInsertRowid=972 
+AB = [object ArrayBuffer] bytes = 37
+ServerAB Bytes Sent to Client= 37
+---
+---
+---
+---
+---
+Server receives INCOMING Client Request AB bytes = 143
+buildQ QBuf=
+DESC 7 Fields, Buf Type: Details:.
+Prefix =     ,$!T:1,#!id:1,$!Q:1,$name:2,$desc:11,$type:4,$str:67
+  C::$!T=S 
+  C::#!id=0 
+  C::$!Q=I 
+  D::$name=Ct 
+  D::$desc=ConnectType 
+  D::$type=List 
+  D::$str=Ct:ConnectType|Data|Event|Action|Queue|DB|SQL:SQLite|Remote|Retail| 
+buildQ nValues = 4
+buildQ, adding qStr = INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?);
+BufPack.Add Incoming:
+DESC 7 Fields, Buf Type: Details:.
+Prefix =     ,$!T:1,#!id:1,$!Q:1,$name:2,$desc:11,$type:4,$str:67
+  C::$!T=S 
+  C::#!id=0 
+  C::$!Q=I 
+  D::$name=Ct 
+  D::$desc=ConnectType 
+  D::$type=List 
+  D::$str=Ct:ConnectType|Data|Event|Action|Queue|DB|SQL:SQLite|Remote|Retail| 
+BuildQ = INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?); 4 Values
+VSTR=    QueryVals=Ct:ConnectType|Data|Event|Action|Queue|DB|SQL:SQLite|Remote|Retail|  List  ConnectType  Ct  =
+Resulting BuildQ:
+DESC 7 Fields, Buf Type: Details:.
+Prefix =     ,$!T:1,#!id:1,$!Q:51,$name:2,$desc:11,$type:4,$str:67
+  C::$!T=S 
+  C::#!id=0 
+  C::$!Q=INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?); 
+  D::$name=Ct 
+  D::$desc=ConnectType 
+  D::$type=List 
+  D::$str=Ct:ConnectType|Data|Event|Action|Queue|DB|SQL:SQLite|Remote|Retail| 
+ExecQ QUERY=INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?);.
+Dumping dbResponse after run
+ObjectIn:Adding entries!
+BufPack.Add Incoming:
+DESC 0 Fields, Buf Type: Details:.
+Prefix =     
+ObjectIn Resultant BP:
+DESC 2 Fields, Buf Type: Details:.
+Prefix =     ,#changes:1,#lastInsertRowid:2
+  D::#changes=1 
+  D::#lastInsertRowid=973 
+{ changes: 1, lastInsertRowid: 973 }
+ServerResult BP:
+DESC 2 Fields, Buf Type: Details:.
+Prefix =     ,#changes:1,#lastInsertRowid:2
+  D::#changes=1 
+  D::#lastInsertRowid=973 
+AB = [object ArrayBuffer] bytes = 37
+ServerAB Bytes Sent to Client= 37
+---
+---
+---
+---
+---
+Server receives INCOMING Client Request AB bytes = 187
+buildQ QBuf=
+DESC 7 Fields, Buf Type: Details:.
+Prefix =     ,$!T:1,#!id:1,$!Q:1,$name:2,$desc:8,$type:4,$str:114
+  C::$!T=S 
+  C::#!id=0 
+  C::$!Q=I 
+  D::$name=Lt 
+  D::$desc=ListType 
+  D::$type=List 
+  D::$str=Lt:ListType|Dt:DataType|Ev:Event|Ac:Action|Rt:Return|Td:TileDef|Ts:TileSize|Pr:Process|Mt:MessageType|Lg:Language| 
+buildQ nValues = 4
+buildQ, adding qStr = INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?);
+BufPack.Add Incoming:
+DESC 7 Fields, Buf Type: Details:.
+Prefix =     ,$!T:1,#!id:1,$!Q:1,$name:2,$desc:8,$type:4,$str:114
+  C::$!T=S 
+  C::#!id=0 
+  C::$!Q=I 
+  D::$name=Lt 
+  D::$desc=ListType 
+  D::$type=List 
+  D::$str=Lt:ListType|Dt:DataType|Ev:Event|Ac:Action|Rt:Return|Td:TileDef|Ts:TileSize|Pr:Process|Mt:MessageType|Lg:Language| 
+BuildQ = INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?); 4 Values
+VSTR=    QueryVals=Lt:ListType|Dt:DataType|Ev:Event|Ac:Action|Rt:Return|Td:TileDef|Ts:TileSize|Pr:Process|Mt:MessageType|Lg:Language|  List  ListType  Lt  =
+Resulting BuildQ:
+DESC 7 Fields, Buf Type: Details:.
+Prefix =     ,$!T:1,#!id:1,$!Q:51,$name:2,$desc:8,$type:4,$str:114
+  C::$!T=S 
+  C::#!id=0 
+  C::$!Q=INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?); 
+  D::$name=Lt 
+  D::$desc=ListType 
+  D::$type=List 
+  D::$str=Lt:ListType|Dt:DataType|Ev:Event|Ac:Action|Rt:Return|Td:TileDef|Ts:TileSize|Pr:Process|Mt:MessageType|Lg:Language| 
+ExecQ QUERY=INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?);.
+Dumping dbResponse after run
+ObjectIn:Adding entries!
+BufPack.Add Incoming:
+DESC 0 Fields, Buf Type: Details:.
+Prefix =     
+ObjectIn Resultant BP:
+DESC 2 Fields, Buf Type: Details:.
+Prefix =     ,#changes:1,#lastInsertRowid:2
+  D::#changes=1 
+  D::#lastInsertRowid=974 
+{ changes: 1, lastInsertRowid: 974 }
+ServerResult BP:
+DESC 2 Fields, Buf Type: Details:.
+Prefix =     ,#changes:1,#lastInsertRowid:2
+  D::#changes=1 
+  D::#lastInsertRowid=974 
+AB = [object ArrayBuffer] bytes = 37
+ServerAB Bytes Sent to Client= 37
+---
+---
+---
+---
+---
+Server receives INCOMING Client Request AB bytes = 159
+buildQ QBuf=
+DESC 7 Fields, Buf Type: Details:.
+Prefix =     ,$!T:1,#!id:1,$!Q:1,$name:2,$desc:8,$type:4,$str:87
+  C::$!T=S 
+  C::#!id=0 
+  C::$!Q=I 
+  D::$name=Dt 
+  D::$desc=DataType 
+  D::$type=List 
+  D::$str=Dt:DataType|String:Free format string|Integer:Whole Number|Number:Whole or Real Number| 
+buildQ nValues = 4
+buildQ, adding qStr = INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?);
+BufPack.Add Incoming:
+DESC 7 Fields, Buf Type: Details:.
+Prefix =     ,$!T:1,#!id:1,$!Q:1,$name:2,$desc:8,$type:4,$str:87
+  C::$!T=S 
+  C::#!id=0 
+  C::$!Q=I 
+  D::$name=Dt 
+  D::$desc=DataType 
+  D::$type=List 
+  D::$str=Dt:DataType|String:Free format string|Integer:Whole Number|Number:Whole or Real Number| 
+BuildQ = INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?); 4 Values
+VSTR=    QueryVals=Dt:DataType|String:Free format string|Integer:Whole Number|Number:Whole or Real Number|  List  DataType  Dt  =
+Resulting BuildQ:
+DESC 7 Fields, Buf Type: Details:.
+Prefix =     ,$!T:1,#!id:1,$!Q:51,$name:2,$desc:8,$type:4,$str:87
+  C::$!T=S 
+  C::#!id=0 
+  C::$!Q=INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?); 
+  D::$name=Dt 
+  D::$desc=DataType 
+  D::$type=List 
+  D::$str=Dt:DataType|String:Free format string|Integer:Whole Number|Number:Whole or Real Number| 
+ExecQ QUERY=INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?);.
+Dumping dbResponse after run
+ObjectIn:Adding entries!
+BufPack.Add Incoming:
+DESC 0 Fields, Buf Type: Details:.
+Prefix =     
+ObjectIn Resultant BP:
+DESC 2 Fields, Buf Type: Details:.
+Prefix =     ,#changes:1,#lastInsertRowid:2
+  D::#changes=1 
+  D::#lastInsertRowid=975 
+{ changes: 1, lastInsertRowid: 975 }
+ServerResult BP:
+DESC 2 Fields, Buf Type: Details:.
+Prefix =     ,#changes:1,#lastInsertRowid:2
+  D::#changes=1 
+  D::#lastInsertRowid=975 
+AB = [object ArrayBuffer] bytes = 37
+ServerAB Bytes Sent to Client= 37
+---
+---
+---
+---
+---
+Server receives INCOMING Client Request AB bytes = 120
+buildQ QBuf=
+DESC 7 Fields, Buf Type: Details:.
+Prefix =     ,$!T:1,#!id:1,$!Q:1,$name:2,$desc:5,$type:4,$str:51
+  C::$!T=S 
+  C::#!id=0 
+  C::$!Q=I 
+  D::$name=Ev 
+  D::$desc=Event 
+  D::$type=List 
+  D::$str=Ev:Event|Click|Enter|Exit|DblClick|Swipe|Drop|Drag| 
+buildQ nValues = 4
+buildQ, adding qStr = INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?);
+BufPack.Add Incoming:
+DESC 7 Fields, Buf Type: Details:.
+Prefix =     ,$!T:1,#!id:1,$!Q:1,$name:2,$desc:5,$type:4,$str:51
+  C::$!T=S 
+  C::#!id=0 
+  C::$!Q=I 
+  D::$name=Ev 
+  D::$desc=Event 
+  D::$type=List 
+  D::$str=Ev:Event|Click|Enter|Exit|DblClick|Swipe|Drop|Drag| 
+BuildQ = INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?); 4 Values
+VSTR=    QueryVals=Ev:Event|Click|Enter|Exit|DblClick|Swipe|Drop|Drag|  List  Event  Ev  =
+Resulting BuildQ:
+DESC 7 Fields, Buf Type: Details:.
+Prefix =     ,$!T:1,#!id:1,$!Q:51,$name:2,$desc:5,$type:4,$str:51
+  C::$!T=S 
+  C::#!id=0 
+  C::$!Q=INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?); 
+  D::$name=Ev 
+  D::$desc=Event 
+  D::$type=List 
+  D::$str=Ev:Event|Click|Enter|Exit|DblClick|Swipe|Drop|Drag| 
+ExecQ QUERY=INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?);.
+Dumping dbResponse after run
+ObjectIn:Adding entries!
+BufPack.Add Incoming:
+DESC 0 Fields, Buf Type: Details:.
+Prefix =     
+ObjectIn Resultant BP:
+DESC 2 Fields, Buf Type: Details:.
+Prefix =     ,#changes:1,#lastInsertRowid:2
+  D::#changes=1 
+  D::#lastInsertRowid=976 
+{ changes: 1, lastInsertRowid: 976 }
+ServerResult BP:
+DESC 2 Fields, Buf Type: Details:.
+Prefix =     ,#changes:1,#lastInsertRowid:2
+  D::#changes=1 
+  D::#lastInsertRowid=976 
+AB = [object ArrayBuffer] bytes = 37
+ServerAB Bytes Sent to Client= 37
+---
+---
+---
+---
+---
+Server receives INCOMING Client Request AB bytes = 108
+buildQ QBuf=
+DESC 7 Fields, Buf Type: Details:.
+Prefix =     ,$!T:1,#!id:1,$!Q:1,$name:2,$desc:6,$type:4,$str:38
+  C::$!T=S 
+  C::#!id=0 
+  C::$!Q=I 
+  D::$name=Rt 
+  D::$desc=Return 
+  D::$type=List 
+  D::$str=Rt:Return|Ok|Fail|Equal|Unequal|Queue| 
+buildQ nValues = 4
+buildQ, adding qStr = INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?);
+BufPack.Add Incoming:
+DESC 7 Fields, Buf Type: Details:.
+Prefix =     ,$!T:1,#!id:1,$!Q:1,$name:2,$desc:6,$type:4,$str:38
+  C::$!T=S 
+  C::#!id=0 
+  C::$!Q=I 
+  D::$name=Rt 
+  D::$desc=Return 
+  D::$type=List 
+  D::$str=Rt:Return|Ok|Fail|Equal|Unequal|Queue| 
+BuildQ = INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?); 4 Values
+VSTR=    QueryVals=Rt:Return|Ok|Fail|Equal|Unequal|Queue|  List  Return  Rt  =
+Resulting BuildQ:
+DESC 7 Fields, Buf Type: Details:.
+Prefix =     ,$!T:1,#!id:1,$!Q:51,$name:2,$desc:6,$type:4,$str:38
+  C::$!T=S 
+  C::#!id=0 
+  C::$!Q=INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?); 
+  D::$name=Rt 
+  D::$desc=Return 
+  D::$type=List 
+  D::$str=Rt:Return|Ok|Fail|Equal|Unequal|Queue| 
+ExecQ QUERY=INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?);.
+Dumping dbResponse after run
+ObjectIn:Adding entries!
+BufPack.Add Incoming:
+DESC 0 Fields, Buf Type: Details:.
+Prefix =     
+ObjectIn Resultant BP:
+DESC 2 Fields, Buf Type: Details:.
+Prefix =     ,#changes:1,#lastInsertRowid:2
+  D::#changes=1 
+  D::#lastInsertRowid=977 
+{ changes: 1, lastInsertRowid: 977 }
+ServerResult BP:
+DESC 2 Fields, Buf Type: Details:.
+Prefix =     ,#changes:1,#lastInsertRowid:2
+  D::#changes=1 
+  D::#lastInsertRowid=977 
+AB = [object ArrayBuffer] bytes = 37
+ServerAB Bytes Sent to Client= 37
+---
+---
+---
+---
+---
+Server receives INCOMING Client Request AB bytes = 116
+buildQ QBuf=
+DESC 7 Fields, Buf Type: Details:.
+Prefix =     ,$!T:1,#!id:1,$!Q:1,$name:2,$desc:7,$type:4,$str:45
+  C::$!T=S 
+  C::#!id=0 
+  C::$!Q=I 
+  D::$name=Td 
+  D::$desc=TileDef 
+  D::$type=List 
+  D::$str=Td:TileDef|Tile|LnEdit|TxtEdit|Btn|Img|Video| 
+buildQ nValues = 4
+buildQ, adding qStr = INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?);
+BufPack.Add Incoming:
+DESC 7 Fields, Buf Type: Details:.
+Prefix =     ,$!T:1,#!id:1,$!Q:1,$name:2,$desc:7,$type:4,$str:45
+  C::$!T=S 
+  C::#!id=0 
+  C::$!Q=I 
+  D::$name=Td 
+  D::$desc=TileDef 
+  D::$type=List 
+  D::$str=Td:TileDef|Tile|LnEdit|TxtEdit|Btn|Img|Video| 
+BuildQ = INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?); 4 Values
+VSTR=    QueryVals=Td:TileDef|Tile|LnEdit|TxtEdit|Btn|Img|Video|  List  TileDef  Td  =
+Resulting BuildQ:
+DESC 7 Fields, Buf Type: Details:.
+Prefix =     ,$!T:1,#!id:1,$!Q:51,$name:2,$desc:7,$type:4,$str:45
+  C::$!T=S 
+  C::#!id=0 
+  C::$!Q=INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?); 
+  D::$name=Td 
+  D::$desc=TileDef 
+  D::$type=List 
+  D::$str=Td:TileDef|Tile|LnEdit|TxtEdit|Btn|Img|Video| 
+ExecQ QUERY=INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?);.
+Dumping dbResponse after run
+ObjectIn:Adding entries!
+BufPack.Add Incoming:
+DESC 0 Fields, Buf Type: Details:.
+Prefix =     
+ObjectIn Resultant BP:
+DESC 2 Fields, Buf Type: Details:.
+Prefix =     ,#changes:1,#lastInsertRowid:2
+  D::#changes=1 
+  D::#lastInsertRowid=978 
+{ changes: 1, lastInsertRowid: 978 }
+ServerResult BP:
+DESC 2 Fields, Buf Type: Details:.
+Prefix =     ,#changes:1,#lastInsertRowid:2
+  D::#changes=1 
+  D::#lastInsertRowid=978 
+AB = [object ArrayBuffer] bytes = 37
+ServerAB Bytes Sent to Client= 37
+---
+---
+---
+---
+---
+Server receives INCOMING Client Request AB bytes = 187
+buildQ QBuf=
+DESC 7 Fields, Buf Type: Details:.
+Prefix =     ,$!T:1,#!id:1,$!Q:1,$name:2,$desc:8,$type:4,$str:114
+  C::$!T=S 
+  C::#!id=0 
+  C::$!Q=I 
+  D::$name=Ts 
+  D::$desc=TileSize 
+  D::$type=List 
+  D::$str=Ts:TileSize|Fixed|T:Top|TL:Top Left|TR:Top Right|B:Bottom|BL:Bottom Left|BR:Bottom Right|L:Left|R:Right|SH:Shared| 
+buildQ nValues = 4
+buildQ, adding qStr = INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?);
+BufPack.Add Incoming:
+DESC 7 Fields, Buf Type: Details:.
+Prefix =     ,$!T:1,#!id:1,$!Q:1,$name:2,$desc:8,$type:4,$str:114
+  C::$!T=S 
+  C::#!id=0 
+  C::$!Q=I 
+  D::$name=Ts 
+  D::$desc=TileSize 
+  D::$type=List 
+  D::$str=Ts:TileSize|Fixed|T:Top|TL:Top Left|TR:Top Right|B:Bottom|BL:Bottom Left|BR:Bottom Right|L:Left|R:Right|SH:Shared| 
+BuildQ = INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?); 4 Values
+VSTR=    QueryVals=Ts:TileSize|Fixed|T:Top|TL:Top Left|TR:Top Right|B:Bottom|BL:Bottom Left|BR:Bottom Right|L:Left|R:Right|SH:Shared|  List  TileSize  Ts  =
+Resulting BuildQ:
+DESC 7 Fields, Buf Type: Details:.
+Prefix =     ,$!T:1,#!id:1,$!Q:51,$name:2,$desc:8,$type:4,$str:114
+  C::$!T=S 
+  C::#!id=0 
+  C::$!Q=INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?); 
+  D::$name=Ts 
+  D::$desc=TileSize 
+  D::$type=List 
+  D::$str=Ts:TileSize|Fixed|T:Top|TL:Top Left|TR:Top Right|B:Bottom|BL:Bottom Left|BR:Bottom Right|L:Left|R:Right|SH:Shared| 
+ExecQ QUERY=INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?);.
+Dumping dbResponse after run
+ObjectIn:Adding entries!
+BufPack.Add Incoming:
+DESC 0 Fields, Buf Type: Details:.
+Prefix =     
+ObjectIn Resultant BP:
+DESC 2 Fields, Buf Type: Details:.
+Prefix =     ,#changes:1,#lastInsertRowid:2
+  D::#changes=1 
+  D::#lastInsertRowid=979 
+{ changes: 1, lastInsertRowid: 979 }
+ServerResult BP:
+DESC 2 Fields, Buf Type: Details:.
+Prefix =     ,#changes:1,#lastInsertRowid:2
+  D::#changes=1 
+  D::#lastInsertRowid=979 
+AB = [object ArrayBuffer] bytes = 37
+ServerAB Bytes Sent to Client= 37
+---
+---
+---
+---
+---
+Server receives INCOMING Client Request AB bytes = 110
+buildQ QBuf=
+DESC 7 Fields, Buf Type: Details:.
+Prefix =     ,$!T:1,#!id:1,$!Q:1,$name:2,$desc:7,$type:4,$str:39
+  C::$!T=S 
+  C::#!id=0 
+  C::$!Q=I 
+  D::$name=Pr 
+  D::$desc=Process 
+  D::$type=List 
+  D::$str=Pr:Process|Init|Read|Set|Clear|Default| 
+buildQ nValues = 4
+buildQ, adding qStr = INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?);
+BufPack.Add Incoming:
+DESC 7 Fields, Buf Type: Details:.
+Prefix =     ,$!T:1,#!id:1,$!Q:1,$name:2,$desc:7,$type:4,$str:39
+  C::$!T=S 
+  C::#!id=0 
+  C::$!Q=I 
+  D::$name=Pr 
+  D::$desc=Process 
+  D::$type=List 
+  D::$str=Pr:Process|Init|Read|Set|Clear|Default| 
+BuildQ = INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?); 4 Values
+VSTR=    QueryVals=Pr:Process|Init|Read|Set|Clear|Default|  List  Process  Pr  =
+Resulting BuildQ:
+DESC 7 Fields, Buf Type: Details:.
+Prefix =     ,$!T:1,#!id:1,$!Q:51,$name:2,$desc:7,$type:4,$str:39
+  C::$!T=S 
+  C::#!id=0 
+  C::$!Q=INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?); 
+  D::$name=Pr 
+  D::$desc=Process 
+  D::$type=List 
+  D::$str=Pr:Process|Init|Read|Set|Clear|Default| 
+ExecQ QUERY=INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?);.
+Dumping dbResponse after run
+ObjectIn:Adding entries!
+BufPack.Add Incoming:
+DESC 0 Fields, Buf Type: Details:.
+Prefix =     
+ObjectIn Resultant BP:
+DESC 2 Fields, Buf Type: Details:.
+Prefix =     ,#changes:1,#lastInsertRowid:2
+  D::#changes=1 
+  D::#lastInsertRowid=980 
+{ changes: 1, lastInsertRowid: 980 }
+ServerResult BP:
+DESC 2 Fields, Buf Type: Details:.
+Prefix =     ,#changes:1,#lastInsertRowid:2
+  D::#changes=1 
+  D::#lastInsertRowid=980 
+AB = [object ArrayBuffer] bytes = 37
+ServerAB Bytes Sent to Client= 37
+---
+---
+---
+---
+---
+Server receives INCOMING Client Request AB bytes = 125
+buildQ QBuf=
+DESC 7 Fields, Buf Type: Details:.
+Prefix =     ,$!T:1,#!id:1,$!Q:1,$name:2,$desc:11,$type:4,$str:49
+  C::$!T=S 
+  C::#!id=0 
+  C::$!Q=I 
+  D::$name=Mt 
+  D::$desc=MessageType 
+  D::$type=List 
+  D::$str=Mt:MessageType|Input|Output|Event|Trigger|Action| 
+buildQ nValues = 4
+buildQ, adding qStr = INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?);
+BufPack.Add Incoming:
+DESC 7 Fields, Buf Type: Details:.
+Prefix =     ,$!T:1,#!id:1,$!Q:1,$name:2,$desc:11,$type:4,$str:49
+  C::$!T=S 
+  C::#!id=0 
+  C::$!Q=I 
+  D::$name=Mt 
+  D::$desc=MessageType 
+  D::$type=List 
+  D::$str=Mt:MessageType|Input|Output|Event|Trigger|Action| 
+BuildQ = INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?); 4 Values
+VSTR=    QueryVals=Mt:MessageType|Input|Output|Event|Trigger|Action|  List  MessageType  Mt  =
+Resulting BuildQ:
+DESC 7 Fields, Buf Type: Details:.
+Prefix =     ,$!T:1,#!id:1,$!Q:51,$name:2,$desc:11,$type:4,$str:49
+  C::$!T=S 
+  C::#!id=0 
+  C::$!Q=INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?); 
+  D::$name=Mt 
+  D::$desc=MessageType 
+  D::$type=List 
+  D::$str=Mt:MessageType|Input|Output|Event|Trigger|Action| 
+ExecQ QUERY=INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?);.
+Dumping dbResponse after run
+ObjectIn:Adding entries!
+BufPack.Add Incoming:
+DESC 0 Fields, Buf Type: Details:.
+Prefix =     
+ObjectIn Resultant BP:
+DESC 2 Fields, Buf Type: Details:.
+Prefix =     ,#changes:1,#lastInsertRowid:2
+  D::#changes=1 
+  D::#lastInsertRowid=981 
+{ changes: 1, lastInsertRowid: 981 }
+ServerResult BP:
+DESC 2 Fields, Buf Type: Details:.
+Prefix =     ,#changes:1,#lastInsertRowid:2
+  D::#changes=1 
+  D::#lastInsertRowid=981 
+AB = [object ArrayBuffer] bytes = 37
+ServerAB Bytes Sent to Client= 37
+---
+---
+---
+---
+---
+Server receives INCOMING Client Request AB bytes = 104
+buildQ QBuf=
+DESC 7 Fields, Buf Type: Details:.
+Prefix =     ,$!T:1,#!id:1,$!Q:1,$name:2,$desc:6,$type:4,$str:34
+  C::$!T=S 
+  C::#!id=0 
+  C::$!Q=I 
+  D::$name=Ac 
+  D::$desc=Action 
+  D::$type=List 
+  D::$str=Ac:Action|Init|Timer|Login|Logout| 
+buildQ nValues = 4
+buildQ, adding qStr = INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?);
+BufPack.Add Incoming:
+DESC 7 Fields, Buf Type: Details:.
+Prefix =     ,$!T:1,#!id:1,$!Q:1,$name:2,$desc:6,$type:4,$str:34
+  C::$!T=S 
+  C::#!id=0 
+  C::$!Q=I 
+  D::$name=Ac 
+  D::$desc=Action 
+  D::$type=List 
+  D::$str=Ac:Action|Init|Timer|Login|Logout| 
+BuildQ = INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?); 4 Values
+VSTR=    QueryVals=Ac:Action|Init|Timer|Login|Logout|  List  Action  Ac  =
+Resulting BuildQ:
+DESC 7 Fields, Buf Type: Details:.
+Prefix =     ,$!T:1,#!id:1,$!Q:51,$name:2,$desc:6,$type:4,$str:34
+  C::$!T=S 
+  C::#!id=0 
+  C::$!Q=INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?); 
+  D::$name=Ac 
+  D::$desc=Action 
+  D::$type=List 
+  D::$str=Ac:Action|Init|Timer|Login|Logout| 
+ExecQ QUERY=INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?);.
+Dumping dbResponse after run
+ObjectIn:Adding entries!
+BufPack.Add Incoming:
+DESC 0 Fields, Buf Type: Details:.
+Prefix =     
+ObjectIn Resultant BP:
+DESC 2 Fields, Buf Type: Details:.
+Prefix =     ,#changes:1,#lastInsertRowid:2
+  D::#changes=1 
+  D::#lastInsertRowid=982 
+{ changes: 1, lastInsertRowid: 982 }
+ServerResult BP:
+DESC 2 Fields, Buf Type: Details:.
+Prefix =     ,#changes:1,#lastInsertRowid:2
+  D::#changes=1 
+  D::#lastInsertRowid=982 
+AB = [object ArrayBuffer] bytes = 37
+ServerAB Bytes Sent to Client= 37
+---
+---
+---
+---
+---
+Server receives INCOMING Client Request AB bytes = 117
+buildQ QBuf=
+DESC 7 Fields, Buf Type: Details:.
+Prefix =     ,$!T:1,#!id:1,$!Q:1,$name:2,$desc:8,$type:4,$str:45
+  C::$!T=S 
+  C::#!id=0 
+  C::$!Q=I 
+  D::$name=Lg 
+  D::$desc=Language 
+  D::$type=List 
+  D::$str=Lg:Language|En:English|Es:Espanol|Cn:Chinese| 
+buildQ nValues = 4
+buildQ, adding qStr = INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?);
+BufPack.Add Incoming:
+DESC 7 Fields, Buf Type: Details:.
+Prefix =     ,$!T:1,#!id:1,$!Q:1,$name:2,$desc:8,$type:4,$str:45
+  C::$!T=S 
+  C::#!id=0 
+  C::$!Q=I 
+  D::$name=Lg 
+  D::$desc=Language 
+  D::$type=List 
+  D::$str=Lg:Language|En:English|Es:Espanol|Cn:Chinese| 
+BuildQ = INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?); 4 Values
+VSTR=    QueryVals=Lg:Language|En:English|Es:Espanol|Cn:Chinese|  List  Language  Lg  =
+Resulting BuildQ:
+DESC 7 Fields, Buf Type: Details:.
+Prefix =     ,$!T:1,#!id:1,$!Q:51,$name:2,$desc:8,$type:4,$str:45
+  C::$!T=S 
+  C::#!id=0 
+  C::$!Q=INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?); 
+  D::$name=Lg 
+  D::$desc=Language 
+  D::$type=List 
+  D::$str=Lg:Language|En:English|Es:Espanol|Cn:Chinese| 
+ExecQ QUERY=INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?);.
+Dumping dbResponse after run
+ObjectIn:Adding entries!
+BufPack.Add Incoming:
+DESC 0 Fields, Buf Type: Details:.
+Prefix =     
+ObjectIn Resultant BP:
+DESC 2 Fields, Buf Type: Details:.
+Prefix =     ,#changes:1,#lastInsertRowid:2
+  D::#changes=1 
+  D::#lastInsertRowid=983 
+{ changes: 1, lastInsertRowid: 983 }
+ServerResult BP:
+DESC 2 Fields, Buf Type: Details:.
+Prefix =     ,#changes:1,#lastInsertRowid:2
+  D::#changes=1 
+  D::#lastInsertRowid=983 
+AB = [object ArrayBuffer] bytes = 37
+ServerAB Bytes Sent to Client= 37
+---
+---
+---
+---
+---
+Server receives INCOMING Client Request AB bytes = 146
+buildQ QBuf=
+DESC 7 Fields, Buf Type: Details:.
+Prefix =     ,$!T:1,#!id:1,$!Q:1,$name:2,$desc:7,$type:4,$str:75
+  C::$!T=S 
+  C::#!id=0 
+  C::$!Q=I 
+  D::$name=Cy 
+  D::$desc=Country 
+  D::$type=List 
+  D::$str=Cy:Country|US:United States|UK:United Kingdom|CA:Canada|RU:Russia|IN:India| 
+buildQ nValues = 4
+buildQ, adding qStr = INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?);
+BufPack.Add Incoming:
+DESC 7 Fields, Buf Type: Details:.
+Prefix =     ,$!T:1,#!id:1,$!Q:1,$name:2,$desc:7,$type:4,$str:75
+  C::$!T=S 
+  C::#!id=0 
+  C::$!Q=I 
+  D::$name=Cy 
+  D::$desc=Country 
+  D::$type=List 
+  D::$str=Cy:Country|US:United States|UK:United Kingdom|CA:Canada|RU:Russia|IN:India| 
+BuildQ = INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?); 4 Values
+VSTR=    QueryVals=Cy:Country|US:United States|UK:United Kingdom|CA:Canada|RU:Russia|IN:India|  List  Country  Cy  =
+Resulting BuildQ:
+DESC 7 Fields, Buf Type: Details:.
+Prefix =     ,$!T:1,#!id:1,$!Q:51,$name:2,$desc:7,$type:4,$str:75
+  C::$!T=S 
+  C::#!id=0 
+  C::$!Q=INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?); 
+  D::$name=Cy 
+  D::$desc=Country 
+  D::$type=List 
+  D::$str=Cy:Country|US:United States|UK:United Kingdom|CA:Canada|RU:Russia|IN:India| 
+ExecQ QUERY=INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?);.
+Dumping dbResponse after run
+ObjectIn:Adding entries!
+BufPack.Add Incoming:
+DESC 0 Fields, Buf Type: Details:.
+Prefix =     
+ObjectIn Resultant BP:
+DESC 2 Fields, Buf Type: Details:.
+Prefix =     ,#changes:1,#lastInsertRowid:2
+  D::#changes=1 
+  D::#lastInsertRowid=984 
+{ changes: 1, lastInsertRowid: 984 }
+ServerResult BP:
+DESC 2 Fields, Buf Type: Details:.
+Prefix =     ,#changes:1,#lastInsertRowid:2
+  D::#changes=1 
+  D::#lastInsertRowid=984 
+AB = [object ArrayBuffer] bytes = 37
+ServerAB Bytes Sent to Client= 37
+---
+---
+---
+---
+---
+Server receives INCOMING Client Request AB bytes = 131
+buildQ QBuf=
+DESC 7 Fields, Buf Type: Details:.
+Prefix =     ,$!T:1,#!id:1,$!Q:1,$name:4,$desc:4,$type:4,$str:61
+  C::$!T=S 
+  C::#!id=0 
+  C::$!Q=I 
+  D::$name=Test 
+  D::$desc=Test 
+  D::$type=List 
+  D::$str=Test|NameF:~%12~First Name|XY:~P~XY Dim|Cost:~$~Dollar Price| 
+buildQ nValues = 4
+buildQ, adding qStr = INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?);
+BufPack.Add Incoming:
+DESC 7 Fields, Buf Type: Details:.
+Prefix =     ,$!T:1,#!id:1,$!Q:1,$name:4,$desc:4,$type:4,$str:61
+  C::$!T=S 
+  C::#!id=0 
+  C::$!Q=I 
+  D::$name=Test 
+  D::$desc=Test 
+  D::$type=List 
+  D::$str=Test|NameF:~%12~First Name|XY:~P~XY Dim|Cost:~$~Dollar Price| 
+BuildQ = INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?); 4 Values
+VSTR=    QueryVals=Test|NameF:~%12~First Name|XY:~P~XY Dim|Cost:~$~Dollar Price|  List  Test  Test  =
+Resulting BuildQ:
+DESC 7 Fields, Buf Type: Details:.
+Prefix =     ,$!T:1,#!id:1,$!Q:51,$name:4,$desc:4,$type:4,$str:61
+  C::$!T=S 
+  C::#!id=0 
+  C::$!Q=INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?); 
+  D::$name=Test 
+  D::$desc=Test 
+  D::$type=List 
+  D::$str=Test|NameF:~%12~First Name|XY:~P~XY Dim|Cost:~$~Dollar Price| 
+ExecQ QUERY=INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?);.
+Dumping dbResponse after run
+ObjectIn:Adding entries!
+BufPack.Add Incoming:
+DESC 0 Fields, Buf Type: Details:.
+Prefix =     
+ObjectIn Resultant BP:
+DESC 2 Fields, Buf Type: Details:.
+Prefix =     ,#changes:1,#lastInsertRowid:2
+  D::#changes=1 
+  D::#lastInsertRowid=985 
+{ changes: 1, lastInsertRowid: 985 }
+ServerResult BP:
+DESC 2 Fields, Buf Type: Details:.
+Prefix =     ,#changes:1,#lastInsertRowid:2
+  D::#changes=1 
+  D::#lastInsertRowid=985 
+AB = [object ArrayBuffer] bytes = 37
+ServerAB Bytes Sent to Client= 37
+---
+---
+---
+---
+---
+Server receives INCOMING Client Request AB bytes = 27
+buildQ QBuf=
+DESC 1 Fields, Buf Type: Details:.
+Prefix =     ,$!Q:16
+  C::$!Q=SELECT * from S; 
+buildQ nValues = 0
+ExecQ QUERY=SELECT * from S;.
+RecArray: length = 16
+[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]
+[
+  {
+    id: 970,
+    name: 'FM',
+    type: 'List',
+    desc: 'FM',
+    str: 'FM|Num|Int|Dollar|Ord|Range|Pair|Nums|Member|Set|Str|Strs|Upper|',
+    data: null
+  },
+  {
+    id: 971,
+    name: '',
+    type: 'List',
+    desc: '',
+    str: '|Number:#|String:$|ArrayBuffer:[|',
+    data: null
+  },
+  {
+    id: 972,
+    name: 'Ft',
+    type: 'List',
+    desc: 'Ft',
+    str: 'Ft|#:Num|I:Int|$:Dollar|P:Pair|O:Ord|A:Nums|%:Str|U:Upper|@:Member|R:Range|{:Set|',
+    data: null
+  },
+  {
+    id: 973,
+    name: 'Ct',
+    type: 'List',
+    desc: 'ConnectType',
+    str: 'Ct:ConnectType|Data|Event|Action|Queue|DB|SQL:SQLite|Remote|Retail|',
+    data: null
+  },
+  {
+    id: 974,
+    name: 'Lt',
+    type: 'List',
+    desc: 'ListType',
+    str: 'Lt:ListType|Dt:DataType|Ev:Event|Ac:Action|Rt:Return|Td:TileDef|Ts:TileSize|Pr:Process|Mt:MessageType|Lg:Language|',
+    data: null
+  },
+  {
+    id: 975,
+    name: 'Dt',
+    type: 'List',
+    desc: 'DataType',
+    str: 'Dt:DataType|String:Free format string|Integer:Whole Number|Number:Whole or Real Number|',
+    data: null
+  },
+  {
+    id: 976,
+    name: 'Ev',
+    type: 'List',
+    desc: 'Event',
+    str: 'Ev:Event|Click|Enter|Exit|DblClick|Swipe|Drop|Drag|',
+    data: null
+  },
+  {
+    id: 977,
+    name: 'Rt',
+    type: 'List',
+    desc: 'Return',
+    str: 'Rt:Return|Ok|Fail|Equal|Unequal|Queue|',
+    data: null
+  },
+  {
+    id: 978,
+    name: 'Td',
+    type: 'List',
+    desc: 'TileDef',
+    str: 'Td:TileDef|Tile|LnEdit|TxtEdit|Btn|Img|Video|',
+    data: null
+  },
+  {
+    id: 979,
+    name: 'Ts',
+    type: 'List',
+    desc: 'TileSize',
+    str: 'Ts:TileSize|Fixed|T:Top|TL:Top Left|TR:Top Right|B:Bottom|BL:Bottom Left|BR:Bottom Right|L:Left|R:Right|SH:Shared|',
+    data: null
+  },
+  {
+    id: 980,
+    name: 'Pr',
+    type: 'List',
+    desc: 'Process',
+    str: 'Pr:Process|Init|Read|Set|Clear|Default|',
+    data: null
+  },
+  {
+    id: 981,
+    name: 'Mt',
+    type: 'List',
+    desc: 'MessageType',
+    str: 'Mt:MessageType|Input|Output|Event|Trigger|Action|',
+    data: null
+  },
+  {
+    id: 982,
+    name: 'Ac',
+    type: 'List',
+    desc: 'Action',
+    str: 'Ac:Action|Init|Timer|Login|Logout|',
+    data: null
+  },
+  {
+    id: 983,
+    name: 'Lg',
+    type: 'List',
+    desc: 'Language',
+    str: 'Lg:Language|En:English|Es:Espanol|Cn:Chinese|',
+    data: null
+  },
+  {
+    id: 984,
+    name: 'Cy',
+    type: 'List',
+    desc: 'Country',
+    str: 'Cy:Country|US:United States|UK:United Kingdom|CA:Canada|RU:Russia|IN:India|',
+    data: null
+  },
+  {
+    id: 985,
+    name: 'Test',
+    type: 'List',
+    desc: 'Test',
+    str: 'Test|NameF:~%12~First Name|XY:~P~XY Dim|Cost:~$~Dollar Price|',
+    data: null
+  }
+]
+Server receives Record Array from Query, length = 16
+ObjectIn:Adding entries!
+BufPack.Add Incoming:
+DESC 0 Fields, Buf Type: Details:.
+Prefix =     
+  Adding NULL Data, Name = data
+ObjectIn Resultant BP:
+DESC 6 Fields, Buf Type: Details:.
+Prefix =     ,#id:2,$name:2,$type:4,$desc:2,$str:64,[data:0
+  D::#id=970 
+  D::$name=FM 
+  D::$type=List 
+  D::$desc=FM 
+  D::$str=FM|Num|Int|Dollar|Ord|Range|Pair|Nums|Member|Set|Str|Strs|Upper| 
+  D::[data=AB(0) 
+ObjectIn:Adding entries!
+BufPack.Add Incoming:
+DESC 0 Fields, Buf Type: Details:.
+Prefix =     
+  Adding NULL Data, Name = data
+ObjectIn Resultant BP:
+DESC 6 Fields, Buf Type: Details:.
+Prefix =     ,#id:2,$name:0,$type:4,$desc:0,$str:33,[data:0
+  D::#id=971 
+  D::$name= 
+  D::$type=List 
+  D::$desc= 
+  D::$str=|Number:#|String:$|ArrayBuffer:[| 
+  D::[data=AB(0) 
+ObjectIn:Adding entries!
+BufPack.Add Incoming:
+DESC 0 Fields, Buf Type: Details:.
+Prefix =     
+  Adding NULL Data, Name = data
+ObjectIn Resultant BP:
+DESC 6 Fields, Buf Type: Details:.
+Prefix =     ,#id:2,$name:2,$type:4,$desc:2,$str:81,[data:0
+  D::#id=972 
+  D::$name=Ft 
+  D::$type=List 
+  D::$desc=Ft 
+  D::$str=Ft|#:Num|I:Int|$:Dollar|P:Pair|O:Ord|A:Nums|%:Str|U:Upper|@:Member|R:Range|{:Set| 
+  D::[data=AB(0) 
+ObjectIn:Adding entries!
+BufPack.Add Incoming:
+DESC 0 Fields, Buf Type: Details:.
+Prefix =     
+  Adding NULL Data, Name = data
+ObjectIn Resultant BP:
+DESC 6 Fields, Buf Type: Details:.
+Prefix =     ,#id:2,$name:2,$type:4,$desc:11,$str:67,[data:0
+  D::#id=973 
+  D::$name=Ct 
+  D::$type=List 
+  D::$desc=ConnectType 
+  D::$str=Ct:ConnectType|Data|Event|Action|Queue|DB|SQL:SQLite|Remote|Retail| 
+  D::[data=AB(0) 
+ObjectIn:Adding entries!
+BufPack.Add Incoming:
+DESC 0 Fields, Buf Type: Details:.
+Prefix =     
+  Adding NULL Data, Name = data
+ObjectIn Resultant BP:
+DESC 6 Fields, Buf Type: Details:.
+Prefix =     ,#id:2,$name:2,$type:4,$desc:8,$str:114,[data:0
+  D::#id=974 
+  D::$name=Lt 
+  D::$type=List 
+  D::$desc=ListType 
+  D::$str=Lt:ListType|Dt:DataType|Ev:Event|Ac:Action|Rt:Return|Td:TileDef|Ts:TileSize|Pr:Process|Mt:MessageType|Lg:Language| 
+  D::[data=AB(0) 
+ObjectIn:Adding entries!
+BufPack.Add Incoming:
+DESC 0 Fields, Buf Type: Details:.
+Prefix =     
+  Adding NULL Data, Name = data
+ObjectIn Resultant BP:
+DESC 6 Fields, Buf Type: Details:.
+Prefix =     ,#id:2,$name:2,$type:4,$desc:8,$str:87,[data:0
+  D::#id=975 
+  D::$name=Dt 
+  D::$type=List 
+  D::$desc=DataType 
+  D::$str=Dt:DataType|String:Free format string|Integer:Whole Number|Number:Whole or Real Number| 
+  D::[data=AB(0) 
+ObjectIn:Adding entries!
+BufPack.Add Incoming:
+DESC 0 Fields, Buf Type: Details:.
+Prefix =     
+  Adding NULL Data, Name = data
+ObjectIn Resultant BP:
+DESC 6 Fields, Buf Type: Details:.
+Prefix =     ,#id:2,$name:2,$type:4,$desc:5,$str:51,[data:0
+  D::#id=976 
+  D::$name=Ev 
+  D::$type=List 
+  D::$desc=Event 
+  D::$str=Ev:Event|Click|Enter|Exit|DblClick|Swipe|Drop|Drag| 
+  D::[data=AB(0) 
+ObjectIn:Adding entries!
+BufPack.Add Incoming:
+DESC 0 Fields, Buf Type: Details:.
+Prefix =     
+  Adding NULL Data, Name = data
+ObjectIn Resultant BP:
+DESC 6 Fields, Buf Type: Details:.
+Prefix =     ,#id:2,$name:2,$type:4,$desc:6,$str:38,[data:0
+  D::#id=977 
+  D::$name=Rt 
+  D::$type=List 
+  D::$desc=Return 
+  D::$str=Rt:Return|Ok|Fail|Equal|Unequal|Queue| 
+  D::[data=AB(0) 
+ObjectIn:Adding entries!
+BufPack.Add Incoming:
+DESC 0 Fields, Buf Type: Details:.
+Prefix =     
+  Adding NULL Data, Name = data
+ObjectIn Resultant BP:
+DESC 6 Fields, Buf Type: Details:.
+Prefix =     ,#id:2,$name:2,$type:4,$desc:7,$str:45,[data:0
+  D::#id=978 
+  D::$name=Td 
+  D::$type=List 
+  D::$desc=TileDef 
+  D::$str=Td:TileDef|Tile|LnEdit|TxtEdit|Btn|Img|Video| 
+  D::[data=AB(0) 
+ObjectIn:Adding entries!
+BufPack.Add Incoming:
+DESC 0 Fields, Buf Type: Details:.
+Prefix =     
+  Adding NULL Data, Name = data
+ObjectIn Resultant BP:
+DESC 6 Fields, Buf Type: Details:.
+Prefix =     ,#id:2,$name:2,$type:4,$desc:8,$str:114,[data:0
+  D::#id=979 
+  D::$name=Ts 
+  D::$type=List 
+  D::$desc=TileSize 
+  D::$str=Ts:TileSize|Fixed|T:Top|TL:Top Left|TR:Top Right|B:Bottom|BL:Bottom Left|BR:Bottom Right|L:Left|R:Right|SH:Shared| 
+  D::[data=AB(0) 
+ObjectIn:Adding entries!
+BufPack.Add Incoming:
+DESC 0 Fields, Buf Type: Details:.
+Prefix =     
+  Adding NULL Data, Name = data
+ObjectIn Resultant BP:
+DESC 6 Fields, Buf Type: Details:.
+Prefix =     ,#id:2,$name:2,$type:4,$desc:7,$str:39,[data:0
+  D::#id=980 
+  D::$name=Pr 
+  D::$type=List 
+  D::$desc=Process 
+  D::$str=Pr:Process|Init|Read|Set|Clear|Default| 
+  D::[data=AB(0) 
+ObjectIn:Adding entries!
+BufPack.Add Incoming:
+DESC 0 Fields, Buf Type: Details:.
+Prefix =     
+  Adding NULL Data, Name = data
+ObjectIn Resultant BP:
+DESC 6 Fields, Buf Type: Details:.
+Prefix =     ,#id:2,$name:2,$type:4,$desc:11,$str:49,[data:0
+  D::#id=981 
+  D::$name=Mt 
+  D::$type=List 
+  D::$desc=MessageType 
+  D::$str=Mt:MessageType|Input|Output|Event|Trigger|Action| 
+  D::[data=AB(0) 
+ObjectIn:Adding entries!
+BufPack.Add Incoming:
+DESC 0 Fields, Buf Type: Details:.
+Prefix =     
+  Adding NULL Data, Name = data
+ObjectIn Resultant BP:
+DESC 6 Fields, Buf Type: Details:.
+Prefix =     ,#id:2,$name:2,$type:4,$desc:6,$str:34,[data:0
+  D::#id=982 
+  D::$name=Ac 
+  D::$type=List 
+  D::$desc=Action 
+  D::$str=Ac:Action|Init|Timer|Login|Logout| 
+  D::[data=AB(0) 
+ObjectIn:Adding entries!
+BufPack.Add Incoming:
+DESC 0 Fields, Buf Type: Details:.
+Prefix =     
+  Adding NULL Data, Name = data
+ObjectIn Resultant BP:
+DESC 6 Fields, Buf Type: Details:.
+Prefix =     ,#id:2,$name:2,$type:4,$desc:8,$str:45,[data:0
+  D::#id=983 
+  D::$name=Lg 
+  D::$type=List 
+  D::$desc=Language 
+  D::$str=Lg:Language|En:English|Es:Espanol|Cn:Chinese| 
+  D::[data=AB(0) 
+ObjectIn:Adding entries!
+BufPack.Add Incoming:
+DESC 0 Fields, Buf Type: Details:.
+Prefix =     
+  Adding NULL Data, Name = data
+ObjectIn Resultant BP:
+DESC 6 Fields, Buf Type: Details:.
+Prefix =     ,#id:2,$name:2,$type:4,$desc:7,$str:75,[data:0
+  D::#id=984 
+  D::$name=Cy 
+  D::$type=List 
+  D::$desc=Country 
+  D::$str=Cy:Country|US:United States|UK:United Kingdom|CA:Canada|RU:Russia|IN:India| 
+  D::[data=AB(0) 
+ObjectIn:Adding entries!
+BufPack.Add Incoming:
+DESC 0 Fields, Buf Type: Details:.
+Prefix =     
+  Adding NULL Data, Name = data
+ObjectIn Resultant BP:
+DESC 6 Fields, Buf Type: Details:.
+Prefix =     ,#id:2,$name:4,$type:4,$desc:4,$str:61,[data:0
+  D::#id=985 
+  D::$name=Test 
+  D::$type=List 
+  D::$desc=Test 
+  D::$str=Test|NameF:~%12~First Name|XY:~P~XY Dim|Cost:~$~Dollar Price| 
+  D::[data=AB(0) 
+AB = [object ArrayBuffer] bytes = 124
+AB = [object ArrayBuffer] bytes = 89
+AB = [object ArrayBuffer] bytes = 141
+AB = [object ArrayBuffer] bytes = 137
+AB = [object ArrayBuffer] bytes = 181
+AB = [object ArrayBuffer] bytes = 153
+AB = [object ArrayBuffer] bytes = 114
+AB = [object ArrayBuffer] bytes = 102
+AB = [object ArrayBuffer] bytes = 110
+AB = [object ArrayBuffer] bytes = 181
+AB = [object ArrayBuffer] bytes = 104
+AB = [object ArrayBuffer] bytes = 119
+AB = [object ArrayBuffer] bytes = 98
+AB = [object ArrayBuffer] bytes = 111
+AB = [object ArrayBuffer] bytes = 140
+AB = [object ArrayBuffer] bytes = 125
+Server packs records to send to client
+
+  count = 16
+DESC 16 Fields, Buf Type:* Details:.
+Prefix =     :*,&:124,&:89,&:141,&:137,&:181,&:153,&:114,&:102,&:110,&:181,&:104,&:119,&:98,&:111,&:140,&:125
+  D::&=Pack(0) 
+  D::&=Pack(0) 
+  D::&=Pack(0) 
+  D::&=Pack(0) 
+  D::&=Pack(0) 
+  D::&=Pack(0) 
+  D::&=Pack(0) 
+  D::&=Pack(0) 
+  D::&=Pack(0) 
+  D::&=Pack(0) 
+  D::&=Pack(0) 
+  D::&=Pack(0) 
+  D::&=Pack(0) 
+  D::&=Pack(0) 
+  D::&=Pack(0) 
+  D::&=Pack(0) 
+AB = [object ArrayBuffer] bytes = 2129
+ServerResult BP:
+DESC 16 Fields, Buf Type:* Details:.
+Prefix =     :*,&:124,&:89,&:141,&:137,&:181,&:153,&:114,&:102,&:110,&:181,&:104,&:119,&:98,&:111,&:140,&:125
+  D::&=Pack(0) 
+  D::&=Pack(0) 
+  D::&=Pack(0) 
+  D::&=Pack(0) 
+  D::&=Pack(0) 
+  D::&=Pack(0) 
+  D::&=Pack(0) 
+  D::&=Pack(0) 
+  D::&=Pack(0) 
+  D::&=Pack(0) 
+  D::&=Pack(0) 
+  D::&=Pack(0) 
+  D::&=Pack(0) 
+  D::&=Pack(0) 
+  D::&=Pack(0) 
+  D::&=Pack(0) 
+AB = [object ArrayBuffer] bytes = 2129
+ServerAB Bytes Sent to Client= 2129
+---
+---
+---
+---
+---
+Server receives INCOMING Client Request AB bytes = 42
+buildQ QBuf=
+DESC 1 Fields, Buf Type: Details:.
+Prefix =     ,$!Q:31
+  C::$!Q=SELECT name from sqlite_master; 
+buildQ nValues = 0
+ExecQ QUERY=SELECT name from sqlite_master;.
+RecArray: length = 2
+[object Object],[object Object]
+[ { name: 'sqlite_sequence' }, { name: 'S' } ]
+Server receives Record Array from Query, length = 2
+ObjectIn:Adding entries!
+BufPack.Add Incoming:
+DESC 0 Fields, Buf Type: Details:.
+Prefix =     
+ObjectIn Resultant BP:
+DESC 1 Fields, Buf Type: Details:.
+Prefix =     ,$name:15
+  D::$name=sqlite_sequence 
+ObjectIn:Adding entries!
+BufPack.Add Incoming:
+DESC 0 Fields, Buf Type: Details:.
+Prefix =     
+ObjectIn Resultant BP:
+DESC 1 Fields, Buf Type: Details:.
+Prefix =     ,$name:1
+  D::$name=S 
+AB = [object ArrayBuffer] bytes = 28
+AB = [object ArrayBuffer] bytes = 13
+Server packs records to send to client
+
+  count = 2
+DESC 2 Fields, Buf Type:* Details:.
+Prefix =     :*,&:28,&:13
+  D::&=Pack(0) 
+  D::&=Pack(0) 
+AB = [object ArrayBuffer] bytes = 57
+ServerResult BP:
+DESC 2 Fields, Buf Type:* Details:.
+Prefix =     :*,&:28,&:13
+  D::&=Pack(0) 
+  D::&=Pack(0) 
+AB = [object ArrayBuffer] bytes = 57
+ServerAB Bytes Sent to Client= 57
+---
+---
+---
+---
+---
+Server receives INCOMING Client Request AB bytes = 42
+buildQ QBuf=
+DESC 1 Fields, Buf Type: Details:.
+Prefix =     ,$!Q:31
+  C::$!Q=SELECT name from sqlite_master; 
+buildQ nValues = 0
+ExecQ QUERY=SELECT name from sqlite_master;.
+RecArray: length = 2
+[object Object],[object Object]
+[ { name: 'sqlite_sequence' }, { name: 'S' } ]
+Server receives Record Array from Query, length = 2
+ObjectIn:Adding entries!
+BufPack.Add Incoming:
+DESC 0 Fields, Buf Type: Details:.
+Prefix =     
+ObjectIn Resultant BP:
+DESC 1 Fields, Buf Type: Details:.
+Prefix =     ,$name:15
+  D::$name=sqlite_sequence 
+ObjectIn:Adding entries!
+BufPack.Add Incoming:
+DESC 0 Fields, Buf Type: Details:.
+Prefix =     
+ObjectIn Resultant BP:
+DESC 1 Fields, Buf Type: Details:.
+Prefix =     ,$name:1
+  D::$name=S 
+AB = [object ArrayBuffer] bytes = 28
+AB = [object ArrayBuffer] bytes = 13
+Server packs records to send to client
+
+  count = 2
+DESC 2 Fields, Buf Type:* Details:.
+Prefix =     :*,&:28,&:13
+  D::&=Pack(0) 
+  D::&=Pack(0) 
+AB = [object ArrayBuffer] bytes = 57
+ServerResult BP:
+DESC 2 Fields, Buf Type:* Details:.
+Prefix =     :*,&:28,&:13
+  D::&=Pack(0) 
+  D::&=Pack(0) 
+AB = [object ArrayBuffer] bytes = 57
+ServerAB Bytes Sent to Client= 57

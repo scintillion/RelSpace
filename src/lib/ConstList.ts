@@ -58,14 +58,9 @@ export namespace RSLst {
 
 	type StoreBuffer = string | ArrayBuffer | Function | undefined;
 
-	export const NameDelim = ':';
-	export const PrimeDelim = '|';
-	export const TabDelim = '\t';
-	export const LineDelim = '\n';
-	export const FormDelim = '\f';
-
-	export const FormatStart = '[';
-	export const FormatEnd = ']';
+	export const NameDelim = ':',PrimeDelim = '|',TabDelim = '\t',LineDelim = '\n',FormDelim = '\f';
+	export const FormatStart = '[',FormatEnd = ']';
+	export const tStr='$',tNum='#',tAB='[',tPack='&';
 
 	export enum CLType {
 		None,
@@ -127,8 +122,7 @@ export namespace RSLst {
 	export function ChkBuf (Buf : ArrayBuffer) {
 		const UInt8View = new Uint8Array (Buf);
 
-		let Sum = 0;
-		let i = 0;
+		let Sum = 0, i = 0;
 		for (const B of UInt8View)
 			Sum += B * ((++i & 31) + 1);
 
@@ -497,8 +491,7 @@ export namespace RSLst {
 		}
 
 		FromOption(Item: SelectArgs) {
-			let text;
-			let value;
+			let text, value;
 
 			if (Item instanceof HTMLOptionElement) {
 				let Option = Item as HTMLOptionElement;
@@ -714,8 +707,7 @@ export namespace RSLst {
 		tiles: TDE[] = [];
 
 		constructor(Str: string[] | string, List: constList | undefined = undefined) {
-			let count = 0;
-			let limit;
+			let limit, count = 0;
 
 			super();
 
@@ -923,9 +915,7 @@ export namespace RSLst {
 
 		constructor(Str: string, List1: constList) {
 			super();
-			let Desc1;
-
-			let NameEnd = Str.indexOf(NameDelim);
+			let Desc1, NameEnd = Str.indexOf(NameDelim);
 
 			if (NameEnd >= 0) {
 				this._Name = Str.slice(0, NameEnd);
@@ -1116,9 +1106,8 @@ export namespace RSLst {
 			let DestStrs = this._Str.split(this._Delim);
 			DestStrs.length = DestStrs.length - 1;
 			let Destlimit = DestStrs.length;
-			let Appended = 0;
-			let Replaced = 0;
-
+			let Appended = 0, Replaced = 0;
+			
 			console.log('Merging Dest:');
 
 			for (let i = 0; i < Destlimit; ++i) console.log('Q1  ' + DestStrs[i]);
@@ -1427,8 +1416,7 @@ export namespace RSLst {
 			this.LType = IDList ? CLType.ID : CLType.Std;
 
 			if (IDList) {
-				let N = 0;
-				let limit = StrLen - 1;
+				let N = 0, limit = StrLen - 1;
 				let Pos: number[] = Array(99);
 				Pos[0] = 0;
 
@@ -1548,8 +1536,7 @@ export namespace RSLst {
 
 				for (let i = this._Childs.length; --i >= 0; )
 					if (this._Childs[i]._Name == Name) {
-						let First;
-						let Second;
+						let First, Second;
 
 						if (dir <= 0) {
 							Second = i;
@@ -1573,11 +1560,9 @@ export namespace RSLst {
 			let Pos = this.GetNamePos(Name);
 			if (Pos < 0) return -1; // cannot find, we are done
 
-			let StartPos;
-			let EndPos;
+			let StartPos, EndPos;
 
-			let First = '';
-			let Second = '';
+			let First = '', Second = '';
 
 			if (dir <= 0) {
 				// bubble up
@@ -1748,8 +1733,7 @@ export namespace RSLst {
 
 		ToDC(): string {
 			let CIDs = this.ToSortedCIDs();
-			let limit = CIDs.length;
-			let FmtStr = '';
+			let limit = CIDs.length, FmtStr = '';
 
 			let LineStr = '// ' + this._Name + NameDelim + this._Desc + '="' + this._Str + '"\n';
 			let Line = 'export const ';
@@ -1985,25 +1969,6 @@ export namespace RSLst {
 			let Check2 = ChkBuf (NewBuf);
 
 			console.log ('Check1/2 = ' + Check1.toString () + ' ' + Check2.toString ());
-
-			/*
-			let AB87 = num2ab (87); 
-			let AB268 = num2ab (268);
-			let AB31804 = num2ab (31804);
-			let AB999999 = num2ab (999999);
-			let AB19 = num2ab (1999999999);
-			let AB3000000000 = num2ab (3000000000);
-			let AB1p27 = num2ab (1.27);
-
-			ab2num (AB87);
-			ab2num (AB268);
-			ab2num (AB31804);
-			ab2num (AB999999);
-			ab2num (AB19);
-			ab2num (AB3000000000);
-
-			ab2num (AB1p27);
-			*/
 		}
 
 		ToConstList(): constList | undefined {
@@ -2188,6 +2153,17 @@ export namespace RSLst {
 
 	export const ToFroms = new TFList();
 
+	export const NILAB = new ArrayBuffer (0);
+	export const NILArray = new Uint8Array (NILAB);
+
+	export function ABfromArray (Source : Int8Array) : ArrayBuffer {
+		let AB = new ArrayBuffer (Source.length);
+		let Dest = new Int8Array (AB);
+		Dest.set (Source);
+
+		return AB;
+	}
+
 	export function ab2str(AB : ArrayBuffer) {
 		return new TextDecoder().decode(AB);
 	  }
@@ -2195,9 +2171,6 @@ export namespace RSLst {
 	export function str2ab(Str : string) {
 		return new TextEncoder().encode(Str);
 	}
-
-	export const NILAB = new ArrayBuffer (0);
-	export const NILArray = new Uint8Array (NILAB);
 
 	export function num2ab (N : number) : ArrayBuffer {
 		if (N !== N)	//	NaN
@@ -2289,6 +2262,7 @@ export namespace RSLst {
 		get AB () { return this._AB; }
 		get Buf () { return this._buf; }
 		get Pack () { return this._pack; }
+		get Error () { return this._error; }
 
 		private _name = '';
 		private _size = 0;
@@ -2296,10 +2270,66 @@ export namespace RSLst {
 		private _data : any;
 		private _str = '';
 		private _num = NaN;
+		private _error = '';
+
 
 		_AB = NILAB;
 		_buf = NILArray;
 		_pack = NILPack;
+
+		toArray () : Int8Array {
+			let AB : ArrayBuffer;
+			switch (this.Type) {
+				case tNum : AB = num2ab (this._num); break;
+				case tStr : AB = str2ab (this._str); break;
+				case tAB : 
+					let Source = new Int8Array (this._AB);
+					AB = new ArrayBuffer (Source.length);
+					let Dest = new Int8Array (AB);
+					Dest.set (Source);
+					// NEED TO PASS a COPY of AB, JUST TO BE SAFE!  All other types
+					// are passing AB copies, not the original!
+					break;			
+
+				case tPack : AB = this._pack.BufOut (); break;
+				default : AB = NILAB; this._error = 'toArray Error, Type =' + this.Type + '.';
+			}
+
+			return new Int8Array (AB);
+		}
+
+		fromBuf (Type : string, InBuffer : Int8Array | ArrayBuffer, Start = -1, nBytes = -1) : number|string|ArrayBuffer|BufPack {
+			let ABuf : ArrayBuffer;
+			let IBuf,TBuf : Int8Array;
+
+			if (Start < 0) {
+				Start = 0; nBytes = 999999999;
+			}
+			else if (nBytes < 0)
+				nBytes = 999999999;
+
+
+			if (InBuffer instanceof ArrayBuffer) {
+				ABuf = (InBuffer as ArrayBuffer).slice (Start, Start + nBytes);
+				IBuf = new Int8Array (ABuf);
+			}
+			else {	// Int8Array
+				TBuf = (InBuffer as Int8Array).slice (Start, Start+nBytes);
+				ABuf = ABfromArray (TBuf);
+			}
+
+			switch (Type) {
+				case tStr : this._str = ab2str (ABuf); break;
+				case tNum : this._num = ab2num (ABuf); break;
+				case tAB : this._AB = ABuf; break;
+				case tPack : this._pack = new BufPack (); this._pack.BufIn (ABuf); break;
+				default : this._AB = NILAB; 
+					this._error = 'fromBuf error, Type=' + Type + ', converted to AB';
+			}
+
+			this._type = Type;
+			return 0;
+		}
 
 		constructor (N : string, V : string|number|ArrayBuffer|BufPack,Type1='') {
 			let AB : ArrayBuffer;
@@ -2308,31 +2338,36 @@ export namespace RSLst {
 				AB = V as ArrayBuffer;
 
 				switch (Type1) {
-					case '$' : this._str = ab2str (AB); break;
-					case '#' : this._num = ab2num (AB); break;
-					case '&' : this._pack = new BufPack (); this._pack.BufIn (AB); break;
-					case '[' : break;
-					default : return;
+					case tStr : this._str = ab2str (AB); break;
+					case tNum : this._num = ab2num (AB); break;
+					case tPack : this._pack = new BufPack (); this._pack.BufIn (AB); break;
+					case tAB : break;
+					default : this._error = 'constructor error Type =' + Type1 + ', converted to NILAB.';  this._AB = NILAB;
 				}
 			}
 			else {
 				switch (typeof (V)) {
 					case 'string' : this._str = V as string;  
 						AB = str2ab (this._str);
-						Type1 = '$';
+						Type1 = tStr;
 						break;
 					case 'number' : this._num = V as number; 
 						AB = num2ab (this._num);
-						Type1 = '#'; 
+						Type1 = tNum; 
 						break;
 					default : 
 						if (V instanceof BufPack) {
 							AB = (V as BufPack).BufOut ();
-							Type1 = '&';
+							Type1 = tPack;
 						}
 						else if (V instanceof ArrayBuffer) {
 							AB = V as ArrayBuffer;
-							Type1 = '[';
+							Type1 = tAB;
+						}
+						else if (!V)	{	// NULL
+							AB = NILAB;
+							console.log ('  Adding NULL Data, Name = ' + N);
+							Type1 = tAB;
 						}
 						else return;
 					}
@@ -2344,12 +2379,26 @@ export namespace RSLst {
 			this._name = N;
 		}
 
+		NameVal () {
+			let Str = this._type + this._name + '=';
+
+			switch (this._type) {
+				case tNum : Str += this._num.toString (); break;
+				case tStr : Str += this._str; break;
+				case tPack : Str += 'Pack(' + this._pack.Ds.length.toString () + ')'; break;
+				case tAB : Str += 'AB(' + this._AB.byteLength.toString () + ')'; break;
+				default : Str += 'BADTYPE=' + this._type + ' ' + this._size.toString () + ' bytes';
+			}
+
+			return Str;
+		}
+
 		Equal (Ref : PackField) : boolean {
 			if ((this._type === Ref._type)  &&  (this._size === Ref._size)) {
 				switch (this._type) {
-					case '#' : return this._num === Ref._num;
-					case '$' : return this._str === Ref._str;
-					case '[' :
+					case tNum : return this._num === Ref._num;
+					case tStr : return this._str === Ref._str;
+					case tAB :
 						let limit = this.Buf.byteLength;
 						for (let i = limit; --i >= 0;) {
 							if (this.Buf[i] !== Ref.Buf[i])
@@ -2363,17 +2412,26 @@ export namespace RSLst {
 		}
 
 		Desc() {
-			let Str = this._type + this._name + ' ';
+//			let Str = 'Type="' + this._type + '" Name="' + this._name + '" ';
+			let Str = this.NameVal () + ' ';
 
 			switch (this._type) {
-				case '#' : Str += '= ' + this._num.toString (); break;
-				case '$' : Str += '= ' + this._str; break;
-				default : Str += ' ' + this._size.toString () + ' bytes'; break;
+				case tNum : break; // Str += '= ' + this._num.toString (); break;
+				case tStr : break; // Str += '= ' + this._str; break;
+				case tPack : 
+					for (let i = 0; i < this._pack.Ds.length;)
+						Str += ' ' + this._pack.Ds[i++].NameVal ();
+					break;
+				case tAB : break;
+
+				default : Str += ' DEFAULT AB, Type =' + this._type + ' ' + this._size.toString () + ' bytes'; break;
 			}
 
-			Str += ' Buf is ' + this.Buf.byteLength.toString () + ' bytes, Chk = ' + ChkBuf (this.Buf).toString ();
 			if (this.Buf === NILArray)
-				Str += '*** Buf === NILArray!\n';
+				Str += ' *** Buf === NILArray!\n';
+
+			if (this._error)
+				Str += ' ***ERROR*** ' + this._error;
 
 			return Str;
 		}
@@ -2486,7 +2544,8 @@ export namespace RSLst {
 			if (Args.length & 1)
 				return;		// must always be matching pairs (Name/Data), odd params not allowed
 
-//			console.log ('BufPack.Add Incoming:\n' + this.Desc ());
+
+			console.log ('BufPack.Add Incoming:\n' + this.Desc ());
 			for (let i = 0; i < limit; )
 			{
 				let FldName = Args[i++] as string;
@@ -2496,7 +2555,7 @@ export namespace RSLst {
 
 				let NewField = new PackField(FldName,Data);
 
-//				console.log ('   Adding ' + FldName + ' DF = ' + DF.toString () + '\n');
+				// console.log ('   ...Adding ' + (DF ? 'D:' : 'C:') +  FldName + ' DESC:' + NewField.Desc () + '\n');
 
 				if (NotNull)
 				{
@@ -2684,39 +2743,6 @@ export namespace RSLst {
 
 					let NewFld = new PackField (Name,DBuf,Type);
 
-					/*
-					//console.log ('  BufInReading ' + NewFld.Name + ':' + NewFld.Type + ' ' + NBytes.toString () + ' bytes, offset ' + Offset.toString () + 
-					//		'Actual = ' + DBuf.byteLength.toString ());
-
-					let Str = '';
-
-					//	console.log ('    BI:Name' + NewFld.Name + ' ' + NewFld.Type + ' ' + NewFld.Size.toString ());
-
-					switch (NewFld.Type) {
-						case '$': 
-							Str = ab2str (DBuf);
-							NewFld.AB = DBuf;
-							NewFld._str = Str;
-							break;
-
-						case '#' :
-							NewFld.Num = ab2num (DBuf);
-							NewFld.AB = DBuf;
-							break;
-
-						case '[': case '&':
-							NewFld.AB = DBuf;
-							break;
-						default:
-							NewFld.Type = ' ';
-							NewFld.AB = NILAB;
-					}
-					
-
-					NewFld.Buf = new Uint8Array (NewFld.AB);
-					*/
-
-
 					if ((NewFld.Name[0] >= '0') || !NewFld.Name) {
 						this.Ds.push (NewFld);
 					}
@@ -2795,6 +2821,8 @@ export namespace RSLst {
 		objectIn (O : Object) {
 			this.Clear ();
 			
+			console.log ('ObjectIn:Adding entries!');
+
 			let entries = Object.entries (O);
 			let AddArray = Array(entries.length << 1);
 			let count = 0;
@@ -2803,7 +2831,7 @@ export namespace RSLst {
 				AddArray[count++] = entry[0];
 				AddArray[count++] = entry[1];
 
-				console.log ('   entry = ' + entry);
+				// console.log ('   AddArray[' + count.toString () + '] entry = ' + entry);
 			}
 
 			this.Add (AddArray);
@@ -2817,8 +2845,9 @@ export namespace RSLst {
 			for (let F of Fields) {
 				let N = F.Name;
 				switch (F.Type) {
-					case '#' : Object.assign (o,{ N : F.Num }); break;
-					case '$' : Object.assign (o,{ N : F.Str }); break;
+					case tNum : Object.assign (o,{ N : F.Num }); break;
+					case tStr : Object.assign (o,{ N : F.Str }); break;
+					case tPack : Object.assign (o, {N : F.Pack }); break;
 					default : Object.assign (o,{ N : F.AB }); break;
 				}
 			}
@@ -2868,8 +2897,8 @@ export namespace RSLst {
 				}
 
 				switch (F.Type) {
-					case '#' : Values[nValues++] = F.Num; break;
-					case '$' : Values[nValues++] = F.Str; break;
+					case tNum : Values[nValues++] = F.Num; break;
+					case tStr : Values[nValues++] = F.Str; break;
 					default : Values[nValues++] = F.AB;
 				}								
 			}

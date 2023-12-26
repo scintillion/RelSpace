@@ -1,0 +1,13 @@
+{
+	"/": [],
+	"/apitesting": [
+		"src/routes/apitesting/+page.js"
+	],
+	"/api/query": [
+		"src/routes/api/query/+server.ts"
+	],
+	"/editor": [],
+	"/loleditor": [],
+	"/plotter": [],
+	"/vhelsing": []
+}
