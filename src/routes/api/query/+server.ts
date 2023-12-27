@@ -61,8 +61,8 @@ class DBKit {
 				}
 				Pack.Cs = [];
 				Pack.Pack (BPs);
-				console.log ('Server packs records to send to client\n');
-				console.log ('  count = ' + BPs.length + '\n' + Pack.Desc ());
+				console.log ('Server packs ' + BPs.length.toString () + ' records to send to client');
+				console.log (Pack.Desc ());
 				let newBPs = new RSLst.BufPack ();
 				newBPs.BufIn (Pack.BufOut ());
 			}

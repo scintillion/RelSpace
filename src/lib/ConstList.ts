@@ -1807,23 +1807,20 @@ export namespace RSLst {
 		Lists: constList[] = [];
 
 		ListByName(Name: string): constList | undefined {
-			for (let i = this.Lists.length; --i >= 0; )
-				if (this.Lists[i].Name == Name) return this.Lists[i];
+			for (const L of this.Lists)
+				if (L.Name === Name) return L;
 		}
 
 		Add(ListStr: string | string[]): constList | undefined {
-			let ListStrs: string[] = typeof ListStr === 'string' ? [ListStr] : ListStr;
+			let ListStrs: string[] = (typeof ListStr === 'string') ? [ListStr] : ListStr;
+			let List;
 
-			let limit = ListStrs.length;
-			for (let i = 0; i < limit; ++i) {
-				let NewList = new constList(ListStrs[i]);
-				this.Lists.push(NewList);
-				if (limit === 1)
-					// single list add
-					return NewList;
+			for (const L of ListStrs) {
+				this.Lists.push (List = new constList(L));
 			}
 
-			return undefined;
+			if (ListStrs.length <= 1)
+				return List;
 		}
 
 		Merge(AOL: constList[]) {
@@ -2254,9 +2251,12 @@ export namespace RSLst {
 	}
 
 	export class PackField {
-		get Size () { return this._size; }
+		get Size () { return this._AB.byteLength; }
 		get Str () { return this._str; }
-		get Num () { return this._num; }
+		get Num () { if (this._type === tNum)
+						return this._data as number;
+						else return NaN; }
+
 		get Type () { return this._type; }
 		get Name () { return this._name; }
 		get AB () { return this._AB; }
@@ -2265,11 +2265,9 @@ export namespace RSLst {
 		get Error () { return this._error; }
 
 		private _name = '';
-		private _size = 0;
 		private _type = ' ';
 		private _data : any;
 		private _str = '';
-		private _num = NaN;
 		private _error = '';
 
 
@@ -2277,18 +2275,13 @@ export namespace RSLst {
 		_buf = NILArray;
 		_pack = NILPack;
 
-		toArray () : Int8Array {
+		toAB () : Int8Array {
 			let AB : ArrayBuffer;
 			switch (this.Type) {
-				case tNum : AB = num2ab (this._num); break;
+				case tNum : AB = num2ab (this.Num); break;
 				case tStr : AB = str2ab (this._str); break;
-				case tAB : 
-					let Source = new Int8Array (this._AB);
-					AB = new ArrayBuffer (Source.length);
-					let Dest = new Int8Array (AB);
-					Dest.set (Source);
-					// NEED TO PASS a COPY of AB, JUST TO BE SAFE!  All other types
-					// are passing AB copies, not the original!
+				case tAB :
+					AB = this._AB.slice (0); 	// make a copy, don't pass pointer to original
 					break;			
 
 				case tPack : AB = this._pack.BufOut (); break;
@@ -2318,6 +2311,7 @@ export namespace RSLst {
 				ABuf = ABfromArray (TBuf);
 			}
 
+			/*
 			switch (Type) {
 				case tStr : this._str = ab2str (ABuf); break;
 				case tNum : this._num = ab2num (ABuf); break;
@@ -2328,24 +2322,80 @@ export namespace RSLst {
 			}
 
 			this._type = Type;
+			this._AB = ABuf;
+			this._buf = IBuf;
+			*/
+
+			switch (Type) {
+				case tStr : this.setData (ab2str (ABuf)); break;
+				case tNum : this.setData (ab2num (ABuf)); break;
+				case tAB : this.setData (ABuf); break;
+				case tPack : let Pack = new BufPack (); Pack.BufIn (ABuf); this.setData (ABuf);
+				default : this.setData (NILAB);
+			}
+
 			return 0;
 		}
 
+		setData (D : number|string|ArrayBuffer|BufPack) {
+			this._data = D;
+			let AB;
+
+			switch (typeof (D)) {
+				case 'string' : this._type = tStr;
+					this._str = D as string;
+					AB = str2ab (D as string);
+					this._type = tStr;
+					break;
+				case 'number' : this._type = tNum;
+//					this._num = D as number;
+					AB = num2ab (D as number);
+					this._type = tNum;
+					break;
+				default :
+					if (D instanceof ArrayBuffer) {
+						this._type = tAB;
+						AB = D as ArrayBuffer;
+						}
+					else if (D instanceof BufPack) {
+						this._type = tPack;
+						this._pack = D as BufPack;
+						AB = this._pack.BufOut ();
+						}
+					else if (!D) {
+						this._type = tAB;
+						this._data = NILAB;
+						AB = NILAB;
+					}
+					else { this._type = 'BAD.DATA'; this._data = NILAB; AB = NILAB; }
+			}
+
+			this._AB = AB;
+		}
+
 		constructor (N : string, V : string|number|ArrayBuffer|BufPack,Type1='') {
-			let AB : ArrayBuffer;
+			this._name = N;
 
 			if (Type1)	{	// AB coming in with type
-				AB = V as ArrayBuffer;
+				let AB = V as ArrayBuffer;
 
 				switch (Type1) {
-					case tStr : this._str = ab2str (AB); break;
-					case tNum : this._num = ab2num (AB); break;
-					case tPack : this._pack = new BufPack (); this._pack.BufIn (AB); break;
-					case tAB : break;
+					case tStr : let Str = ab2str (AB); this.setData (Str); break;
+					case tNum : let Num = ab2num (AB); this.setData (Num); break;
+					case tPack : this._pack = new BufPack (); this._pack.BufIn (AB); this.setData (this._pack); break;
+					case tAB : this.setData (AB); break;
 					default : this._error = 'constructor error Type =' + Type1 + ', converted to NILAB.';  this._AB = NILAB;
+						this._type = tAB;
+						this.setData (NILAB);
+						break;
 				}
+//				this._type = Type1;
+//				this._AB = AB;
 			}
 			else {
+				this.setData (V);
+
+/*				
 				switch (typeof (V)) {
 					case 'string' : this._str = V as string;  
 						AB = str2ab (this._str);
@@ -2371,32 +2421,32 @@ export namespace RSLst {
 						}
 						else return;
 					}
+*/
+
 			}
 
-			this._buf = new Uint8Array (this._AB = AB);
-			this._size = this.Buf.length;
-			this._type = Type1;
-			this._name = N;
+			this._buf = new Uint8Array (this._AB);
+			// this._size = this.Buf.length;
 		}
 
 		NameVal () {
 			let Str = this._type + this._name + '=';
 
 			switch (this._type) {
-				case tNum : Str += this._num.toString (); break;
+				case tNum : Str += this.Num.toString (); break;
 				case tStr : Str += this._str; break;
 				case tPack : Str += 'Pack(' + this._pack.Ds.length.toString () + ')'; break;
 				case tAB : Str += 'AB(' + this._AB.byteLength.toString () + ')'; break;
-				default : Str += 'BADTYPE=' + this._type + ' ' + this._size.toString () + ' bytes';
+				default : Str += 'BADTYPE=' + this._type + ' ' + this.Size.toString () + ' bytes';
 			}
 
 			return Str;
 		}
 
 		Equal (Ref : PackField) : boolean {
-			if ((this._type === Ref._type)  &&  (this._size === Ref._size)) {
+			if ((this._type === Ref._type)  &&  (this.Size === Ref.Size)) {
 				switch (this._type) {
-					case tNum : return this._num === Ref._num;
+					case tNum : return this.Num === Ref.Num;
 					case tStr : return this._str === Ref._str;
 					case tAB :
 						let limit = this.Buf.byteLength;
@@ -2412,7 +2462,6 @@ export namespace RSLst {
 		}
 
 		Desc() {
-//			let Str = 'Type="' + this._type + '" Name="' + this._name + '" ';
 			let Str = this.NameVal () + ' ';
 
 			switch (this._type) {
@@ -2424,7 +2473,7 @@ export namespace RSLst {
 					break;
 				case tAB : break;
 
-				default : Str += ' DEFAULT AB, Type =' + this._type + ' ' + this._size.toString () + ' bytes'; break;
+				default : Str += ' DEFAULT AB, Type =' + this._type + ' ' + this.Size.toString () + ' bytes'; break;
 			}
 
 			if (this.Buf === NILArray)
@@ -2534,18 +2583,20 @@ export namespace RSLst {
 			let limit = Args.length;
 			let NotNull = this.Cs.length || this.Ds.length;
 
-			let TypeCh;
-			let Size;
+			let TypeCh,Size,Bytes;
 			let NewBuf : ArrayBuffer;
-			let Bytes;
 			let PList = PL;
+
 			if (!PList) return;
 
 			if (Args.length & 1)
 				return;		// must always be matching pairs (Name/Data), odd params not allowed
 
 
-			console.log ('BufPack.Add Incoming:\n' + this.Desc ());
+			console.log ('BufPack.Add Incoming:');
+			if (NotNull)
+				console.log (this.Desc ());
+
 			for (let i = 0; i < limit; )
 			{
 				let FldName = Args[i++] as string;
