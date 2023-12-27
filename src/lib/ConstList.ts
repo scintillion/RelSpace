@@ -60,7 +60,7 @@ export namespace RSLst {
 
 	export const NameDelim = ':',PrimeDelim = '|',TabDelim = '\t',LineDelim = '\n',FormDelim = '\f';
 	export const FormatStart = '[',FormatEnd = ']';
-	export const tStr='$',tNum='#',tAB='[',tPack='&';
+	export const tNone='',tStr='$',tNum='#',tAB='[',tPack='&';
 
 	export enum CLType {
 		None,
@@ -2335,46 +2335,67 @@ export namespace RSLst {
 			return 0;
 		}
 
-		setData (D : number|string|ArrayBuffer|BufPack) {
+		private _setHard (D : any, Type1 : string, AB : ArrayBuffer) {
 			this._data = D;
-			let AB;
+			this._type = Type1;
+			this._buf = new Uint8Array (this._AB = AB);
+		}
+
+		setData (D : number|string|ArrayBuffer|BufPack) {
+			let AB, Type1='';
 
 			switch (typeof (D)) {
 				case 'string' : this._type = tStr;
-//					this._str = D as string;
 					AB = str2ab (D as string);
-					this._type = tStr;
+					Type1 = tStr;
 					break;
 				case 'number' : this._type = tNum;
-//					this._num = D as number;
 					AB = num2ab (D as number);
-					this._type = tNum;
+					Type1 = tNum;
 					break;
 				default :
 					if (D instanceof ArrayBuffer) {
-						this._type = tAB;
+						Type1 = tAB;
 						AB = D as ArrayBuffer;
 						}
 					else if (D instanceof BufPack) {
-						this._type = tPack;
-//						this._pack = D as BufPack;
+						Type1 = tPack;
 						AB = (D as BufPack).BufOut ();
 						}
 					else if (!D) {
-						this._type = tAB;
-						this._data = NILAB;
-						AB = NILAB;
+						Type1 = tAB;
+						D = AB = NILAB;
 					}
-					else { this._type = 'BAD.DATA'; this._data = NILAB; AB = NILAB; }
+					else { Type1 = tAB; D = AB = NILAB; this._error = 'BAD_DATAType'; }
 			}
 
-			this._AB = AB;
+			this._setHard (D, Type1, AB);
+		}
+
+		setByAB (AB : ArrayBuffer,Type1 : string) {
+			let D;
+			switch (Type1) {
+				case tStr : D = ab2str (AB); break;
+				case tNum : D = ab2num (AB); break;
+				case tPack : let Pack = new BufPack (); Pack.BufIn (AB); D = Pack; break;
+				case tAB : D = AB; break;
+				default : this._error = 'constructor error Type =' + Type1 + ', converted to NILAB.';
+					Type1 = tAB;
+					D = NILAB;
+					AB = NILAB;
+					break;
+			}
+
+			this._setHard (D, Type1, AB);
 		}
 
 		constructor (N : string, V : string|number|ArrayBuffer|BufPack,Type1='') {
 			this._name = N;
 
 			if (Type1)	{	// AB coming in with type
+				this.setByAB (V as ArrayBuffer, Type1);
+				return;
+
 				let AB = V as ArrayBuffer;
 
 				switch (Type1) {
@@ -2422,9 +2443,6 @@ export namespace RSLst {
 */
 
 			}
-
-			this._buf = new Uint8Array (this._AB);
-			// this._size = this.Buf.length;
 		}
 
 		NameVal () {
