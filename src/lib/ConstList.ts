@@ -2250,30 +2250,29 @@ export namespace RSLst {
 		return Num;
 	}
 
+	export type PFData=string|number|ArrayBuffer|BufPack;
+
 	export class PackField {
-		get Size () { return this._AB.byteLength; }
-		get Str () { return (this._type === tStr) ? this._data as string : ''; }
-		get Num () { if (this._type === tNum)
-						return this._data as number;
-						else return NaN; }
+		private _name = '';
+		private _type = ' ';
+		private _data : PFData = NILAB;
+		private _error = '';
+		private _AB = NILAB;
+		private _buf = NILArray;
 
 		get Type () { return this._type; }
 		get Name () { return this._name; }
+		get Str () { return (this._type === tStr) ? this._data as string : ''; }
+		get Num () { return (this._type === tNum) ? this._data as number : NaN; }
+
+		get Size () { return this._AB.byteLength; }
 		get AB () { return this._AB; }
 		get Buf () { return this._buf; }
 		get Pack () { return (this._type == tPack) ? this._data as BufPack : NILPack; }
 		get Error () { return this._error; }
+		get Data () { return this._data; }
 
-		private _name = '';
-		private _type = ' ';
-		private _data : any;
-		private _error = '';
-
-
-		_AB = NILAB;
-		_buf = NILArray;
-
-		toAB () : Int8Array {
+		private toAB () : Int8Array {
 			let AB : ArrayBuffer;
 			switch (this.Type) {
 				case tNum : AB = num2ab (this.Num); break;
@@ -2289,7 +2288,71 @@ export namespace RSLst {
 			return new Int8Array (AB);
 		}
 
-		fromBuf (Type : string, InBuffer : Int8Array | ArrayBuffer, Start = -1, nBytes = -1) : number|string|ArrayBuffer|BufPack {
+		private _setHard (D : PFData, Type1 : string, AB : ArrayBuffer) {
+			this._data = D;
+			this._type = Type1;
+			this._buf = new Uint8Array (this._AB = AB);
+		}
+
+		setFast (D : PFData, Type1 : string) {
+			let AB;
+
+			switch (Type1) {
+				case tStr : AB = str2ab (D as string); break;
+				case tNum : AB = num2ab (D as number); break;
+				case tAB : AB = D as ArrayBuffer; break;
+				case tPack : AB = (D as BufPack).BufOut (); break;
+				default :
+						Type1 = tAB;
+						D = AB = NILAB;
+				}
+
+			this._setHard (D, Type1, AB);
+		}
+
+		setData (D : PFData) {
+			switch (typeof (D)) {
+				case 'string' : this.setFast (D, tStr); break;
+				case 'number' : this.setFast (D, tNum); break;
+				default :
+					if (D instanceof ArrayBuffer)
+						this._setHard (D,tAB,D as ArrayBuffer);
+					else {
+						let AB, Type;
+
+						if (D instanceof BufPack) {
+							AB = (D as BufPack).BufOut ();
+							Type = tAB;
+						}
+						else {
+							Type = tAB;
+							AB = NILAB;
+							if (D)	// not null, but BAD type
+								this._error = 'BAD_DATATYPE';
+						}
+						this._setHard (D, Type, AB);
+					}
+			}
+		}
+
+		private setByAB (AB : ArrayBuffer,Type1 : string) {
+			let D;
+			switch (Type1) {
+				case tStr : D = ab2str (AB); break;
+				case tNum : D = ab2num (AB); break;
+				case tPack : let Pack = new BufPack (); Pack.BufIn (AB); D = Pack; break;
+				case tAB : D = AB; break;
+				default : this._error = 'constructor error Type =' + Type1 + ', converted to NILAB.';
+					Type1 = tAB;
+					D = NILAB;
+					AB = NILAB;
+					break;
+			}
+
+			this._setHard (D, Type1, AB);
+		}
+
+		private _setByBuf (Type : string, InBuffer : Int8Array | ArrayBuffer, Start = -1, nBytes = -1) {
 			let ABuf : ArrayBuffer;
 			let IBuf,TBuf : Int8Array;
 
@@ -2309,140 +2372,15 @@ export namespace RSLst {
 				ABuf = ABfromArray (TBuf);
 			}
 
-			/*
-			switch (Type) {
-				case tStr : this._str = ab2str (ABuf); break;
-				case tNum : this._num = ab2num (ABuf); break;
-				case tAB : this._AB = ABuf; break;
-				case tPack : this._pack = new BufPack (); this._pack.BufIn (ABuf); break;
-				default : this._AB = NILAB; 
-					this._error = 'fromBuf error, Type=' + Type + ', converted to AB';
-			}
-
-			this._type = Type;
-			this._AB = ABuf;
-			this._buf = IBuf;
-			*/
-
-			switch (Type) {
-				case tStr : this.setData (ab2str (ABuf)); break;
-				case tNum : this.setData (ab2num (ABuf)); break;
-				case tAB : this.setData (ABuf); break;
-				case tPack : let Pack = new BufPack (); Pack.BufIn (ABuf); this.setData (ABuf);
-				default : this.setData (NILAB);
-			}
-
-			return 0;
+			this.setByAB (ABuf, Type);
 		}
 
-		private _setHard (D : any, Type1 : string, AB : ArrayBuffer) {
-			this._data = D;
-			this._type = Type1;
-			this._buf = new Uint8Array (this._AB = AB);
-		}
-
-		setData (D : number|string|ArrayBuffer|BufPack) {
-			let AB, Type1='';
-
-			switch (typeof (D)) {
-				case 'string' : this._type = tStr;
-					AB = str2ab (D as string);
-					Type1 = tStr;
-					break;
-				case 'number' : this._type = tNum;
-					AB = num2ab (D as number);
-					Type1 = tNum;
-					break;
-				default :
-					if (D instanceof ArrayBuffer) {
-						Type1 = tAB;
-						AB = D as ArrayBuffer;
-						}
-					else if (D instanceof BufPack) {
-						Type1 = tPack;
-						AB = (D as BufPack).BufOut ();
-						}
-					else if (!D) {
-						Type1 = tAB;
-						D = AB = NILAB;
-					}
-					else { Type1 = tAB; D = AB = NILAB; this._error = 'BAD_DATAType'; }
-			}
-
-			this._setHard (D, Type1, AB);
-		}
-
-		setByAB (AB : ArrayBuffer,Type1 : string) {
-			let D;
-			switch (Type1) {
-				case tStr : D = ab2str (AB); break;
-				case tNum : D = ab2num (AB); break;
-				case tPack : let Pack = new BufPack (); Pack.BufIn (AB); D = Pack; break;
-				case tAB : D = AB; break;
-				default : this._error = 'constructor error Type =' + Type1 + ', converted to NILAB.';
-					Type1 = tAB;
-					D = NILAB;
-					AB = NILAB;
-					break;
-			}
-
-			this._setHard (D, Type1, AB);
-		}
-
-		constructor (N : string, V : string|number|ArrayBuffer|BufPack,Type1='') {
+		constructor (N : string, D : PFData,Type1='') {
 			this._name = N;
 
-			if (Type1)	{	// AB coming in with type
-				this.setByAB (V as ArrayBuffer, Type1);
-				return;
-
-				let AB = V as ArrayBuffer;
-
-				switch (Type1) {
-					case tStr : let Str = ab2str (AB); this.setData (Str); break;
-					case tNum : let Num = ab2num (AB); this.setData (Num); break;
-					case tPack : let Pack = new BufPack (); Pack.BufIn (AB); this.setData (Pack); break;
-					case tAB : this.setData (AB); break;
-					default : this._error = 'constructor error Type =' + Type1 + ', converted to NILAB.';  this._AB = NILAB;
-						this._type = tAB;
-						this.setData (NILAB);
-						break;
-				}
-//				this._type = Type1;
-//				this._AB = AB;
-			}
-			else {
-				this.setData (V);
-
-/*				
-				switch (typeof (V)) {
-					case 'string' : this._str = V as string;  
-						AB = str2ab (this._str);
-						Type1 = tStr;
-						break;
-					case 'number' : this._num = V as number; 
-						AB = num2ab (this._num);
-						Type1 = tNum; 
-						break;
-					default : 
-						if (V instanceof BufPack) {
-							AB = (V as BufPack).BufOut ();
-							Type1 = tPack;
-						}
-						else if (V instanceof ArrayBuffer) {
-							AB = V as ArrayBuffer;
-							Type1 = tAB;
-						}
-						else if (!V)	{	// NULL
-							AB = NILAB;
-							console.log ('  Adding NULL Data, Name = ' + N);
-							Type1 = tAB;
-						}
-						else return;
-					}
-*/
-
-			}
+			if (Type1)		// AB coming in with type
+				this.setByAB (D as ArrayBuffer, Type1);
+			else this.setData (D);
 		}
 
 		NameVal () {
@@ -2451,8 +2389,14 @@ export namespace RSLst {
 			switch (this._type) {
 				case tNum : Str += this.Num.toString (); break;
 				case tStr : Str += this.Str; break;
-				case tPack : Str += 'Pack(' + this.Pack.Ds.length.toString () + ')'; break;
-				case tAB : Str += 'AB(' + this._AB.byteLength.toString () + ')'; break;
+				case tPack : case tAB :
+					 Str += '(' + this.Size.toString () + 'b)';
+					 if (this._type === tPack) {
+						let Pack = this.Pack;
+
+						Str += 'C:'+Pack.Cs.length.toString() + ' D:' + Pack.Ds.length.toString ();
+					 }
+					 break;
 				default : Str += 'BADTYPE=' + this._type + ' ' + this.Size.toString () + ' bytes';
 			}
 

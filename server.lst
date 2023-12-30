@@ -3,7 +3,7 @@
 > vite dev
 
 
-  [32m[1mVITE[22m v4.5.1[39m  [2mready in [0m[1m2324[22m[2m[0m ms[22m
+  [32m[1mVITE[22m v4.5.1[39m  [2mready in [0m[1m2338[22m[2m[0m ms[22m
 
   [32m➜[39m  [1mLocal[22m:   [36mhttp://localhost:[1m5173[22m/[39m
 [2m  [32m➜[39m  [1mNetwork[22m[2m: use [22m[1m--host[22m[2m to expose[22m
@@ -58,8 +58,6 @@ ExecQ QUERY=DELETE FROM S;.
 Dumping dbResponse after run
 ObjectIn:Adding entries!
 BufPack.Add Incoming:
-DESC 0 Fields, Buf Type: Details:.
-Prefix =     
 ObjectIn Resultant BP:
 DESC 2 Fields, Buf Type: Details:.
 Prefix =     ,#changes:1,#lastInsertRowid:1
@@ -117,19 +115,17 @@ ExecQ QUERY=INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?);.
 Dumping dbResponse after run
 ObjectIn:Adding entries!
 BufPack.Add Incoming:
-DESC 0 Fields, Buf Type: Details:.
-Prefix =     
 ObjectIn Resultant BP:
 DESC 2 Fields, Buf Type: Details:.
 Prefix =     ,#changes:1,#lastInsertRowid:2
   D::#changes=1 
-  D::#lastInsertRowid=970 
-{ changes: 1, lastInsertRowid: 970 }
+  D::#lastInsertRowid=1130 
+{ changes: 1, lastInsertRowid: 1130 }
 ServerResult BP:
 DESC 2 Fields, Buf Type: Details:.
 Prefix =     ,#changes:1,#lastInsertRowid:2
   D::#changes=1 
-  D::#lastInsertRowid=970 
+  D::#lastInsertRowid=1130 
 AB = [object ArrayBuffer] bytes = 37
 ServerAB Bytes Sent to Client= 37
 ---
@@ -176,19 +172,17 @@ ExecQ QUERY=INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?);.
 Dumping dbResponse after run
 ObjectIn:Adding entries!
 BufPack.Add Incoming:
-DESC 0 Fields, Buf Type: Details:.
-Prefix =     
 ObjectIn Resultant BP:
 DESC 2 Fields, Buf Type: Details:.
 Prefix =     ,#changes:1,#lastInsertRowid:2
   D::#changes=1 
-  D::#lastInsertRowid=971 
-{ changes: 1, lastInsertRowid: 971 }
+  D::#lastInsertRowid=1131 
+{ changes: 1, lastInsertRowid: 1131 }
 ServerResult BP:
 DESC 2 Fields, Buf Type: Details:.
 Prefix =     ,#changes:1,#lastInsertRowid:2
   D::#changes=1 
-  D::#lastInsertRowid=971 
+  D::#lastInsertRowid=1131 
 AB = [object ArrayBuffer] bytes = 37
 ServerAB Bytes Sent to Client= 37
 ---
@@ -235,19 +229,17 @@ ExecQ QUERY=INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?);.
 Dumping dbResponse after run
 ObjectIn:Adding entries!
 BufPack.Add Incoming:
-DESC 0 Fields, Buf Type: Details:.
-Prefix =     
 ObjectIn Resultant BP:
 DESC 2 Fields, Buf Type: Details:.
 Prefix =     ,#changes:1,#lastInsertRowid:2
   D::#changes=1 
-  D::#lastInsertRowid=972 
-{ changes: 1, lastInsertRowid: 972 }
+  D::#lastInsertRowid=1132 
+{ changes: 1, lastInsertRowid: 1132 }
 ServerResult BP:
 DESC 2 Fields, Buf Type: Details:.
 Prefix =     ,#changes:1,#lastInsertRowid:2
   D::#changes=1 
-  D::#lastInsertRowid=972 
+  D::#lastInsertRowid=1132 
 AB = [object ArrayBuffer] bytes = 37
 ServerAB Bytes Sent to Client= 37
 ---
@@ -294,19 +286,17 @@ ExecQ QUERY=INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?);.
 Dumping dbResponse after run
 ObjectIn:Adding entries!
 BufPack.Add Incoming:
-DESC 0 Fields, Buf Type: Details:.
-Prefix =     
 ObjectIn Resultant BP:
 DESC 2 Fields, Buf Type: Details:.
 Prefix =     ,#changes:1,#lastInsertRowid:2
   D::#changes=1 
-  D::#lastInsertRowid=973 
-{ changes: 1, lastInsertRowid: 973 }
+  D::#lastInsertRowid=1133 
+{ changes: 1, lastInsertRowid: 1133 }
 ServerResult BP:
 DESC 2 Fields, Buf Type: Details:.
 Prefix =     ,#changes:1,#lastInsertRowid:2
   D::#changes=1 
-  D::#lastInsertRowid=973 
+  D::#lastInsertRowid=1133 
 AB = [object ArrayBuffer] bytes = 37
 ServerAB Bytes Sent to Client= 37
 ---
@@ -353,19 +343,17 @@ ExecQ QUERY=INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?);.
 Dumping dbResponse after run
 ObjectIn:Adding entries!
 BufPack.Add Incoming:
-DESC 0 Fields, Buf Type: Details:.
-Prefix =     
 ObjectIn Resultant BP:
 DESC 2 Fields, Buf Type: Details:.
 Prefix =     ,#changes:1,#lastInsertRowid:2
   D::#changes=1 
-  D::#lastInsertRowid=974 
-{ changes: 1, lastInsertRowid: 974 }
+  D::#lastInsertRowid=1134 
+{ changes: 1, lastInsertRowid: 1134 }
 ServerResult BP:
 DESC 2 Fields, Buf Type: Details:.
 Prefix =     ,#changes:1,#lastInsertRowid:2
   D::#changes=1 
-  D::#lastInsertRowid=974 
+  D::#lastInsertRowid=1134 
 AB = [object ArrayBuffer] bytes = 37
 ServerAB Bytes Sent to Client= 37
 ---
@@ -412,19 +400,17 @@ ExecQ QUERY=INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?);.
 Dumping dbResponse after run
 ObjectIn:Adding entries!
 BufPack.Add Incoming:
-DESC 0 Fields, Buf Type: Details:.
-Prefix =     
 ObjectIn Resultant BP:
 DESC 2 Fields, Buf Type: Details:.
 Prefix =     ,#changes:1,#lastInsertRowid:2
   D::#changes=1 
-  D::#lastInsertRowid=975 
-{ changes: 1, lastInsertRowid: 975 }
+  D::#lastInsertRowid=1135 
+{ changes: 1, lastInsertRowid: 1135 }
 ServerResult BP:
 DESC 2 Fields, Buf Type: Details:.
 Prefix =     ,#changes:1,#lastInsertRowid:2
   D::#changes=1 
-  D::#lastInsertRowid=975 
+  D::#lastInsertRowid=1135 
 AB = [object ArrayBuffer] bytes = 37
 ServerAB Bytes Sent to Client= 37
 ---
@@ -471,19 +457,17 @@ ExecQ QUERY=INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?);.
 Dumping dbResponse after run
 ObjectIn:Adding entries!
 BufPack.Add Incoming:
-DESC 0 Fields, Buf Type: Details:.
-Prefix =     
 ObjectIn Resultant BP:
 DESC 2 Fields, Buf Type: Details:.
 Prefix =     ,#changes:1,#lastInsertRowid:2
   D::#changes=1 
-  D::#lastInsertRowid=976 
-{ changes: 1, lastInsertRowid: 976 }
+  D::#lastInsertRowid=1136 
+{ changes: 1, lastInsertRowid: 1136 }
 ServerResult BP:
 DESC 2 Fields, Buf Type: Details:.
 Prefix =     ,#changes:1,#lastInsertRowid:2
   D::#changes=1 
-  D::#lastInsertRowid=976 
+  D::#lastInsertRowid=1136 
 AB = [object ArrayBuffer] bytes = 37
 ServerAB Bytes Sent to Client= 37
 ---
@@ -530,19 +514,17 @@ ExecQ QUERY=INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?);.
 Dumping dbResponse after run
 ObjectIn:Adding entries!
 BufPack.Add Incoming:
-DESC 0 Fields, Buf Type: Details:.
-Prefix =     
 ObjectIn Resultant BP:
 DESC 2 Fields, Buf Type: Details:.
 Prefix =     ,#changes:1,#lastInsertRowid:2
   D::#changes=1 
-  D::#lastInsertRowid=977 
-{ changes: 1, lastInsertRowid: 977 }
+  D::#lastInsertRowid=1137 
+{ changes: 1, lastInsertRowid: 1137 }
 ServerResult BP:
 DESC 2 Fields, Buf Type: Details:.
 Prefix =     ,#changes:1,#lastInsertRowid:2
   D::#changes=1 
-  D::#lastInsertRowid=977 
+  D::#lastInsertRowid=1137 
 AB = [object ArrayBuffer] bytes = 37
 ServerAB Bytes Sent to Client= 37
 ---
@@ -589,19 +571,17 @@ ExecQ QUERY=INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?);.
 Dumping dbResponse after run
 ObjectIn:Adding entries!
 BufPack.Add Incoming:
-DESC 0 Fields, Buf Type: Details:.
-Prefix =     
 ObjectIn Resultant BP:
 DESC 2 Fields, Buf Type: Details:.
 Prefix =     ,#changes:1,#lastInsertRowid:2
   D::#changes=1 
-  D::#lastInsertRowid=978 
-{ changes: 1, lastInsertRowid: 978 }
+  D::#lastInsertRowid=1138 
+{ changes: 1, lastInsertRowid: 1138 }
 ServerResult BP:
 DESC 2 Fields, Buf Type: Details:.
 Prefix =     ,#changes:1,#lastInsertRowid:2
   D::#changes=1 
-  D::#lastInsertRowid=978 
+  D::#lastInsertRowid=1138 
 AB = [object ArrayBuffer] bytes = 37
 ServerAB Bytes Sent to Client= 37
 ---
@@ -648,19 +628,17 @@ ExecQ QUERY=INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?);.
 Dumping dbResponse after run
 ObjectIn:Adding entries!
 BufPack.Add Incoming:
-DESC 0 Fields, Buf Type: Details:.
-Prefix =     
 ObjectIn Resultant BP:
 DESC 2 Fields, Buf Type: Details:.
 Prefix =     ,#changes:1,#lastInsertRowid:2
   D::#changes=1 
-  D::#lastInsertRowid=979 
-{ changes: 1, lastInsertRowid: 979 }
+  D::#lastInsertRowid=1139 
+{ changes: 1, lastInsertRowid: 1139 }
 ServerResult BP:
 DESC 2 Fields, Buf Type: Details:.
 Prefix =     ,#changes:1,#lastInsertRowid:2
   D::#changes=1 
-  D::#lastInsertRowid=979 
+  D::#lastInsertRowid=1139 
 AB = [object ArrayBuffer] bytes = 37
 ServerAB Bytes Sent to Client= 37
 ---
@@ -707,19 +685,17 @@ ExecQ QUERY=INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?);.
 Dumping dbResponse after run
 ObjectIn:Adding entries!
 BufPack.Add Incoming:
-DESC 0 Fields, Buf Type: Details:.
-Prefix =     
 ObjectIn Resultant BP:
 DESC 2 Fields, Buf Type: Details:.
 Prefix =     ,#changes:1,#lastInsertRowid:2
   D::#changes=1 
-  D::#lastInsertRowid=980 
-{ changes: 1, lastInsertRowid: 980 }
+  D::#lastInsertRowid=1140 
+{ changes: 1, lastInsertRowid: 1140 }
 ServerResult BP:
 DESC 2 Fields, Buf Type: Details:.
 Prefix =     ,#changes:1,#lastInsertRowid:2
   D::#changes=1 
-  D::#lastInsertRowid=980 
+  D::#lastInsertRowid=1140 
 AB = [object ArrayBuffer] bytes = 37
 ServerAB Bytes Sent to Client= 37
 ---
@@ -766,19 +742,17 @@ ExecQ QUERY=INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?);.
 Dumping dbResponse after run
 ObjectIn:Adding entries!
 BufPack.Add Incoming:
-DESC 0 Fields, Buf Type: Details:.
-Prefix =     
 ObjectIn Resultant BP:
 DESC 2 Fields, Buf Type: Details:.
 Prefix =     ,#changes:1,#lastInsertRowid:2
   D::#changes=1 
-  D::#lastInsertRowid=981 
-{ changes: 1, lastInsertRowid: 981 }
+  D::#lastInsertRowid=1141 
+{ changes: 1, lastInsertRowid: 1141 }
 ServerResult BP:
 DESC 2 Fields, Buf Type: Details:.
 Prefix =     ,#changes:1,#lastInsertRowid:2
   D::#changes=1 
-  D::#lastInsertRowid=981 
+  D::#lastInsertRowid=1141 
 AB = [object ArrayBuffer] bytes = 37
 ServerAB Bytes Sent to Client= 37
 ---
@@ -825,19 +799,17 @@ ExecQ QUERY=INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?);.
 Dumping dbResponse after run
 ObjectIn:Adding entries!
 BufPack.Add Incoming:
-DESC 0 Fields, Buf Type: Details:.
-Prefix =     
 ObjectIn Resultant BP:
 DESC 2 Fields, Buf Type: Details:.
 Prefix =     ,#changes:1,#lastInsertRowid:2
   D::#changes=1 
-  D::#lastInsertRowid=982 
-{ changes: 1, lastInsertRowid: 982 }
+  D::#lastInsertRowid=1142 
+{ changes: 1, lastInsertRowid: 1142 }
 ServerResult BP:
 DESC 2 Fields, Buf Type: Details:.
 Prefix =     ,#changes:1,#lastInsertRowid:2
   D::#changes=1 
-  D::#lastInsertRowid=982 
+  D::#lastInsertRowid=1142 
 AB = [object ArrayBuffer] bytes = 37
 ServerAB Bytes Sent to Client= 37
 ---
@@ -884,19 +856,17 @@ ExecQ QUERY=INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?);.
 Dumping dbResponse after run
 ObjectIn:Adding entries!
 BufPack.Add Incoming:
-DESC 0 Fields, Buf Type: Details:.
-Prefix =     
 ObjectIn Resultant BP:
 DESC 2 Fields, Buf Type: Details:.
 Prefix =     ,#changes:1,#lastInsertRowid:2
   D::#changes=1 
-  D::#lastInsertRowid=983 
-{ changes: 1, lastInsertRowid: 983 }
+  D::#lastInsertRowid=1143 
+{ changes: 1, lastInsertRowid: 1143 }
 ServerResult BP:
 DESC 2 Fields, Buf Type: Details:.
 Prefix =     ,#changes:1,#lastInsertRowid:2
   D::#changes=1 
-  D::#lastInsertRowid=983 
+  D::#lastInsertRowid=1143 
 AB = [object ArrayBuffer] bytes = 37
 ServerAB Bytes Sent to Client= 37
 ---
@@ -943,19 +913,17 @@ ExecQ QUERY=INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?);.
 Dumping dbResponse after run
 ObjectIn:Adding entries!
 BufPack.Add Incoming:
-DESC 0 Fields, Buf Type: Details:.
-Prefix =     
 ObjectIn Resultant BP:
 DESC 2 Fields, Buf Type: Details:.
 Prefix =     ,#changes:1,#lastInsertRowid:2
   D::#changes=1 
-  D::#lastInsertRowid=984 
-{ changes: 1, lastInsertRowid: 984 }
+  D::#lastInsertRowid=1144 
+{ changes: 1, lastInsertRowid: 1144 }
 ServerResult BP:
 DESC 2 Fields, Buf Type: Details:.
 Prefix =     ,#changes:1,#lastInsertRowid:2
   D::#changes=1 
-  D::#lastInsertRowid=984 
+  D::#lastInsertRowid=1144 
 AB = [object ArrayBuffer] bytes = 37
 ServerAB Bytes Sent to Client= 37
 ---
@@ -1002,19 +970,17 @@ ExecQ QUERY=INSERT INTO S (name,desc,type,str) VALUES(?,?,?,?);.
 Dumping dbResponse after run
 ObjectIn:Adding entries!
 BufPack.Add Incoming:
-DESC 0 Fields, Buf Type: Details:.
-Prefix =     
 ObjectIn Resultant BP:
 DESC 2 Fields, Buf Type: Details:.
 Prefix =     ,#changes:1,#lastInsertRowid:2
   D::#changes=1 
-  D::#lastInsertRowid=985 
-{ changes: 1, lastInsertRowid: 985 }
+  D::#lastInsertRowid=1145 
+{ changes: 1, lastInsertRowid: 1145 }
 ServerResult BP:
 DESC 2 Fields, Buf Type: Details:.
 Prefix =     ,#changes:1,#lastInsertRowid:2
   D::#changes=1 
-  D::#lastInsertRowid=985 
+  D::#lastInsertRowid=1145 
 AB = [object ArrayBuffer] bytes = 37
 ServerAB Bytes Sent to Client= 37
 ---
@@ -1033,7 +999,7 @@ RecArray: length = 16
 [object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]
 [
   {
-    id: 970,
+    id: 1130,
     name: 'FM',
     type: 'List',
     desc: 'FM',
@@ -1041,7 +1007,7 @@ RecArray: length = 16
     data: null
   },
   {
-    id: 971,
+    id: 1131,
     name: '',
     type: 'List',
     desc: '',
@@ -1049,7 +1015,7 @@ RecArray: length = 16
     data: null
   },
   {
-    id: 972,
+    id: 1132,
     name: 'Ft',
     type: 'List',
     desc: 'Ft',
@@ -1057,7 +1023,7 @@ RecArray: length = 16
     data: null
   },
   {
-    id: 973,
+    id: 1133,
     name: 'Ct',
     type: 'List',
     desc: 'ConnectType',
@@ -1065,7 +1031,7 @@ RecArray: length = 16
     data: null
   },
   {
-    id: 974,
+    id: 1134,
     name: 'Lt',
     type: 'List',
     desc: 'ListType',
@@ -1073,7 +1039,7 @@ RecArray: length = 16
     data: null
   },
   {
-    id: 975,
+    id: 1135,
     name: 'Dt',
     type: 'List',
     desc: 'DataType',
@@ -1081,7 +1047,7 @@ RecArray: length = 16
     data: null
   },
   {
-    id: 976,
+    id: 1136,
     name: 'Ev',
     type: 'List',
     desc: 'Event',
@@ -1089,7 +1055,7 @@ RecArray: length = 16
     data: null
   },
   {
-    id: 977,
+    id: 1137,
     name: 'Rt',
     type: 'List',
     desc: 'Return',
@@ -1097,7 +1063,7 @@ RecArray: length = 16
     data: null
   },
   {
-    id: 978,
+    id: 1138,
     name: 'Td',
     type: 'List',
     desc: 'TileDef',
@@ -1105,7 +1071,7 @@ RecArray: length = 16
     data: null
   },
   {
-    id: 979,
+    id: 1139,
     name: 'Ts',
     type: 'List',
     desc: 'TileSize',
@@ -1113,7 +1079,7 @@ RecArray: length = 16
     data: null
   },
   {
-    id: 980,
+    id: 1140,
     name: 'Pr',
     type: 'List',
     desc: 'Process',
@@ -1121,7 +1087,7 @@ RecArray: length = 16
     data: null
   },
   {
-    id: 981,
+    id: 1141,
     name: 'Mt',
     type: 'List',
     desc: 'MessageType',
@@ -1129,7 +1095,7 @@ RecArray: length = 16
     data: null
   },
   {
-    id: 982,
+    id: 1142,
     name: 'Ac',
     type: 'List',
     desc: 'Action',
@@ -1137,7 +1103,7 @@ RecArray: length = 16
     data: null
   },
   {
-    id: 983,
+    id: 1143,
     name: 'Lg',
     type: 'List',
     desc: 'Language',
@@ -1145,7 +1111,7 @@ RecArray: length = 16
     data: null
   },
   {
-    id: 984,
+    id: 1144,
     name: 'Cy',
     type: 'List',
     desc: 'Country',
@@ -1153,7 +1119,7 @@ RecArray: length = 16
     data: null
   },
   {
-    id: 985,
+    id: 1145,
     name: 'Test',
     type: 'List',
     desc: 'Test',
@@ -1164,228 +1130,180 @@ RecArray: length = 16
 Server receives Record Array from Query, length = 16
 ObjectIn:Adding entries!
 BufPack.Add Incoming:
-DESC 0 Fields, Buf Type: Details:.
-Prefix =     
-  Adding NULL Data, Name = data
 ObjectIn Resultant BP:
 DESC 6 Fields, Buf Type: Details:.
 Prefix =     ,#id:2,$name:2,$type:4,$desc:2,$str:64,[data:0
-  D::#id=970 
+  D::#id=1130 
   D::$name=FM 
   D::$type=List 
   D::$desc=FM 
   D::$str=FM|Num|Int|Dollar|Ord|Range|Pair|Nums|Member|Set|Str|Strs|Upper| 
-  D::[data=AB(0) 
+  D::[data=(0b) 
 ObjectIn:Adding entries!
 BufPack.Add Incoming:
-DESC 0 Fields, Buf Type: Details:.
-Prefix =     
-  Adding NULL Data, Name = data
 ObjectIn Resultant BP:
 DESC 6 Fields, Buf Type: Details:.
 Prefix =     ,#id:2,$name:0,$type:4,$desc:0,$str:33,[data:0
-  D::#id=971 
+  D::#id=1131 
   D::$name= 
   D::$type=List 
   D::$desc= 
   D::$str=|Number:#|String:$|ArrayBuffer:[| 
-  D::[data=AB(0) 
+  D::[data=(0b) 
 ObjectIn:Adding entries!
 BufPack.Add Incoming:
-DESC 0 Fields, Buf Type: Details:.
-Prefix =     
-  Adding NULL Data, Name = data
 ObjectIn Resultant BP:
 DESC 6 Fields, Buf Type: Details:.
 Prefix =     ,#id:2,$name:2,$type:4,$desc:2,$str:81,[data:0
-  D::#id=972 
+  D::#id=1132 
   D::$name=Ft 
   D::$type=List 
   D::$desc=Ft 
   D::$str=Ft|#:Num|I:Int|$:Dollar|P:Pair|O:Ord|A:Nums|%:Str|U:Upper|@:Member|R:Range|{:Set| 
-  D::[data=AB(0) 
+  D::[data=(0b) 
 ObjectIn:Adding entries!
 BufPack.Add Incoming:
-DESC 0 Fields, Buf Type: Details:.
-Prefix =     
-  Adding NULL Data, Name = data
 ObjectIn Resultant BP:
 DESC 6 Fields, Buf Type: Details:.
 Prefix =     ,#id:2,$name:2,$type:4,$desc:11,$str:67,[data:0
-  D::#id=973 
+  D::#id=1133 
   D::$name=Ct 
   D::$type=List 
   D::$desc=ConnectType 
   D::$str=Ct:ConnectType|Data|Event|Action|Queue|DB|SQL:SQLite|Remote|Retail| 
-  D::[data=AB(0) 
+  D::[data=(0b) 
 ObjectIn:Adding entries!
 BufPack.Add Incoming:
-DESC 0 Fields, Buf Type: Details:.
-Prefix =     
-  Adding NULL Data, Name = data
 ObjectIn Resultant BP:
 DESC 6 Fields, Buf Type: Details:.
 Prefix =     ,#id:2,$name:2,$type:4,$desc:8,$str:114,[data:0
-  D::#id=974 
+  D::#id=1134 
   D::$name=Lt 
   D::$type=List 
   D::$desc=ListType 
   D::$str=Lt:ListType|Dt:DataType|Ev:Event|Ac:Action|Rt:Return|Td:TileDef|Ts:TileSize|Pr:Process|Mt:MessageType|Lg:Language| 
-  D::[data=AB(0) 
+  D::[data=(0b) 
 ObjectIn:Adding entries!
 BufPack.Add Incoming:
-DESC 0 Fields, Buf Type: Details:.
-Prefix =     
-  Adding NULL Data, Name = data
 ObjectIn Resultant BP:
 DESC 6 Fields, Buf Type: Details:.
 Prefix =     ,#id:2,$name:2,$type:4,$desc:8,$str:87,[data:0
-  D::#id=975 
+  D::#id=1135 
   D::$name=Dt 
   D::$type=List 
   D::$desc=DataType 
   D::$str=Dt:DataType|String:Free format string|Integer:Whole Number|Number:Whole or Real Number| 
-  D::[data=AB(0) 
+  D::[data=(0b) 
 ObjectIn:Adding entries!
 BufPack.Add Incoming:
-DESC 0 Fields, Buf Type: Details:.
-Prefix =     
-  Adding NULL Data, Name = data
 ObjectIn Resultant BP:
 DESC 6 Fields, Buf Type: Details:.
 Prefix =     ,#id:2,$name:2,$type:4,$desc:5,$str:51,[data:0
-  D::#id=976 
+  D::#id=1136 
   D::$name=Ev 
   D::$type=List 
   D::$desc=Event 
   D::$str=Ev:Event|Click|Enter|Exit|DblClick|Swipe|Drop|Drag| 
-  D::[data=AB(0) 
+  D::[data=(0b) 
 ObjectIn:Adding entries!
 BufPack.Add Incoming:
-DESC 0 Fields, Buf Type: Details:.
-Prefix =     
-  Adding NULL Data, Name = data
 ObjectIn Resultant BP:
 DESC 6 Fields, Buf Type: Details:.
 Prefix =     ,#id:2,$name:2,$type:4,$desc:6,$str:38,[data:0
-  D::#id=977 
+  D::#id=1137 
   D::$name=Rt 
   D::$type=List 
   D::$desc=Return 
   D::$str=Rt:Return|Ok|Fail|Equal|Unequal|Queue| 
-  D::[data=AB(0) 
+  D::[data=(0b) 
 ObjectIn:Adding entries!
 BufPack.Add Incoming:
-DESC 0 Fields, Buf Type: Details:.
-Prefix =     
-  Adding NULL Data, Name = data
 ObjectIn Resultant BP:
 DESC 6 Fields, Buf Type: Details:.
 Prefix =     ,#id:2,$name:2,$type:4,$desc:7,$str:45,[data:0
-  D::#id=978 
+  D::#id=1138 
   D::$name=Td 
   D::$type=List 
   D::$desc=TileDef 
   D::$str=Td:TileDef|Tile|LnEdit|TxtEdit|Btn|Img|Video| 
-  D::[data=AB(0) 
+  D::[data=(0b) 
 ObjectIn:Adding entries!
 BufPack.Add Incoming:
-DESC 0 Fields, Buf Type: Details:.
-Prefix =     
-  Adding NULL Data, Name = data
 ObjectIn Resultant BP:
 DESC 6 Fields, Buf Type: Details:.
 Prefix =     ,#id:2,$name:2,$type:4,$desc:8,$str:114,[data:0
-  D::#id=979 
+  D::#id=1139 
   D::$name=Ts 
   D::$type=List 
   D::$desc=TileSize 
   D::$str=Ts:TileSize|Fixed|T:Top|TL:Top Left|TR:Top Right|B:Bottom|BL:Bottom Left|BR:Bottom Right|L:Left|R:Right|SH:Shared| 
-  D::[data=AB(0) 
+  D::[data=(0b) 
 ObjectIn:Adding entries!
 BufPack.Add Incoming:
-DESC 0 Fields, Buf Type: Details:.
-Prefix =     
-  Adding NULL Data, Name = data
 ObjectIn Resultant BP:
 DESC 6 Fields, Buf Type: Details:.
 Prefix =     ,#id:2,$name:2,$type:4,$desc:7,$str:39,[data:0
-  D::#id=980 
+  D::#id=1140 
   D::$name=Pr 
   D::$type=List 
   D::$desc=Process 
   D::$str=Pr:Process|Init|Read|Set|Clear|Default| 
-  D::[data=AB(0) 
+  D::[data=(0b) 
 ObjectIn:Adding entries!
 BufPack.Add Incoming:
-DESC 0 Fields, Buf Type: Details:.
-Prefix =     
-  Adding NULL Data, Name = data
 ObjectIn Resultant BP:
 DESC 6 Fields, Buf Type: Details:.
 Prefix =     ,#id:2,$name:2,$type:4,$desc:11,$str:49,[data:0
-  D::#id=981 
+  D::#id=1141 
   D::$name=Mt 
   D::$type=List 
   D::$desc=MessageType 
   D::$str=Mt:MessageType|Input|Output|Event|Trigger|Action| 
-  D::[data=AB(0) 
+  D::[data=(0b) 
 ObjectIn:Adding entries!
 BufPack.Add Incoming:
-DESC 0 Fields, Buf Type: Details:.
-Prefix =     
-  Adding NULL Data, Name = data
 ObjectIn Resultant BP:
 DESC 6 Fields, Buf Type: Details:.
 Prefix =     ,#id:2,$name:2,$type:4,$desc:6,$str:34,[data:0
-  D::#id=982 
+  D::#id=1142 
   D::$name=Ac 
   D::$type=List 
   D::$desc=Action 
   D::$str=Ac:Action|Init|Timer|Login|Logout| 
-  D::[data=AB(0) 
+  D::[data=(0b) 
 ObjectIn:Adding entries!
 BufPack.Add Incoming:
-DESC 0 Fields, Buf Type: Details:.
-Prefix =     
-  Adding NULL Data, Name = data
 ObjectIn Resultant BP:
 DESC 6 Fields, Buf Type: Details:.
 Prefix =     ,#id:2,$name:2,$type:4,$desc:8,$str:45,[data:0
-  D::#id=983 
+  D::#id=1143 
   D::$name=Lg 
   D::$type=List 
   D::$desc=Language 
   D::$str=Lg:Language|En:English|Es:Espanol|Cn:Chinese| 
-  D::[data=AB(0) 
+  D::[data=(0b) 
 ObjectIn:Adding entries!
 BufPack.Add Incoming:
-DESC 0 Fields, Buf Type: Details:.
-Prefix =     
-  Adding NULL Data, Name = data
 ObjectIn Resultant BP:
 DESC 6 Fields, Buf Type: Details:.
 Prefix =     ,#id:2,$name:2,$type:4,$desc:7,$str:75,[data:0
-  D::#id=984 
+  D::#id=1144 
   D::$name=Cy 
   D::$type=List 
   D::$desc=Country 
   D::$str=Cy:Country|US:United States|UK:United Kingdom|CA:Canada|RU:Russia|IN:India| 
-  D::[data=AB(0) 
+  D::[data=(0b) 
 ObjectIn:Adding entries!
 BufPack.Add Incoming:
-DESC 0 Fields, Buf Type: Details:.
-Prefix =     
-  Adding NULL Data, Name = data
 ObjectIn Resultant BP:
 DESC 6 Fields, Buf Type: Details:.
 Prefix =     ,#id:2,$name:4,$type:4,$desc:4,$str:61,[data:0
-  D::#id=985 
+  D::#id=1145 
   D::$name=Test 
   D::$type=List 
   D::$desc=Test 
   D::$str=Test|NameF:~%12~First Name|XY:~P~XY Dim|Cost:~$~Dollar Price| 
-  D::[data=AB(0) 
+  D::[data=(0b) 
 AB = [object ArrayBuffer] bytes = 124
 AB = [object ArrayBuffer] bytes = 89
 AB = [object ArrayBuffer] bytes = 141
@@ -1402,47 +1320,45 @@ AB = [object ArrayBuffer] bytes = 98
 AB = [object ArrayBuffer] bytes = 111
 AB = [object ArrayBuffer] bytes = 140
 AB = [object ArrayBuffer] bytes = 125
-Server packs records to send to client
-
-  count = 16
+Server packs 16 records to send to client
 DESC 16 Fields, Buf Type:* Details:.
-Prefix =     :*,&:124,&:89,&:141,&:137,&:181,&:153,&:114,&:102,&:110,&:181,&:104,&:119,&:98,&:111,&:140,&:125
-  D::&=Pack(0) 
-  D::&=Pack(0) 
-  D::&=Pack(0) 
-  D::&=Pack(0) 
-  D::&=Pack(0) 
-  D::&=Pack(0) 
-  D::&=Pack(0) 
-  D::&=Pack(0) 
-  D::&=Pack(0) 
-  D::&=Pack(0) 
-  D::&=Pack(0) 
-  D::&=Pack(0) 
-  D::&=Pack(0) 
-  D::&=Pack(0) 
-  D::&=Pack(0) 
-  D::&=Pack(0) 
+Prefix =     :*,[:124,[:89,[:141,[:137,[:181,[:153,[:114,[:102,[:110,[:181,[:104,[:119,[:98,[:111,[:140,[:125
+  D::[=(124b) 
+  D::[=(89b) 
+  D::[=(141b) 
+  D::[=(137b) 
+  D::[=(181b) 
+  D::[=(153b) 
+  D::[=(114b) 
+  D::[=(102b) 
+  D::[=(110b) 
+  D::[=(181b) 
+  D::[=(104b) 
+  D::[=(119b) 
+  D::[=(98b) 
+  D::[=(111b) 
+  D::[=(140b) 
+  D::[=(125b) 
 AB = [object ArrayBuffer] bytes = 2129
 ServerResult BP:
 DESC 16 Fields, Buf Type:* Details:.
-Prefix =     :*,&:124,&:89,&:141,&:137,&:181,&:153,&:114,&:102,&:110,&:181,&:104,&:119,&:98,&:111,&:140,&:125
-  D::&=Pack(0) 
-  D::&=Pack(0) 
-  D::&=Pack(0) 
-  D::&=Pack(0) 
-  D::&=Pack(0) 
-  D::&=Pack(0) 
-  D::&=Pack(0) 
-  D::&=Pack(0) 
-  D::&=Pack(0) 
-  D::&=Pack(0) 
-  D::&=Pack(0) 
-  D::&=Pack(0) 
-  D::&=Pack(0) 
-  D::&=Pack(0) 
-  D::&=Pack(0) 
-  D::&=Pack(0) 
+Prefix =     :*,[:124,[:89,[:141,[:137,[:181,[:153,[:114,[:102,[:110,[:181,[:104,[:119,[:98,[:111,[:140,[:125
+  D::[=(124b) 
+  D::[=(89b) 
+  D::[=(141b) 
+  D::[=(137b) 
+  D::[=(181b) 
+  D::[=(153b) 
+  D::[=(114b) 
+  D::[=(102b) 
+  D::[=(110b) 
+  D::[=(181b) 
+  D::[=(104b) 
+  D::[=(119b) 
+  D::[=(98b) 
+  D::[=(111b) 
+  D::[=(140b) 
+  D::[=(125b) 
 AB = [object ArrayBuffer] bytes = 2129
 ServerAB Bytes Sent to Client= 2129
 ---
@@ -1463,35 +1379,29 @@ RecArray: length = 2
 Server receives Record Array from Query, length = 2
 ObjectIn:Adding entries!
 BufPack.Add Incoming:
-DESC 0 Fields, Buf Type: Details:.
-Prefix =     
 ObjectIn Resultant BP:
 DESC 1 Fields, Buf Type: Details:.
 Prefix =     ,$name:15
   D::$name=sqlite_sequence 
 ObjectIn:Adding entries!
 BufPack.Add Incoming:
-DESC 0 Fields, Buf Type: Details:.
-Prefix =     
 ObjectIn Resultant BP:
 DESC 1 Fields, Buf Type: Details:.
 Prefix =     ,$name:1
   D::$name=S 
 AB = [object ArrayBuffer] bytes = 28
 AB = [object ArrayBuffer] bytes = 13
-Server packs records to send to client
-
-  count = 2
+Server packs 2 records to send to client
 DESC 2 Fields, Buf Type:* Details:.
-Prefix =     :*,&:28,&:13
-  D::&=Pack(0) 
-  D::&=Pack(0) 
+Prefix =     :*,[:28,[:13
+  D::[=(28b) 
+  D::[=(13b) 
 AB = [object ArrayBuffer] bytes = 57
 ServerResult BP:
 DESC 2 Fields, Buf Type:* Details:.
-Prefix =     :*,&:28,&:13
-  D::&=Pack(0) 
-  D::&=Pack(0) 
+Prefix =     :*,[:28,[:13
+  D::[=(28b) 
+  D::[=(13b) 
 AB = [object ArrayBuffer] bytes = 57
 ServerAB Bytes Sent to Client= 57
 ---
@@ -1512,34 +1422,28 @@ RecArray: length = 2
 Server receives Record Array from Query, length = 2
 ObjectIn:Adding entries!
 BufPack.Add Incoming:
-DESC 0 Fields, Buf Type: Details:.
-Prefix =     
 ObjectIn Resultant BP:
 DESC 1 Fields, Buf Type: Details:.
 Prefix =     ,$name:15
   D::$name=sqlite_sequence 
 ObjectIn:Adding entries!
 BufPack.Add Incoming:
-DESC 0 Fields, Buf Type: Details:.
-Prefix =     
 ObjectIn Resultant BP:
 DESC 1 Fields, Buf Type: Details:.
 Prefix =     ,$name:1
   D::$name=S 
 AB = [object ArrayBuffer] bytes = 28
 AB = [object ArrayBuffer] bytes = 13
-Server packs records to send to client
-
-  count = 2
+Server packs 2 records to send to client
 DESC 2 Fields, Buf Type:* Details:.
-Prefix =     :*,&:28,&:13
-  D::&=Pack(0) 
-  D::&=Pack(0) 
+Prefix =     :*,[:28,[:13
+  D::[=(28b) 
+  D::[=(13b) 
 AB = [object ArrayBuffer] bytes = 57
 ServerResult BP:
 DESC 2 Fields, Buf Type:* Details:.
-Prefix =     :*,&:28,&:13
-  D::&=Pack(0) 
-  D::&=Pack(0) 
+Prefix =     :*,[:28,[:13
+  D::[=(28b) 
+  D::[=(13b) 
 AB = [object ArrayBuffer] bytes = 57
 ServerAB Bytes Sent to Client= 57
