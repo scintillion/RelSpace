@@ -3,7 +3,7 @@ import type { RequestHandler } from './$types';
 // import { URLTranscoder } from '$lib/DBKit/Transcoder';
 // import Blobs from '$lib/Blobs/index';
 // import buffer from "node:buffer";
-import { RSLst } from '$lib/ConstList';
+import { RS1 } from '$lib/RS';
 
 import db from 'better-sqlite3';
 import type { Statement } from 'sqlite';
@@ -16,8 +16,8 @@ class DBKit {
 		this._db = new db(dbPath);
 		console.log ('Database opened at ' + dbPath);
 
-		RSLst.ReqAB = ReqAB;
-		RSLst.ReqPack = ReqPack;
+		RS1.ReqAB = ReqAB;
+		RS1.ReqPack = ReqPack;
 	}
 
 	get db() {
@@ -37,7 +37,7 @@ class DBKit {
 	}
 
 
-	public execQ (Pack : RSLst.BufPack, Params : any[]) : RSLst.BufPack {
+	public execQ (Pack : RS1.BufPack, Params : any[]) : RS1.BufPack {
 		let Query = Pack.Str ('!Q');
 		console.log ('ExecQ QUERY=' + Query + '.');
 		// Query = "SELECT name FROM sqlite_master";	// retrieve all tables
@@ -55,7 +55,7 @@ class DBKit {
 			console.log ('Server receives Record Array from Query, length = ' + RecArray.length.toString ());
 			for (let Each of RecArray) {
 				let Obj = Each as object;
-				let BP = new RSLst.BufPack ();
+				let BP = new RS1.BufPack ();
 				BP.objectIn (Obj);
 				BPs[countBP++] = BP;
 				}
@@ -63,7 +63,7 @@ class DBKit {
 				Pack.Pack (BPs);
 				console.log ('Server packs ' + BPs.length.toString () + ' records to send to client');
 				console.log (Pack.Desc ());
-				let newBPs = new RSLst.BufPack ();
+				let newBPs = new RS1.BufPack ();
 				newBPs.BufIn (Pack.BufOut ());
 			}
 		else {
@@ -84,13 +84,13 @@ class DBKit {
 
 const DBK = new DBKit('tile.sqlite3');
 
-async function ReqPack (InPack : RSLst.BufPack) : Promise<RSLst.BufPack> {
+async function ReqPack (InPack : RS1.BufPack) : Promise<RS1.BufPack> {
 	let Serial = InPack.Num ('#');
 	if (!Serial)
 		throw "No Client Serial!";
 	console.log ('Receive Client Request #' + Serial.toString ());
 
-	let Params = RSLst.sql.buildQ (InPack);
+	let Params = RS1.sql.buildQ (InPack);
 	let OutPack = DBK.execQ (InPack, Params);
 
 	OutPack.Add (['#',Serial]);
@@ -100,10 +100,10 @@ async function ReqPack (InPack : RSLst.BufPack) : Promise<RSLst.BufPack> {
 }
 
 async function ReqAB (AB : ArrayBuffer) : Promise<ArrayBuffer> {
-	let BP = new RSLst.BufPack ();
+	let BP = new RS1.BufPack ();
 	BP.BufIn (AB);
 
-	let ResultPack = await RSLst.ReqPack (BP);
+	let ResultPack = await RS1.ReqPack (BP);
 	let ResultAB = ResultPack.BufOut ();
 	return ResultAB;
 }
@@ -112,7 +112,7 @@ export const POST = (async ({ request, url }) => {
 
 	const ClientAB = await request.arrayBuffer();
 
-	let ServerAB = await RSLst.ReqAB (ClientAB);
+	let ServerAB = await RS1.ReqAB (ClientAB);
 
 	return new Response(ServerAB);
 }) satisfies RequestHandler;

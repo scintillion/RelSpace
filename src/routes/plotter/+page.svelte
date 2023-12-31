@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { Plotter } from '$lib/Plotter';
-	import { RSLst } from '$lib/ConstList';
+	import { RS1 } from '$lib/VList';
 
 	const TileStrings: string[] = [
 		'T\ta|name:Full|\ts|display:flex|column:1|align-items:center|background:black|width:100vw|height:100vh|\t',
@@ -13,7 +13,7 @@
 		'  T\ta|name:Right|inner:I am the right side|\ts|background:yellow|width:20vw|height:90vh|\t'
 	];
 
-	const List: RSLst.TileList = new RSLst.TileList(TileStrings); // remove temporarily
+	const List: RS1.TileList = new RS1.TileList(TileStrings); // remove temporarily
 
 	onMount(() => {
 		let tiles = document.querySelector('.tiles');

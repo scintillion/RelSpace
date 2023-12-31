@@ -24,7 +24,7 @@ let Thing;
 
   import Button from './Span.svelte';
 
-  import { RSLst } from "../../lib/ConstList"
+  import { RS1 } from "../../lib/VList"
 
   // import { DBKit }  from "../../lib/DBKit/Main"
 
@@ -40,17 +40,17 @@ let Thing;
 function DumpLists () {
   console.log ('DumpLists...');
 
-  RSLst.LstEdit.MainList = document.querySelector ('#MainList') as HTMLSelectElement;
-  RSLst.LstEdit.DropList = document.querySelector ('#DropList') as HTMLSelectElement;
-  RSLst.LstEdit.ListSelect = document.querySelector ('#ListOfLists') as HTMLSelectElement;
-  RSLst.LstEdit.TileSelect = document.querySelector ('#ListOfTiles') as HTMLSelectElement;
+  RS1.LstEdit.MainList = document.querySelector ('#MainList') as HTMLSelectElement;
+  RS1.LstEdit.DropList = document.querySelector ('#DropList') as HTMLSelectElement;
+  RS1.LstEdit.ListSelect = document.querySelector ('#ListOfLists') as HTMLSelectElement;
+  RS1.LstEdit.TileSelect = document.querySelector ('#ListOfTiles') as HTMLSelectElement;
 
-  if (RSLst.CL.LT  && RSLst.LstEdit.MainList)
-      RSLst.CL.LT.ToSelect (RSLst.LstEdit.MainList);
-  if (RSLst.CL.TD  &&  RSLst.LstEdit.DropList)
-      RSLst.CL.TD.ToSelect (RSLst.LstEdit.DropList);
-  if (RSLst.CL  &&  RSLst.LstEdit.ListSelect)
-      RSLst.CL.ToSelect (RSLst.LstEdit.ListSelect);
+  if (RS1.CL.LT  && RS1.LstEdit.MainList)
+      RS1.CL.LT.ToSelect (RS1.LstEdit.MainList);
+  if (RS1.CL.TD  &&  RS1.LstEdit.DropList)
+      RS1.CL.TD.ToSelect (RS1.LstEdit.DropList);
+  if (RS1.CL  &&  RS1.LstEdit.ListSelect)
+      RS1.CL.ToSelect (RS1.LstEdit.ListSelect);
 
 
 
@@ -62,7 +62,7 @@ function DumpLists () {
 */
 
   console.log ('Calling Defines!'); 
-  RSLst.CL.Defines ('Consts.ts');
+  RS1.CL.Defines ('Consts.ts');
   console.log ('DumpList!');
 }
 </script>
@@ -91,7 +91,7 @@ function DumpLists () {
 
   <button on:click={() => DumpLists ()}> DumpLists ()</button>
 
-  <button on:click= {() => RSLst.CL.Defines ('Constants.ts')}>Direct Defines (Constants.ts) call</button>
+  <button on:click= {() => RS1.CL.Defines ('Constants.ts')}>Direct Defines (Constants.ts) call</button>
 
   </div>
 

@@ -1,4 +1,4 @@
-import { RSLst } from '$lib/ConstList';
+import { RS1 } from '$lib/RS';
 
 var Serial : number = 0;
 
@@ -21,18 +21,18 @@ async function ABRequest (AB : ArrayBuffer): Promise<ArrayBuffer> {
     return response;
 }
 
-async function packRequest (BP : RSLst.BufPack) : Promise<RSLst.BufPack>{
+async function packRequest (BP : RS1.BufPack) : Promise<RS1.BufPack>{
   // console.log ('PackRequest Incoming = \n' + BP.Desc ());
   BP.Add (['#',++Serial]);
 
   let AB = BP.BufOut ();
   console.log ('Sending Client Request #' + Serial.toString ());
 
-  // console.log ('  CheckBuf Outgoing = ' + RSLst.ChkBuf (AB).toString ());
+  // console.log ('  CheckBuf Outgoing = ' + RS1.ChkBuf (AB).toString ());
 
-  AB = await RSLst.ReqAB (AB);
+  AB = await RS1.ReqAB (AB);
 
-  // console.log ('   CheckBuf Incoming = ' + RSLst.ChkBuf (AB).toString ());
+  // console.log ('   CheckBuf Incoming = ' + RS1.ChkBuf (AB).toString ());
   
   BP.BufIn (AB);
 
@@ -42,7 +42,7 @@ async function packRequest (BP : RSLst.BufPack) : Promise<RSLst.BufPack>{
 }
 
 export function InitClient () {
-    if (!RSLst.ReqAB)
-        RSLst.InitReq (ABRequest,packRequest);
+    if (!RS1.ReqAB)
+        RS1.InitReq (ABRequest,packRequest);
 }
 

@@ -1,10 +1,10 @@
-import { RSLst } from '$lib/ConstList';
+import { RS1 } from '$lib/RS';
 import { Editor_TC } from '../components/tiles';
 import * as Plotter from './Plotter';
 
 export class Editor {
 	private container: HTMLDivElement;
-	private constList: RSLst.constList;
+	private VList: RS1.VList;
 	private selectbox: HTMLSelectElement;
 	private i: {
 		name: HTMLInputElement;
@@ -22,20 +22,20 @@ export class Editor {
 		down: HTMLButtonElement;
 	}; // HTMLElement(s)
 	private selectContainer: HTMLDivElement;
-	private lol: RSLst.ListOfLists;
-	private formats: RSLst.constList = RSLst.CL.FT as RSLst.constList;
+	private lol: RS1.ListOfLists;
+	private formats: RS1.VList = RS1.CL.FT as RS1.VList;
 
 	/** Public Functions (External Calls) */
 
 	constructor(
 		container: HTMLDivElement | null,
-		constList: RSLst.constList,
-		ListOfLists: RSLst.ListOfLists = RSLst.CL,
-		linkedConstList?: RSLst.constList
+		VList: RS1.VList,
+		ListOfLists: RS1.ListOfLists = RS1.CL,
+		linkedVList?: RS1.VList
 	) {
 		// Constructor
 		this.container = container as HTMLDivElement;
-		this.constList = constList as RSLst.constList;
+		this.VList = VList as RS1.VList;
 
 		this.lol = ListOfLists;
 
@@ -95,13 +95,13 @@ export class Editor {
 		// public/Populate
 		this.CLToSelect();
 
-		const FirstCID: RSLst.constID = this.constList.ToSortedCIDs()[0] as RSLst.constID;
+		const FirstCID: RS1.constID = this.VList.ToSortedCIDs()[0] as RS1.constID;
 
-		const constIDs = this.constList.ToSortedCIDs();
+		const constIDs = this.VList.ToSortedCIDs();
 		this.selectbox.onchange = () => {
-			console.log(this.constList.Str);
+			console.log(this.VList.Str);
 			const selected = this.selectbox.value;
-			const cid: RSLst.constID = constIDs.find((cid) => cid.Name === selected) as RSLst.constID;
+			const cid: RS1.constID = constIDs.find((cid) => cid.Name === selected) as RS1.constID;
 			this.DefineFields(cid);
 		};
 	}
@@ -125,7 +125,7 @@ export class Editor {
 			this.selectbox.innerHTML = '';
 		}
 
-		this.constList.ToSelect(this.selectbox);
+		this.VList.ToSelect(this.selectbox);
 		this.selectContainer.appendChild(this.selectbox);
 	}
 
@@ -139,14 +139,14 @@ export class Editor {
 		this.selectbox.selectedIndex = -1;
 	}
 
-	private DefineFields(constID: RSLst.constID): void {
+	private DefineFields(constID: RS1.constID): void {
 		if (constID) {
 			this.i.name.value = constID.Name ? constID.Name : '';
 			this.i.description.value = constID.Desc ? constID.Desc : '';
 
 			console.log(constID.Fmt?.Ch !== '');
 
-			const rawFMT = constID.Fmt as RSLst.IFmt;
+			const rawFMT = constID.Fmt as RS1.IFmt;
 			const format = this.formats.GetDesc(rawFMT.Ch) as string;
 
 			if (format === 'Member') {
@@ -172,12 +172,12 @@ export class Editor {
 		this.i.value.style.display = 'none';
 		this.i.list.style.cssText =
 			'display: block; width: 100px; height: 40px; border-radius: 10px; font-family: inherit; outline: none; border: none; padding-left: 10px; transition: 0.3s linear;';
-		const CL = this.lol.ToConstList() as RSLst.constList;
+		const CL = this.lol.ToVList() as RS1.VList;
 		CL.ToSelect(this.i.list);
 		this.i.constID.style.cssText =
 			'display: block; width: 100px; height: 40px; border-radius: 10px; font-family: inherit; outline: none; border: none; padding-left: 10px; transition: 0.3s linear;';
 		this.i.list.onchange = () => {
-			const List = this.lol.ListByName(this.i.list.value) as RSLst.constList;
+			const List = this.lol.ListByName(this.i.list.value) as RS1.VList;
 			List.ToSelect(this.i.constID);
 		};
 
@@ -225,14 +225,14 @@ export class Editor {
 			validDesc = `[{${this.RemoveWhitespace(this.i.list.value)}=${selected}]`;
 		}
 
-		let constID: RSLst.constID = new RSLst.constID(this.i.name.value, validDesc, this.constList);
-		// Update ConstList
-		this.constList.UpdateCID(constID);
+		let constID: RS1.constID = new RS1.constID(this.i.name.value, validDesc, this.VList);
+		// Update VList
+		this.VList.UpdateCID(constID);
 		this.CLToSelect();
-		constID = constID.Copy(this.constList);
+		constID = constID.Copy(this.VList);
 		this.ClearRef();
 		console.log('Create', constID);
-		console.log('Create', this.constList.Str);
+		console.log('Create', this.VList.Str);
 	}
 
 	private GetSelected(Select: HTMLSelectElement): string[] {
@@ -281,17 +281,17 @@ export class Editor {
 			validDesc = `[{${this.RemoveWhitespace(this.i.list.value)}=${selected}]`;
 		}
 
-		let constID = new RSLst.constID(`${name}:${validDesc}`, this.constList);
+		let constID = new RS1.constID(`${name}:${validDesc}`, this.VList);
 
 		if (updatedName) {
-			this.constList.UpdateCID(constID, true);
+			this.VList.UpdateCID(constID, true);
 			constID.SetName(updatedName);
 		}
 
-		this.constList.UpdateCID(constID, false);
+		this.VList.UpdateCID(constID, false);
 		this.CLToSelect();
-		constID = constID.Copy(this.constList);
-		console.log(this.constList.Str);
+		constID = constID.Copy(this.VList);
+		console.log(this.VList.Str);
 	}
 
 	private RemoveWhitespace(str: string): string {
@@ -299,28 +299,28 @@ export class Editor {
 	}
 
 	private DeleteCID(name: string): void {
-		const constID: RSLst.constID = this.constList.GetCID(name) as RSLst.constID;
-		this.constList.UpdateCID(constID, true);
+		const constID: RS1.constID = this.VList.GetCID(name) as RS1.constID;
+		this.VList.UpdateCID(constID, true);
 		this.CLToSelect();
-		console.log(this.constList.Str);
+		console.log(this.VList.Str);
 	}
 
-	private CopyCID(constID: RSLst.constID) {
-		const newConstID = constID.Copy(this.constList);
+	private CopyCID(constID: RS1.constID) {
+		const newConstID = constID.Copy(this.VList);
 		newConstID.SetName(`${newConstID.Name} Copy`);
-		this.constList.UpdateCID(newConstID, false);
+		this.VList.UpdateCID(newConstID, false);
 		this.ClearRef();
 		this.Populate();
-		console.log(this.constList.Str);
+		console.log(this.VList.Str);
 	}
 
-	private MoveElement(direction: string, constID: RSLst.constID): void {
+	private MoveElement(direction: string, constID: RS1.constID): void {
 		if (direction === 'up') {
-			this.constList.Bubble(constID.Name, -1);
+			this.VList.Bubble(constID.Name, -1);
 			this.CLToSelect(true);
 			return;
 		} else if (direction === 'down') {
-			this.constList.Bubble(constID.Name, 1);
+			this.VList.Bubble(constID.Name, 1);
 			this.CLToSelect(true);
 			return;
 		} else return;
@@ -392,7 +392,7 @@ export class Editor {
 }
 
 export class LOLEditor {
-	private LOL: RSLst.ListOfLists;
+	private LOL: RS1.ListOfLists;
 	private container: HTMLDivElement;
 	private select: HTMLSelectElement;
 	private selected: string;
@@ -400,11 +400,11 @@ export class LOLEditor {
 	private editorComponent: any | null; // New property to store the editor component instance
 	private buttons: { Copy: HTMLButtonElement; Merge: HTMLButtonElement };
 
-	get CL(): RSLst.constList | undefined {
-		return this.ListOfLists.ToConstList();
+	get CL(): RS1.VList | undefined {
+		return this.ListOfLists.ToVList();
 	}
 
-	constructor(ListOfLists: RSLst.ListOfLists, container: HTMLDivElement) {
+	constructor(ListOfLists: RS1.ListOfLists, container: HTMLDivElement) {
 		this.LOL = ListOfLists;
 		this.container = container;
 
@@ -435,7 +435,7 @@ export class LOLEditor {
 		};
 	}
 
-	get ListOfLists(): RSLst.ListOfLists {
+	get ListOfLists(): RS1.ListOfLists {
 		return this.LOL;
 	}
 
@@ -511,16 +511,16 @@ export class LOLEditor {
 
 	private CopyList(): void {
 		// @ts-ignore REASON: You've removed the copy function.
-		const newList: RSLst.constList = this.LOL.ListByName(
+		const newList: RS1.VList = this.LOL.ListByName(
 			this.select.value
-		)?.Copy() as RSLst.constList;
+		)?.Copy() as RS1.VList;
 		this.LOL.Add(newList.Str);
 		console.log(this.CL);
 		this.Reload();
 	}
 
 	private MergeList(): void {
-		const currentList = this.LOL.ListByName(this.selected) as RSLst.constList;
+		const currentList = this.LOL.ListByName(this.selected) as RS1.VList;
 		const mergeWith: string = prompt(
 			'Which list would you like to merge with? *(enter name, case sensitive)'
 		) as string;
@@ -528,7 +528,7 @@ export class LOLEditor {
 	}
 
 	private LoadList(): void {
-		const list: RSLst.constList = this.LOL.ListByName(this.selected) as RSLst.constList;
+		const list: RS1.VList = this.LOL.ListByName(this.selected) as RS1.VList;
 
 		if (list.Name === this.selected) {
 			if (this.editorComponent) {
@@ -536,7 +536,7 @@ export class LOLEditor {
 				this.DestroyComponent('.editor');
 			}
 
-			this.LoadEditorComponent(list as RSLst.constList);
+			this.LoadEditorComponent(list as RS1.VList);
 		} else return;
 	}
 
@@ -548,7 +548,7 @@ export class LOLEditor {
 		} else return;
 	}
 
-	private LoadEditorComponent(list: RSLst.constList) {
+	private LoadEditorComponent(list: RS1.VList) {
 		this.editorComponent = new Editor_TC({
 			target: this.container,
 			props: {

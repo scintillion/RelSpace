@@ -1,12 +1,12 @@
-import type { RSLst } from './ConstList';
+import type { RS1 } from './RS';
 import * as components from '../components/tiles/index';
 import type { SvelteComponent } from 'svelte';
 
 export class Plotter {
 	container: HTMLDivElement;
-	list: RSLst.TileList;
+	list: RS1.TileList;
 
-	constructor(List: RSLst.TileList, container: HTMLDivElement) {
+	constructor(List: RS1.TileList, container: HTMLDivElement) {
 		this.list = List;
 		this.container = container;
 	}
@@ -14,7 +14,7 @@ export class Plotter {
 	public PlotTiles() {
 		console.log(this.list);
 
-		this.list.tiles.forEach((tile: RSLst.TDE, index: number) => {
+		this.list.tiles.forEach((tile: RS1.TDE, index: number) => {
 			let HTMLTile = this.CreateTile(tile);
 			if (!tile.parent) {
 				this.container.innerHTML += HTMLTile;
@@ -44,7 +44,7 @@ export class Plotter {
 		return /^\d+$/.test(str);
 	}
 
-	private CreateTile(tile: RSLst.TDE) {
+	private CreateTile(tile: RS1.TDE) {
 		if (!tile.aList) {
 			return '<p>Invalid</p>';
 			throw 'Error: Invalid Tile';

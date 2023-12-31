@@ -1,10 +1,10 @@
-import { RSLst } from '$lib/ConstList';
+import { RS1 } from '$lib/RS';
 import Blobs from '$lib/Blobs';
 
 export class Query {
 	private query: string;
 	private data: Blob[];
-	private pack: RSLst.BlobPack;
+	private pack: RS1.BlobPack;
 	private _request: any | undefined;
 	private response: boolean;
 
@@ -12,7 +12,7 @@ export class Query {
 		this.query = query;
 		this.data = data;
 
-		this.pack = new RSLst.BlobPack('');
+		this.pack = new RS1.BlobPack('');
 
 		/*this.data.forEach(async blob => {
             await this.pack.Add([blob]);

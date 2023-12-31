@@ -1,20 +1,20 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { Editor } from '$lib/ConstListEditor';
-	import { RSLst } from '../../lib/ConstList';
+	import { Editor } from '$lib/VListEditor';
+	import { RS1 } from '../../lib/VList';
 
 	export let CLString: string = '';
 
-	const list1: RSLst.constList = new RSLst.constList(
+	const list1: RS1.VList = new RS1.VList(
 		'Test1|Test1Name:[%=Jane]Your Name|ListNum:[#=1]The List Number|'
 	);
-	const list2: RSLst.constList = new RSLst.constList(
+	const list2: RS1.VList = new RS1.VList(
 		'Test2|Test2Name:[%=John]Your Name|ListNum:[#=2]The List Number|'
 	);
-	const list3: RSLst.constList = new RSLst.constList(
+	const list3: RS1.VList = new RS1.VList(
 		'Test3|Test3Name:[%=Jacob]Your Name|ListNum:[#=3]The List Number|'
 	);
-	const LoL: RSLst.ListOfLists = new RSLst.ListOfLists();
+	const LoL: RS1.ListOfLists = new RS1.ListOfLists();
 	LoL.Add(list1.Str);
 	LoL.Add(list2.Str);
 	LoL.Add(list3.Str);
@@ -25,7 +25,7 @@
 		) as HTMLDivElement | null;
 
 		if (container) {
-			const list: RSLst.constList = new RSLst.constList(CLString);
+			const list: RS1.VList = new RS1.VList(CLString);
 			const edit: Editor = new Editor(container, list, LoL);
 			edit.Populate();
 		}

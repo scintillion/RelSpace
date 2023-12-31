@@ -1,54 +1,54 @@
-export namespace RSLst {
+export namespace RS1 {
 
 	/*
       constID is a class representing a named value, which also had an ID related to its
       index (position) within an ordered list of like items.  constIDs are stored in
-      constLists which are defined by a string in the format
+      VLists which are defined by a string in the format
 
       ListName|Element1Name:Desc e1|Element2Name: Description or value|...|ElementN:asdf|
 
-      The last character in the constList string defines its Element Delimiter, in the
+      The last character in the VList string defines its Element Delimiter, in the
       case above, '|'.  The colon character ':' terminates the name (and cannot appear
       within the name), and each ElementNames may NOT start with a numeric character
       (0..9,-,+) since these are illegal in variable names.
 
-      An element in the constList is starts and terminates with the Element Delimiter
+      An element in the VList is starts and terminates with the Element Delimiter
       taking the format |ElementName:ElementDesc|.  Therefore, it is easy to search a
-      constList for a particular Element by its name, in the form "|Element:".  The
+      VList for a particular Element by its name, in the form "|Element:".  The
       end of the Element is the last character before |.
 
-      constLists can be used to maintain lists of defined constants for programmers, but
+      VLists can be used to maintain lists of defined constants for programmers, but
       conveniently provide a way to display those values to the user through their
       element names and descriptions.  (In such a case, their position in the list is
       fixed and provides the ID (index) value of the defined constant.  (See the ToDC
       function in the constID class).
 
-      constLists and their defining string can also be used to provide configuration
+      VLists and their defining string can also be used to provide configuration
       parameters for an object such as a Tile: e.g. |TileCfg|AL=UL|Color=Blue|Height=23|
 
-      Because constLists and their constIDs are defined by strings, they can be used to
+      Because VLists and their constIDs are defined by strings, they can be used to
       pass data between machines or foreign tiles.  They can efficiently represent the
       data of diverse objects, e.g. user record
       "User|Name:Doe1234|FullName:John Doe:Email:scintillion@gmail.com|Value:123.96|Phone:16055551414|"
 
-      Once passed to an object, a constList can be left AS IS, without deliberately
+      Once passed to an object, a VList can be left AS IS, without deliberately
       parsing and expanding its data, because the individual elements are quickly
       accessed, each time as needed, using highly efficient string search.
 
       The constID for a list element returns the Name and Desc fields (strings),
-      along with the ID (the index within the constList, which is fixed), and the
+      along with the ID (the index within the VList, which is fixed), and the
       Value field which is a number (if Desc is a number, Value will be set).
 
-      A special case of a constList is a RefList, which is a list of indexes referring
-      to a fully defined constList, with the form "constListName|1|5|23|" where the
-      RefList includes elements #1, #5, #23 from the constList named "constListName".
+      A special case of a VList is a RefList, which is a list of indexes referring
+      to a fully defined VList, with the form "VListName|1|5|23|" where the
+      RefList includes elements #1, #5, #23 from the VList named "VListName".
       Note that if a constID is selected from the RefList, in this case, #2, it would
       select the second element in the list, whose name is "5".  Since there is no
       name terminator ':', we know this is a reflist element with no description field,
       but for consistency, we set the description field to match the name "5".  And the
       Value field for the constID is set to the numeric value of its name/descriptor = 5.
 
-      By using a complete constList along with a RefList defining a subset of its
+      By using a complete VList along with a RefList defining a subset of its
       elements, we can create lists of elements to display to the user.  The ToLine
       function of the constID creates such a line, with the Description in the first
       part of the line (readable by the user), and (if delimiter is provided), a
@@ -71,7 +71,7 @@ export namespace RSLst {
 	}
 
 	interface ABReq { (AB : ArrayBuffer) : Promise<ArrayBuffer> }
-	interface StrReq { (Query : string) : Promise<RSLst.BufPack> }
+	interface StrReq { (Query : string) : Promise<RS1.BufPack> }
 	interface PackReq { (Pack : BufPack) : Promise<BufPack> }
 	
 	export var ReqAB : ABReq;
@@ -84,7 +84,7 @@ export namespace RSLst {
 		return true;
 	}
 	
-	export async function ReqStr (Query : string) : Promise<RSLst.BufPack> {
+	export async function ReqStr (Query : string) : Promise<RS1.BufPack> {
 		let DPos = Query.indexOf (PrimeDelim);
 		let StrType;
 		if (DPos >= 0) {
@@ -104,8 +104,8 @@ export namespace RSLst {
 		return BPReply;
 	}
 
-	export async function ReqTables () : Promise<RSLst.BufPack> {
-		let BP = await RSLst.ReqStr ('SELECT name from sqlite_master;');
+	export async function ReqTables () : Promise<RS1.BufPack> {
+		let BP = await RS1.ReqStr ('SELECT name from sqlite_master;');
 		console.log ('ReqTables:\n' + BP.Expand ());
 		return BP;
 	}
@@ -195,7 +195,7 @@ export namespace RSLst {
 		Str: string;
 		Value: IValue = new IValue();
 		Num = 0;
-		List: constList | undefined;
+		List: VList | undefined;
 		Arr: number[] | undefined;
 
 		/*  Input Formats, defined by ]FormatStr[
@@ -657,12 +657,12 @@ export namespace RSLst {
 		//  TileDefElement, for defining Tiles
 		level = 0;
 		tileID: TileID | undefined;
-		List: constList | undefined;
-		Childs: constList[] | undefined;
-		aList: constList | undefined;
-		sList: constList | undefined;
-		vList: constList | undefined;
-		jList: constList | undefined;
+		List: VList | undefined;
+		Childs: VList[] | undefined;
+		aList: VList | undefined;
+		sList: VList | undefined;
+		vList: VList | undefined;
+		jList: VList | undefined;
 
 		nLists = 0;
 		parent = 0;
@@ -671,10 +671,10 @@ export namespace RSLst {
 		first = 0;
 		last = 0;
 
-		constructor(Str: string, List1: constList | undefined = undefined) {
+		constructor(Str: string, List1: VList | undefined = undefined) {
 			super();
 
-			if (Str) List1 = new constList(Str);
+			if (Str) List1 = new VList(Str);
 
 			if (List1) {
 				this.List = List1;
@@ -706,7 +706,7 @@ export namespace RSLst {
 	export class TileList extends RSData {
 		tiles: TDE[] = [];
 
-		constructor(Str: string[] | string, List: constList | undefined = undefined) {
+		constructor(Str: string[] | string, List: VList | undefined = undefined) {
 			let limit, count = 0;
 
 			super();
@@ -883,7 +883,7 @@ export namespace RSLst {
 	}
 
 	export class TileCache {
-		First: constList | undefined;
+		First: VList | undefined;
 
 		constructor(ListStrs: string[]) {
 			// 'Name:Addr|TileName1|..|TileNameN|"  ("*" is ALL)
@@ -892,7 +892,7 @@ export namespace RSLst {
 			for (let i = 0; i < limit; ) {
 				let Str = ListStrs[i++].trim();
 
-				let List = new constList(Str, this.First);
+				let List = new VList(Str, this.First);
 				if (!this.First) this.First = List;
 			}
 		}
@@ -906,14 +906,14 @@ export namespace RSLst {
 
 	export class constID extends RSData {
 		// often abbreviated as CID
-		List: constList;
+		List: VList;
 		Values: number[] = [];
 
 		get ID() {
 			return this.List ? this.List.IDByName(this.Name) : 0;
 		}
 
-		constructor(Str: string, List1: constList) {
+		constructor(Str: string, List1: VList) {
 			super();
 			let Desc1, NameEnd = Str.indexOf(NameDelim);
 
@@ -974,7 +974,7 @@ export namespace RSLst {
 
 		/*		
 
-		Copy(List1: constList): constID {
+		Copy(List1: VList): constID {
 			if (!List1) {
 				List1 = this.List;
 			}
@@ -1050,16 +1050,16 @@ export namespace RSLst {
 		}
 	} // class constID
 
-	export class constList extends RSData {
+	export class VList extends RSData {
 		_Type = 'List';
 		protected _Delim = PrimeDelim;
 		private _FirstDelim = 0;
 		protected _Count = 0;
-		protected _Next: constList | undefined;
+		protected _Next: VList | undefined;
 		protected _IDs: number[] | undefined;
 		_NameIDs = '';
 		LType: CLType = CLType.None;
-		protected _Childs: constList[] | undefined;
+		protected _Childs: VList[] | undefined;
 		protected _Indent = 0;
 
 		get Count() {
@@ -1098,11 +1098,11 @@ export namespace RSLst {
 		get Delim() {
 			return this._Delim;
 		}
-		get FirstChild(): constList | undefined {
+		get FirstChild(): VList | undefined {
 			if (this._Childs) return this._Childs[0];
 		}
 
-		Merge(AddList: constList | undefined): boolean {
+		Merge(AddList: VList | undefined): boolean {
 			let DestStrs = this._Str.split(this._Delim);
 			DestStrs.length = DestStrs.length - 1;
 			let Destlimit = DestStrs.length;
@@ -1360,7 +1360,7 @@ export namespace RSLst {
 			if (this._FirstDelim < 0) this._FirstDelim = Str1.indexOf(Delim1, NamePos);
 
 			if (Delim1 < ' ') {
-				// special case, embedded ConstLists!
+				// special case, embedded VLists!
 				this._Count = 0;
 				this.LType = CLType.Pack;
 
@@ -1374,7 +1374,7 @@ export namespace RSLst {
 				for (let i = 0; ++i < limit; ) {
 					if (Strs[i][0] === '/' || !Strs[i].trim()) continue; //	ignore comment lines
 
-					let Child: constList = new constList(Strs[i]);
+					let Child: VList = new VList(Strs[i]);
 					if (Child) {
 						if (!this._Childs) this._Childs = [];
 						this._Childs.push(Child);
@@ -1408,7 +1408,7 @@ export namespace RSLst {
 			//			console.log ('InitList ' + this._Name + ' Indent = ' + this._Indent.toString () + ' #C =' +
 			//				this.ChildCount.toString () + ' Count = ' + this.Count.toString () + ' Str=' + this._Str);
 
-			if (Delim1 < ' ') return; // done processing, ConstList with kids...
+			if (Delim1 < ' ') return; // done processing, VList with kids...
 
 			let FirstChar = Str1[this._FirstDelim + 1];
 
@@ -1433,7 +1433,7 @@ export namespace RSLst {
 			this.NameList();
 		}
 
-		constructor(Str1: string | string[], First: constList | undefined = undefined) {
+		constructor(Str1: string | string[], First: VList | undefined = undefined) {
 			super();
 
 			this.InitList(Str1);
@@ -1446,7 +1446,7 @@ export namespace RSLst {
 				while (Last._Next && Last._Next._Name != this._Name) Last = Last._Next;
 
 				this._Next = Last._Next;
-				Last._Next = this; // add our constList to the list of constLists
+				Last._Next = this; // add our VList to the list of VLists
 			}
 		}
 
@@ -1654,7 +1654,7 @@ export namespace RSLst {
 			return CID ? CID.ToLine(Delim1) : '';
 		}
 
-		IDsToRefList(IDs: number[]): constList | undefined {
+		IDsToRefList(IDs: number[]): VList | undefined {
 			if (IDs) {
 				let Delim = this._Delim;
 				let Ret = this._Name + Delim;
@@ -1662,12 +1662,12 @@ export namespace RSLst {
 					Ret += IDs[i].toString() + Delim;
 				}
 
-				return new constList(Ret);
+				return new VList(Ret);
 			}
 			return undefined;
 		}
 
-		CIDsToRefList(CIDs: constID[] | undefined): constList | undefined {
+		CIDsToRefList(CIDs: constID[] | undefined): VList | undefined {
 			if (CIDs) {
 				let IDs: number[] = new Array(CIDs.length);
 
@@ -1704,7 +1704,7 @@ export namespace RSLst {
 			return CIDs;
 		}
 
-		RefListToCIDs(Ref: constList): constID[] | undefined {
+		RefListToCIDs(Ref: VList): constID[] | undefined {
 			if (Ref._IDs) return this.IDsToCIDs(Ref._IDs);
 			return undefined;
 		}
@@ -1789,7 +1789,7 @@ export namespace RSLst {
 			e.style.display = 'none';
 			e.click();
 		}
-	} // constList
+	} // VList
 
 	export class IOType {
 		type: number = 0;
@@ -1804,26 +1804,26 @@ export namespace RSLst {
 	}
 
 	export class ListOfLists {
-		Lists: constList[] = [];
+		Lists: VList[] = [];
 
-		ListByName(Name: string): constList | undefined {
+		ListByName(Name: string): VList | undefined {
 			for (const L of this.Lists)
 				if (L.Name === Name) return L;
 		}
 
-		Add(ListStr: string | string[]): constList | undefined {
+		Add(ListStr: string | string[]): VList | undefined {
 			let ListStrs: string[] = (typeof ListStr === 'string') ? [ListStr] : ListStr;
 			let List;
 
 			for (const L of ListStrs) {
-				this.Lists.push (List = new constList(L));
+				this.Lists.push (List = new VList(L));
 			}
 
 			if (ListStrs.length <= 1)
 				return List;
 		}
 
-		Merge(AOL: constList[]) {
+		Merge(AOL: VList[]) {
 			let ListLimit = this.Lists.length;
 			if (!ListLimit) {
 				//	empty list
@@ -1849,13 +1849,13 @@ export namespace RSLst {
 		async Defines(FileName: string = 'Consts.ts') {
 			let DocStr = '\n\n\n/*  Documentation Names/Desc\t___________________\n\n';
 
-			let DefineStr = '/*\tDefines for ConstLists\t*/\n\n';
+			let DefineStr = '/*\tDefines for VLists\t*/\n\n';
 
 			let AB = new ArrayBuffer(16);
 			let ABBool = AB instanceof ArrayBuffer;
 
 			DefineStr += 'AB = ' + typeof AB + (ABBool ? 'true' : 'false') + '\n';
-			let CList = constList;
+			let CList = VList;
 			DefineStr += 'CList = ' + typeof CList + '\n';
 
 			let limit = this.Lists.length;
@@ -1887,7 +1887,7 @@ export namespace RSLst {
 			}
 
 			console.log('Reading NewTileStrings!');
-			let NewTileList = new constList(NewTileStrings);
+			let NewTileList = new VList(NewTileStrings);
 			if (NewTileList) NewTileList.Dump('');
 			console.log('Finished reading NewTileStrings');
 
@@ -1896,13 +1896,13 @@ export namespace RSLst {
 			TL = new TileList('', NewTileList);
 			console.log('TileList is read from NewTileList');
 
-			if (RSLst.LstEdit.TileSelect) TL.ToSelect(RSLst.LstEdit.TileSelect);
+			if (RS1.LstEdit.TileSelect) TL.ToSelect(RS1.LstEdit.TileSelect);
 
 			let TString = TL.Str;
 
-			if (RSLst.CL.LT && RSLst.CL.AC) RSLst.CL.LT.Merge(RSLst.CL.AC);
+			if (RS1.CL.LT && RS1.CL.AC) RS1.CL.LT.Merge(RS1.CL.AC);
 
-			let LongList = new constList(TileStrings.join('\n') + '\n');
+			let LongList = new VList(TileStrings.join('\n') + '\n');
 
 			DocStr += '\n Dump of LongList...\n' + LongList.Str + '\n End of LongList Dump.  \n';
 			DocStr += 'LongList Name=' + LongList.Name + ' Desc=' + LongList.Desc + '\n\n';
@@ -1919,7 +1919,7 @@ export namespace RSLst {
 				let List = CL.Lists[i];
 				let Pack = List.InitPack ();
 				Pack.Add (['!Q','I']);
-				RSLst.sql.bInsUpd (Pack);
+				RS1.sql.bInsUpd (Pack);
 			}
 
 
@@ -1933,13 +1933,13 @@ export namespace RSLst {
 				console.log ('LT InitPack List:' + '\n' + Pack.Desc ());
 
 				Pack.Add (['!Q','S']);
-				RSLst.sql.buildQ (Pack);
+				RS1.sql.buildQ (Pack);
 				Pack.Add (['!Q','I']);
-				RSLst.sql.buildQ (Pack);
+				RS1.sql.buildQ (Pack);
 				Pack.Add (['!Q','U','!I',123]);
-				RSLst.sql.buildQ (Pack);
+				RS1.sql.buildQ (Pack);
 				Pack.Add (['!Q','D','!I',456]);
-				RSLst.sql.buildQ (Pack);
+				RS1.sql.buildQ (Pack);
 			}
 
 
@@ -1968,7 +1968,7 @@ export namespace RSLst {
 			console.log ('Check1/2 = ' + Check1.toString () + ' ' + Check2.toString ());
 		}
 
-		ToConstList(): constList | undefined {
+		ToVList(): VList | undefined {
 			let limit = this.Lists.length;
 
 			let LStrs: string[] = ['LL:ListOfLists'];
@@ -1985,11 +1985,11 @@ export namespace RSLst {
 
 			LStrs = LStrs.sort();
 
-			return new constList(LStrs.join(PrimeDelim) + PrimeDelim);
+			return new VList(LStrs.join(PrimeDelim) + PrimeDelim);
 		}
 
 		ToSelect(Select: HTMLSelectElement) {
-			let List = this.ToConstList();
+			let List = this.ToVList();
 
 			if (List) List.ToSelect(Select);
 		}
@@ -2071,7 +2071,7 @@ export namespace RSLst {
 
 			let ListCID: constID | undefined = CL.FM ? CL.FM.GetCID(this.ListType) : undefined;
 			if (ListCID) {
-				let List: constList | undefined = CL.ListByName(ListCID.Name);
+				let List: VList | undefined = CL.ListByName(ListCID.Name);
 
 				if (List) {
 					let CID: constID | undefined = List.GetCID(this.ID);
@@ -3021,11 +3021,11 @@ export namespace RSLst {
 			return Pack;
 		}
 
-	}	// RSLst
+	}	// RS1
 
 	export const sql = new SQL ();
 
-	/*	Defines for ConstLists	*/
+	/*	Defines for VLists	*/
 
 	// FM:FM="FM|Num|Int|Dollar|Ord|Range|Pair|Nums|Member|Set|Str|Strs|Upper|"
 	export const FMDollar = 3,
@@ -3127,7 +3127,7 @@ export namespace RSLst {
 	export const TestCost = 3,
 		TestNameF = 1,
 		TestXY = 2;
-} // namespace RSLst
+} // namespace RS1
 
 /*  Documentation Names/Desc	___________________
 
