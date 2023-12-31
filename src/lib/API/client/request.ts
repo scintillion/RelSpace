@@ -23,9 +23,9 @@ async function ABRequest (AB : ArrayBuffer): Promise<ArrayBuffer> {
 
 async function packRequest (BP : RS1.BufPack) : Promise<RS1.BufPack>{
   // console.log ('PackRequest Incoming = \n' + BP.Desc ());
-  BP.Add (['#',++Serial]);
+  BP.add (['#',++Serial]);
 
-  let AB = BP.BufOut ();
+  let AB = BP.bufOut ();
   console.log ('Sending Client Request #' + Serial.toString ());
 
   // console.log ('  CheckBuf Outgoing = ' + RS1.ChkBuf (AB).toString ());
@@ -34,9 +34,9 @@ async function packRequest (BP : RS1.BufPack) : Promise<RS1.BufPack>{
 
   // console.log ('   CheckBuf Incoming = ' + RS1.ChkBuf (AB).toString ());
   
-  BP.BufIn (AB);
+  BP.bufIn (AB);
 
-  console.log (' Received Server reply #' + BP.Num ('#').toString ());
+  console.log (' Received Server reply #' + BP.num ('#').toString ());
 
   return BP;
 }

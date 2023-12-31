@@ -38,7 +38,7 @@ class DBKit {
 
 
 	public execQ (Pack : RS1.BufPack, Params : any[]) : RS1.BufPack {
-		let Query = Pack.Str ('!Q');
+		let Query = Pack.str ('!Q');
 		console.log ('ExecQ QUERY=' + Query + '.');
 		// Query = "SELECT name FROM sqlite_master";	// retrieve all tables
 		const statement = this._db.prepare (Query) as unknown as Statement;
@@ -60,11 +60,11 @@ class DBKit {
 				BPs[countBP++] = BP;
 				}
 				Pack.Cs = [];
-				Pack.Pack (BPs);
+				Pack.pack (BPs);
 				console.log ('Server packs ' + BPs.length.toString () + ' records to send to client');
-				console.log (Pack.Desc ());
+				console.log (Pack.desc);
 				let newBPs = new RS1.BufPack ();
-				newBPs.BufIn (Pack.BufOut ());
+				newBPs.bufIn (Pack.bufOut ());
 			}
 		else {
 			// console.log ('Dumping dbResponse after run');
@@ -85,7 +85,7 @@ class DBKit {
 const DBK = new DBKit('tile.sqlite3');
 
 async function ReqPack (InPack : RS1.BufPack) : Promise<RS1.BufPack> {
-	let Serial = InPack.Num ('#');
+	let Serial = InPack.num ('#');
 	if (!Serial)
 		throw "No Client Serial!";
 	console.log ('Receive Client Request #' + Serial.toString ());
@@ -93,18 +93,18 @@ async function ReqPack (InPack : RS1.BufPack) : Promise<RS1.BufPack> {
 	let Params = RS1.sql.buildQ (InPack);
 	let OutPack = DBK.execQ (InPack, Params);
 
-	OutPack.Add (['#',Serial]);
+	OutPack.add (['#',Serial]);
 
-	console.log ('ServerResult BP:\n' + OutPack.Desc ());
+	console.log ('ServerResult BP:\n' + OutPack.desc);
 	return OutPack;
 }
 
 async function ReqAB (AB : ArrayBuffer) : Promise<ArrayBuffer> {
 	let BP = new RS1.BufPack ();
-	BP.BufIn (AB);
+	BP.bufIn (AB);
 
 	let ResultPack = await RS1.ReqPack (BP);
-	let ResultAB = ResultPack.BufOut ();
+	let ResultAB = ResultPack.bufOut ();
 	return ResultAB;
 }
 

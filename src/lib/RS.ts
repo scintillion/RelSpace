@@ -94,7 +94,7 @@ export namespace RS1 {
 		else StrType = '!Q';
 
 		let BP = new BufPack ();
-		BP.Add ([StrType,Query]);
+		BP.add ([StrType,Query]);
 	
 		// console.log ('strRequest BP on client:\n' + BP.Desc ());
 		// console.log ('BP.BufOut length = ' + BP.BufOut ().byteLength.toString ());
@@ -106,7 +106,7 @@ export namespace RS1 {
 
 	export async function ReqTables () : Promise<RS1.BufPack> {
 		let BP = await RS1.ReqStr ('SELECT name from sqlite_master;');
-		console.log ('ReqTables:\n' + BP.Expand ());
+		console.log ('ReqTables:\n' + BP.expand ());
 		return BP;
 	}
 	
@@ -411,7 +411,7 @@ export namespace RS1 {
 
 		InitPack() {
 			let P = new BufPack();
-			P.Add([
+			P.add([
 				'name',
 				this._Name,
 				'desc',
@@ -430,12 +430,12 @@ export namespace RS1 {
 		}
 
 		LoadPack(P: BufPack) {
-			this._Name = P.Str('name');
-			this._Desc = P.Str('desc');
-			this._Type = P.Str('type');
-			this._ID = P.Num('!id');
-			this._Tile = P.Str('!table');
-			this._Str = P.Str('str');
+			this._Name = P.str('name');
+			this._Desc = P.str('desc');
+			this._Type = P.str('type');
+			this._ID = P.num('!id');
+			this._Tile = P.str('!table');
+			this._Str = P.str('str');
 		}
 
 		get Desc() {
@@ -580,9 +580,9 @@ export namespace RS1 {
 			if (In.constructor.name === 'BufPack') {
 				let Pack = In as BufPack;
 				let Data = new RSData();
-				Data.SetName(Pack.Str('name'));
-				Data.SetType(Pack.Str('type'));
-				Data.SetStr(Pack.Str('?str'));
+				Data.SetName(Pack.str('name'));
+				Data.SetType(Pack.str('type'));
+				Data.SetStr(Pack.str('str'));
 			} else {
 				// must be class for conversion
 			}
@@ -1918,7 +1918,7 @@ export namespace RS1 {
 			for (let i = 0; i < CL.Lists.length; ++i) {
 				let List = CL.Lists[i];
 				let Pack = List.InitPack ();
-				Pack.Add (['!Q','I']);
+				Pack.add (['!Q','I']);
 				RS1.sql.bInsUpd (Pack);
 			}
 
@@ -1930,21 +1930,21 @@ export namespace RS1 {
 				// Add code here to save List to the database
 				// using "Pack"
 
-				console.log ('LT InitPack List:' + '\n' + Pack.Desc ());
+				console.log ('LT InitPack List:' + '\n' + Pack.desc);
 
-				Pack.Add (['!Q','S']);
+				Pack.add (['!Q','S']);
 				RS1.sql.buildQ (Pack);
-				Pack.Add (['!Q','I']);
+				Pack.add (['!Q','I']);
 				RS1.sql.buildQ (Pack);
-				Pack.Add (['!Q','U','!I',123]);
+				Pack.add (['!Q','U','!I',123]);
 				RS1.sql.buildQ (Pack);
-				Pack.Add (['!Q','D','!I',456]);
+				Pack.add (['!Q','D','!I',456]);
 				RS1.sql.buildQ (Pack);
 			}
 
 
 			let BP = new BufPack('TEST', 'Details...asdfasdfas');
-			BP.Add([
+			BP.add([
 				'Num1',
 				123,
 				'Num2',
@@ -1955,14 +1955,14 @@ export namespace RS1 {
 				'0123456789',
 			]);
 
-			console.log('Incoming Buf:' + '\n' + BP.Desc());
-			let NewBuf = BP.BufOut ();
+			console.log('Incoming Buf:' + '\n' + BP.desc);
+			let NewBuf = BP.bufOut ();
 			let Check1 = ChkBuf (NewBuf);
 
-			BP.BufIn (NewBuf);
-			console.log('Resultant Buf:' + '\n' + BP.Desc());
+			BP.bufIn (NewBuf);
+			console.log('Resultant Buf:' + '\n' + BP.desc);
 
-			NewBuf = BP.BufOut ();
+			NewBuf = BP.bufOut ();
 			let Check2 = ChkBuf (NewBuf);
 
 			console.log ('Check1/2 = ' + Check1.toString () + ' ' + Check2.toString ());
@@ -2269,29 +2269,18 @@ export namespace RS1 {
 		get Error () { return this._error; }
 		get Data () { return this._data; }
 
-		toAB () {
+		get toAB () {
 			let AB : ArrayBuffer;
 			switch (this._type) {
 				case tNum : AB = num2ab (this.Num); break;
 				case tStr : AB = str2ab (this.Str); break;
 				case tAB : return this._AB;
-				case tPack : AB = (this._data as BufPack).BufOut (); break;
+				case tPack : AB = (this._data as BufPack).bufOut (); break;
 				default : AB = NILAB; this._error = 'toArray Error, Type =' + this.Type + '.';
 			}
 
 			return this._AB = AB;
 		}
-
-	/*
-		get Size () {
-			let AB;
-
-			if (!(AB = this._AB))
-				AB = this.toAB ();
-
-			return AB ? AB.byteLength : 0;
-		}
-	*/
 
 		setData (D : PFData) {
 			let Type;
@@ -2321,7 +2310,7 @@ export namespace RS1 {
 			switch (Type1) {
 				case tStr : D = ab2str (AB); break;
 				case tNum : D = ab2num (AB); break;
-				case tPack : let Pack = new BufPack (); Pack.BufIn (AB); D = Pack; break;
+				case tPack : let Pack = new BufPack (); Pack.bufIn (AB); D = Pack; break;
 				case tAB : D = AB; break;
 				default : this._error = 'constructor error Type =' + Type1 + ', converted to NILAB.';
 					Type1 = tAB;
@@ -2365,7 +2354,7 @@ export namespace RS1 {
 			else this.setData (D);
 		}
 
-		NameVal () {
+		get NameVal () {
 			let Str = this._type + this._name + '=';
 
 			switch (this._type) {
@@ -2412,8 +2401,8 @@ export namespace RS1 {
 			return false;
 		}
 
-		Desc() {
-			let Str = this.NameVal () + ' ';
+		get desc() {
+			let Str = this.NameVal + ' ';
 
 			switch (this._type) {
 				case tNum : break; // Str += '= ' + this._num.toString (); break;
@@ -2421,7 +2410,7 @@ export namespace RS1 {
 				case tPack : 
 					let Pack = this.Pack;
 					for (const F of Pack.Ds)
-						Str += ' ' + F.NameVal ();
+						Str += ' ' + F.NameVal;
 					break;
 				case tAB : break;
 
@@ -2455,13 +2444,13 @@ export namespace RS1 {
 		toABs ()
 		{
 			for (const F of this.Cs)
-				F.toAB ();
+				F.toAB;
 
 			for (const F of this.Ds)
-				F.toAB ();
+				F.toAB;
 		}
 
-		Update (N : string, V : any) {
+		update (N : string, V : any) {
 			let i;
 			let Fs = ((N[0] < '0') || !N) ? this.Ds : this.Cs;
 			for (i = Fs.length; --i >= 0;) {
@@ -2472,7 +2461,7 @@ export namespace RS1 {
 				}
 		}
 
-		Field(Name: string): PackField | undefined {
+		field(Name: string): PackField | undefined {
 			if (!Name)
 				return undefined;
 
@@ -2484,24 +2473,24 @@ export namespace RS1 {
 			}
 		}
 
-		Data(Name: string): PFData {
-			let F = this.Field(Name);
+		data(Name: string): PFData {
+			let F = this.field(Name);
 			return F ? F.Data : NILAB;
 		}
 
-		Str(Name: string) {
-			let F = this.Field(Name);
+		str(Name: string) {
+			let F = this.field(Name);
 			return F ? F.Str : '';
 		}
 
-		Num(Name: string) {
-			let F = this.Field(Name);
+		num(Name: string) {
+			let F = this.field(Name);
 			return F ? F.Num : NaN;
 		}
 
-		Desc() {
+		get desc() {
 			let Lines = [];
-			let Pref = this.GetPrefix ();
+			let Pref = this.getPrefix ();
 			let Fields = this.Cs.concat (this.Ds);
 			let nFields = Fields.length;
 
@@ -2511,33 +2500,33 @@ export namespace RS1 {
 
 
 			for (const F of this.Cs) {
-				Lines.push ('  C::' + F.Desc ());
+				Lines.push ('  C::' + F.desc);
 				}
 			for (const F of this.Ds) {
-					Lines.push ('  D::' + F.Desc ());
+					Lines.push ('  D::' + F.desc);
 			}
 	
 			return Lines.join('\n');
 		}
 
-		Expand () {
-			if (!this.Multi ())
-				return this.Desc () + '\n';
+		expand () {
+			if (!this.multi)
+				return this.desc + '\n';
 
 			let Lines = [];
-			Lines.push (this.Desc() + '\n\n ** Expanded views of each record **' + this.Ds.length.toString () + 'n');
+			Lines.push (this.desc + '\n\n ** Expanded views of each record **' + this.Ds.length.toString () + 'n');
 
 			let count = 0;
 			for (const D of this.Ds) {
 				let BP = new BufPack ();
-				BP.BufIn (D.AB);
-				Lines.push ('----- Record ' + (++count).toString () + '\n' + BP.Desc ());
+				BP.bufIn (D.AB);
+				Lines.push ('----- Record ' + (++count).toString () + '\n' + BP.desc);
 			}
 
 			return Lines.join ('\n');
 		}
 
-		 Add(Args: any[]) {
+		 add(Args: any[]) {
 			let limit = Args.length;
 			let NotNull = this.Cs.length || this.Ds.length;
 
@@ -2553,7 +2542,7 @@ export namespace RS1 {
 
 			// console.log ('BufPack.Add Incoming:');
 			if (NotNull)
-				console.log (this.Desc ());
+				console.log (this.desc);
 
 			for (let i = 0; i < limit; )
 			{
@@ -2605,7 +2594,7 @@ export namespace RS1 {
 //			console.log ('BufPack.Add Outgoing:\n' + this.Desc ());
 		}
 
-		private GetPrefix(): string {
+		private getPrefix(): string {
 			this.toABs ();
 
 			let PFs = this.Cs.concat (this.Ds);
@@ -2624,8 +2613,8 @@ export namespace RS1 {
 			return Prefix;
 		}
 
-		BufOut (): ArrayBuffer {
-			let Prefix = this.GetPrefix();
+		bufOut (): ArrayBuffer {
+			let Prefix = this.getPrefix();
 			let PAB = str2ab (Prefix);
 			let Bytes = PAB.byteLength;
 			let ByteStr = Bytes.toString ();
@@ -2663,8 +2652,8 @@ export namespace RS1 {
 
 			// console.log ('BufOut Prefix:' + Prefix);
 			let TestBP = new BufPack ('?');
-			TestBP.BufIn (AB);
-			let TestPrefix = TestBP.GetPrefix ();
+			TestBP.bufIn (AB);
+			let TestPrefix = TestBP.getPrefix ();
 			// console.log (' BufIn Prefix:' + TestPrefix);
 			if (Prefix.slice (4) !== TestPrefix.slice (4))
 				throw "Prefix Mismatch!";
@@ -2672,10 +2661,10 @@ export namespace RS1 {
 			return AB;
 		}
 
-		Copy () : BufPack {
-			let AB = this.BufOut ();
+		copy () : BufPack {
+			let AB = this.bufOut ();
 			let NewBP = new BufPack ();
-			NewBP.BufIn (AB);
+			NewBP.bufIn (AB);
 			return NewBP;
 		}
 
@@ -2689,8 +2678,8 @@ export namespace RS1 {
 			return Bytes;
 		}
 
-		BufIn (AB: ArrayBuffer) {
-			this.Clear ();
+		bufIn (AB: ArrayBuffer) {
+			this.clear ();
 
 			let BA = new Uint8Array (AB);
 
@@ -2788,14 +2777,14 @@ export namespace RS1 {
 			}
 		}
 
-		Clear() {
+		clear() {
 			this.Cs = [];
 			this.Ds = [];
 			this.Type1 = '';
 			this.Details = '';
 		}
 
-		Multi () {
+		get multi () {
 			if (this.Type1[0] === '*')
 				return this.Ds.length;
 			else return 0;
@@ -2804,8 +2793,8 @@ export namespace RS1 {
 /*		Unpack creates an array of BufPacks corresponding to the BufPacks
 		that are packed in this single BufPack. Also strips out the */
 
-		Unpack () : BufPack[] {
-			if (!this.Multi ())
+		unpack () : BufPack[] {
+			if (!this.multi)
 				return [];
 
 			let BPs = Array<BufPack> ();
@@ -2814,7 +2803,7 @@ export namespace RS1 {
 
 			for (const F of this.Ds) {
 					let NewBP = new BufPack ();
-					NewBP.BufIn (F.AB);
+					NewBP.bufIn (F.AB);
 					BPs[count++] = NewBP;
 			}
 
@@ -2829,7 +2818,7 @@ export namespace RS1 {
 		often to send to another client or server.  The array of BufPacks to
 		pack is passed in	*/
 
-		Pack (BPs : BufPack[]) {
+		pack (BPs : BufPack[]) {
 			let NewFields : PackField[] = [];
 			NewFields.length = BPs.length;
 			let count = 0;
@@ -2848,7 +2837,7 @@ export namespace RS1 {
 		}
 
 		objectIn (O : Object) {
-			this.Clear ();
+			this.clear ();
 			
 			// console.log ('ObjectIn:Adding entries!');
 
@@ -2863,7 +2852,7 @@ export namespace RS1 {
 				// console.log ('   AddArray[' + count.toString () + '] entry = ' + entry);
 			}
 
-			this.Add (AddArray);
+			this.add (AddArray);
 			// console.log ('ObjectIn Resultant BP:' + '\n' + this.Desc ());
 		}
 
@@ -2891,7 +2880,7 @@ export namespace RS1 {
 	export class SQL {
 		buildQ (QBuf : BufPack) : any[] {
 			// select, insert, update, delete
-			console.log ('buildQ QBuf=\n' + QBuf.Desc ());
+			console.log ('buildQ QBuf=\n' + QBuf.desc);
 
 			let Tile, qType = '', ID, QF;
 
@@ -2906,7 +2895,7 @@ export namespace RS1 {
 			}
 
 			if (!QF) {
-				QBuf.Add (['!E','No Query!']);
+				QBuf.add (['!E','No Query!']);
 				return [];
 			}
 
@@ -2976,7 +2965,7 @@ export namespace RS1 {
 									' WHERE id=' + ID.toString () + ';';
 						}
 						else {
-							QBuf.Add (['!E','ERROR:' + qType]);
+							QBuf.add (['!E','ERROR:' + qType]);
 							return [];
 						}
 					}
@@ -2986,7 +2975,7 @@ export namespace RS1 {
 			}	// switch
 
 			console.log ('buildQ, adding qStr = ' + qStr);
-			QBuf.Add (['!Q',qStr]);
+			QBuf.add (['!Q',qStr]);
 
 			console.log ('BuildQ = ' + qStr + ' ' + Values.length.toString () + ' Values');
 			vStr = '    QueryVals=';
@@ -3002,22 +2991,22 @@ export namespace RS1 {
 			}
 
 			console.log ('VSTR=' + vStr + '=');
-			console.log ('Resulting BuildQ:\n' + QBuf.Desc ());
+			console.log ('Resulting BuildQ:\n' + QBuf.desc);
 
 			return	Values;
 		}	// BuildQ
 
 		bSelDel (Tile : string, ID : number, Query : string) : BufPack {
 			let Pack = new BufPack ();
-			Pack.Add (['!T', Tile, '!I', ID,'!Q',Query]);
+			Pack.add (['!T', Tile, '!I', ID,'!Q',Query]);
 
 			return Pack;
 		}
 
 		bInsUpd (Pack : BufPack) : BufPack {
-			let ID = Pack.Num ('!I');
+			let ID = Pack.num ('!I');
 
-			Pack.Add (['!Q',ID ? 'U' : 'I']);
+			Pack.add (['!Q',ID ? 'U' : 'I']);
 			return Pack;
 		}
 
