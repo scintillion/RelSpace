@@ -4,7 +4,7 @@ import * as Plotter from './Plotter';
 
 export class Editor {
 	private container: HTMLDivElement;
-	private VList: RS1.VList;
+	private vList: RS1.vList;
 	private selectbox: HTMLSelectElement;
 	private i: {
 		name: HTMLInputElement;
@@ -13,7 +13,7 @@ export class Editor {
 		value: HTMLInputElement;
 		fmtstr: HTMLInputElement;
 		list: HTMLSelectElement;
-		constID: HTMLSelectElement;
+		vID: HTMLSelectElement;
 		save: HTMLButtonElement;
 		del: HTMLButtonElement;
 		clear: HTMLButtonElement;
@@ -23,19 +23,19 @@ export class Editor {
 	}; // HTMLElement(s)
 	private selectContainer: HTMLDivElement;
 	private lol: RS1.ListOfLists;
-	private formats: RS1.VList = RS1.CL.FT as RS1.VList;
+	private formats: RS1.vList = RS1.CL.FT as RS1.vList;
 
 	/** Public Functions (External Calls) */
 
 	constructor(
 		container: HTMLDivElement | null,
-		VList: RS1.VList,
+		vList: RS1.vList,
 		ListOfLists: RS1.ListOfLists = RS1.CL,
-		linkedVList?: RS1.VList
+		linkedvList?: RS1.vList
 	) {
 		// Constructor
 		this.container = container as HTMLDivElement;
-		this.VList = VList as RS1.VList;
+		this.vList = vList as RS1.vList;
 
 		this.lol = ListOfLists;
 
@@ -68,23 +68,23 @@ export class Editor {
 			up: this.container.querySelector('#up') as HTMLButtonElement,
 			down: this.container.querySelector('#down') as HTMLButtonElement,
 			list: firstLine.appendChild(this.container.ownerDocument.createElement('select')),
-			constID: firstLine.appendChild(this.container.ownerDocument.createElement('select'))
+			vID: firstLine.appendChild(this.container.ownerDocument.createElement('select'))
 		};
 
-		this.i.constID.multiple = false;
+		this.i.vID.multiple = false;
 
 		this.i.list.style.cssText =
 			'display: none; width: 100px; height: 40px; border-radius: 10px; font-family: inherit; outline: none; border: none; padding-left: 10px; transition: 0.3s linear;';
-		this.i.constID.style.cssText =
+		this.i.vID.style.cssText =
 			'display: none; width: 100px; height: 40px; border-radius: 10px; font-family: inherit; outline: none; border: none; padding-left: 10px; transition: 0.3s linear;';
 
 		/** Preset Event Handlers  */
 		this.i.save.onclick = () => {
 			if (this.selectbox.value) {
-				this.UpdateCID(this.i.name.value);
+				this.UpdateVID(this.i.name.value);
 				this.Reload();
 			} else {
-				this.CreateCID();
+				this.CreateVID();
 				this.Reload();
 			}
 		};
@@ -95,14 +95,14 @@ export class Editor {
 		// public/Populate
 		this.CLToSelect();
 
-		const FirstCID: RS1.constID = this.VList.ToSortedCIDs()[0] as RS1.constID;
+		const FirstVID: RS1.vID = this.vList.ToSortedVIDs()[0] as RS1.vID;
 
-		const constIDs = this.VList.ToSortedCIDs();
+		const vIDs = this.vList.ToSortedVIDs();
 		this.selectbox.onchange = () => {
-			console.log(this.VList.Str);
+			console.log(this.vList.Str);
 			const selected = this.selectbox.value;
-			const cid: RS1.constID = constIDs.find((cid) => cid.Name === selected) as RS1.constID;
-			this.DefineFields(cid);
+			const VID: RS1.vID = vIDs.find((VID) => VID.Name === selected) as RS1.vID;
+			this.DefineFields(VID);
 		};
 	}
 
@@ -125,7 +125,7 @@ export class Editor {
 			this.selectbox.innerHTML = '';
 		}
 
-		this.VList.ToSelect(this.selectbox);
+		this.vList.ToSelect(this.selectbox);
 		this.selectContainer.appendChild(this.selectbox);
 	}
 
@@ -139,14 +139,14 @@ export class Editor {
 		this.selectbox.selectedIndex = -1;
 	}
 
-	private DefineFields(constID: RS1.constID): void {
-		if (constID) {
-			this.i.name.value = constID.Name ? constID.Name : '';
-			this.i.description.value = constID.Desc ? constID.Desc : '';
+	private DefineFields(vID: RS1.vID): void {
+		if (vID) {
+			this.i.name.value = vID.Name ? vID.Name : '';
+			this.i.description.value = vID.Desc ? vID.Desc : '';
 
-			console.log(constID.Fmt?.Ch !== '');
+			console.log(vID.Fmt?.Ch !== '');
 
-			const rawFMT = constID.Fmt as RS1.IFmt;
+			const rawFMT = vID.Fmt as RS1.IFmt;
 			const format = this.formats.GetDesc(rawFMT.Ch) as string;
 
 			if (format === 'Member') {
@@ -159,11 +159,11 @@ export class Editor {
 			this.i.fmt.value = format;
 			this.i.value.value = rawFMT.Value._Str as string;
 
-			this.i.del.onclick = () => this.DeleteCID(constID.Name);
+			this.i.del.onclick = () => this.DeleteVID(vID.Name);
 			this.i.clear.onclick = () => this.ClearRef();
-			this.i.copy.onclick = () => this.CopyCID(constID);
-			this.i.up.onclick = () => this.MoveElement('up', constID);
-			this.i.down.onclick = () => this.MoveElement('down', constID);
+			this.i.copy.onclick = () => this.CopyVID(vID);
+			this.i.up.onclick = () => this.MoveElement('up', vID);
+			this.i.down.onclick = () => this.MoveElement('down', vID);
 		} else return;
 	}
 
@@ -172,30 +172,30 @@ export class Editor {
 		this.i.value.style.display = 'none';
 		this.i.list.style.cssText =
 			'display: block; width: 100px; height: 40px; border-radius: 10px; font-family: inherit; outline: none; border: none; padding-left: 10px; transition: 0.3s linear;';
-		const CL = this.lol.ToVList() as RS1.VList;
+		const CL = this.lol.TovList() as RS1.vList;
 		CL.ToSelect(this.i.list);
-		this.i.constID.style.cssText =
+		this.i.vID.style.cssText =
 			'display: block; width: 100px; height: 40px; border-radius: 10px; font-family: inherit; outline: none; border: none; padding-left: 10px; transition: 0.3s linear;';
 		this.i.list.onchange = () => {
-			const List = this.lol.ListByName(this.i.list.value) as RS1.VList;
-			List.ToSelect(this.i.constID);
+			const List = this.lol.ListByName(this.i.list.value) as RS1.vList;
+			List.ToSelect(this.i.vID);
 		};
 
 		if (field === 'Set') {
-			this.i.constID.multiple = true;
+			this.i.vID.multiple = true;
 		}
 	}
 
 	private UnloadMemberAndSetFields() {
 		this.i.list.style.cssText =
 			'display: none; width: 100px; height: 40px; border-radius: 10px; font-family: inherit; outline: none; border: none; padding-left: 10px; transition: 0.3s linear;';
-		this.i.constID.style.cssText =
+		this.i.vID.style.cssText =
 			'display: none; width: 100px; height: 40px; border-radius: 10px; font-family: inherit; outline: none; border: none; padding-left: 10px; transition: 0.3s linear;';
 		this.i.value.style.display = 'block';
-		this.i.constID.multiple = false;
+		this.i.vID.multiple = false;
 	}
 
-	private CreateCID(): void {
+	private CreateVID(): void {
 		const format: string = this.formats.NameByDesc(
 			this.RemovePossibleDelim(this.i.fmt.value)
 		) as string;
@@ -216,23 +216,23 @@ export class Editor {
 
 		if (format === 'Member') {
 			validDesc = `[@${this.RemoveWhitespace(this.i.list.value)}=${this.RemoveWhitespace(
-				this.i.constID.value
+				this.i.vID.value
 			)}]${description}` as string;
 		}
 
 		if (format === 'Set') {
-			const selected = this.GetSelected(this.i.constID).join(',');
+			const selected = this.GetSelected(this.i.vID).join(',');
 			validDesc = `[{${this.RemoveWhitespace(this.i.list.value)}=${selected}]`;
 		}
 
-		let constID: RS1.constID = new RS1.constID(this.i.name.value, validDesc, this.VList);
-		// Update VList
-		this.VList.UpdateCID(constID);
+		let vID: RS1.vID = new RS1.vID(this.i.name.value, validDesc, this.vList);
+		// Update vList
+		this.vList.UpdateVID(vID);
 		this.CLToSelect();
-		constID = constID.Copy(this.VList);
+		vID = vID.Copy(this.vList);
 		this.ClearRef();
-		console.log('Create', constID);
-		console.log('Create', this.VList.Str);
+		console.log('Create', vID);
+		console.log('Create', this.vList.Str);
 	}
 
 	private GetSelected(Select: HTMLSelectElement): string[] {
@@ -243,7 +243,7 @@ export class Editor {
 		return response;
 	}
 
-	private UpdateCID(name: string): void {
+	private UpdateVID(name: string): void {
 		const format: string = this.formats.NameByDesc(
 			this.RemovePossibleDelim(this.i.fmt.value)
 		) as string;
@@ -270,64 +270,64 @@ export class Editor {
 
 		if (format === 'Member') {
 			console.log(this.i.list.value, 'this is the list selected');
-			console.log(this.i.constID.value, 'this is the constID selected');
+			console.log(this.i.vID.value, 'this is the vID selected');
 			validDesc = `[@${this.RemoveWhitespace(this.i.list.value)}=${this.RemoveWhitespace(
-				this.i.constID.value
+				this.i.vID.value
 			)}]${description}` as string;
 		}
 
 		if (format === 'Set') {
-			const selected = this.GetSelected(this.i.constID).join(',');
+			const selected = this.GetSelected(this.i.vID).join(',');
 			validDesc = `[{${this.RemoveWhitespace(this.i.list.value)}=${selected}]`;
 		}
 
-		let constID = new RS1.constID(`${name}:${validDesc}`, this.VList);
+		let vID = new RS1.vID(`${name}:${validDesc}`, this.vList);
 
 		if (updatedName) {
-			this.VList.UpdateCID(constID, true);
-			constID.SetName(updatedName);
+			this.vList.UpdateVID(vID, true);
+			vID.SetName(updatedName);
 		}
 
-		this.VList.UpdateCID(constID, false);
+		this.vList.UpdateVID(vID, false);
 		this.CLToSelect();
-		constID = constID.Copy(this.VList);
-		console.log(this.VList.Str);
+		vID = vID.Copy(this.vList);
+		console.log(this.vList.Str);
 	}
 
 	private RemoveWhitespace(str: string): string {
 		return str.replace(/(\s+Bad\s+List\s+Name\s+|\s+)/g, '');
 	}
 
-	private DeleteCID(name: string): void {
-		const constID: RS1.constID = this.VList.GetCID(name) as RS1.constID;
-		this.VList.UpdateCID(constID, true);
+	private DeleteVID(name: string): void {
+		const vID: RS1.vID = this.vList.GetVID(name) as RS1.vID;
+		this.vList.UpdateVID(vID, true);
 		this.CLToSelect();
-		console.log(this.VList.Str);
+		console.log(this.vList.Str);
 	}
 
-	private CopyCID(constID: RS1.constID) {
-		const newConstID = constID.Copy(this.VList);
-		newConstID.SetName(`${newConstID.Name} Copy`);
-		this.VList.UpdateCID(newConstID, false);
+	private CopyVID(vID: RS1.vID) {
+		const newvID = vID.Copy(this.vList);
+		newvID.SetName(`${newvID.Name} Copy`);
+		this.vList.UpdateVID(newvID, false);
 		this.ClearRef();
 		this.Populate();
-		console.log(this.VList.Str);
+		console.log(this.vList.Str);
 	}
 
-	private MoveElement(direction: string, constID: RS1.constID): void {
+	private MoveElement(direction: string, vID: RS1.vID): void {
 		if (direction === 'up') {
-			this.VList.Bubble(constID.Name, -1);
+			this.vList.Bubble(vID.Name, -1);
 			this.CLToSelect(true);
 			return;
 		} else if (direction === 'down') {
-			this.VList.Bubble(constID.Name, 1);
+			this.vList.Bubble(vID.Name, 1);
 			this.CLToSelect(true);
 			return;
 		} else return;
 	}
 
 	private checkFormat(value: string, format: string): boolean {
-		const validFormat = this.formats.GetCID(format);
+		const validFormat = this.formats.GetVID(format);
 
 		if (!validFormat) {
 			return false;
@@ -400,8 +400,8 @@ export class LOLEditor {
 	private editorComponent: any | null; // New property to store the editor component instance
 	private buttons: { Copy: HTMLButtonElement; Merge: HTMLButtonElement };
 
-	get CL(): RS1.VList | undefined {
-		return this.ListOfLists.ToVList();
+	get CL(): RS1.vList | undefined {
+		return this.ListOfLists.TovList();
 	}
 
 	constructor(ListOfLists: RS1.ListOfLists, container: HTMLDivElement) {
@@ -511,16 +511,16 @@ export class LOLEditor {
 
 	private CopyList(): void {
 		// @ts-ignore REASON: You've removed the copy function.
-		const newList: RS1.VList = this.LOL.ListByName(
+		const newList: RS1.vList = this.LOL.ListByName(
 			this.select.value
-		)?.Copy() as RS1.VList;
+		)?.Copy() as RS1.vList;
 		this.LOL.Add(newList.Str);
 		console.log(this.CL);
 		this.Reload();
 	}
 
 	private MergeList(): void {
-		const currentList = this.LOL.ListByName(this.selected) as RS1.VList;
+		const currentList = this.LOL.ListByName(this.selected) as RS1.vList;
 		const mergeWith: string = prompt(
 			'Which list would you like to merge with? *(enter name, case sensitive)'
 		) as string;
@@ -528,7 +528,7 @@ export class LOLEditor {
 	}
 
 	private LoadList(): void {
-		const list: RS1.VList = this.LOL.ListByName(this.selected) as RS1.VList;
+		const list: RS1.vList = this.LOL.ListByName(this.selected) as RS1.vList;
 
 		if (list.Name === this.selected) {
 			if (this.editorComponent) {
@@ -536,7 +536,7 @@ export class LOLEditor {
 				this.DestroyComponent('.editor');
 			}
 
-			this.LoadEditorComponent(list as RS1.VList);
+			this.LoadEditorComponent(list as RS1.vList);
 		} else return;
 	}
 
@@ -548,7 +548,7 @@ export class LOLEditor {
 		} else return;
 	}
 
-	private LoadEditorComponent(list: RS1.VList) {
+	private LoadEditorComponent(list: RS1.vList) {
 		this.editorComponent = new Editor_TC({
 			target: this.container,
 			props: {

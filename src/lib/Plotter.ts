@@ -62,7 +62,7 @@ export class Plotter {
 
 		let styles = ``;
 		let index = this.list.tiles.indexOf(tile);
-		const cssProperties = tile.sList.IDsToCIDs(undefined);
+		const cssProperties = tile.sList.IDsToVIDs(undefined);
 		cssProperties.forEach((property) => {
 			if (property.Name !== 'row' && property.Name !== 'column') {
 				if (this.CheckNum(property.Desc)) {
@@ -75,7 +75,7 @@ export class Plotter {
 			}
 		});
 
-		const properties = tile.aList.IDsToCIDs(undefined);
+		const properties = tile.aList.IDsToVIDs(undefined);
 		let attributes: any = {};
 		properties.forEach((property) => {
 			attributes[property.Name] = property.Desc;

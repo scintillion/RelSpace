@@ -1,56 +1,56 @@
 export namespace RS1 {
 
 	/*
-      constID is a class representing a named value, which also had an ID related to its
-      index (position) within an ordered list of like items.  constIDs are stored in
-      VLists which are defined by a string in the format
+      vID is a class representing a named value, which also had an ID related to its
+      index (position) within an ordered list of like items.  vIDs are stored in
+      vLists which are defined by a string in the format
 
       ListName|Element1Name:Desc e1|Element2Name: Description or value|...|ElementN:asdf|
 
-      The last character in the VList string defines its Element Delimiter, in the
+      The last character in the vList string defines its Element Delimiter, in the
       case above, '|'.  The colon character ':' terminates the name (and cannot appear
       within the name), and each ElementNames may NOT start with a numeric character
       (0..9,-,+) since these are illegal in variable names.
 
-      An element in the VList is starts and terminates with the Element Delimiter
+      An element in the vList is starts and terminates with the Element Delimiter
       taking the format |ElementName:ElementDesc|.  Therefore, it is easy to search a
-      VList for a particular Element by its name, in the form "|Element:".  The
+      vList for a particular Element by its name, in the form "|Element:".  The
       end of the Element is the last character before |.
 
-      VLists can be used to maintain lists of defined constants for programmers, but
+      vLists can be used to maintain lists of defined constants for programmers, but
       conveniently provide a way to display those values to the user through their
       element names and descriptions.  (In such a case, their position in the list is
       fixed and provides the ID (index) value of the defined constant.  (See the ToDC
-      function in the constID class).
+      function in the vID class).
 
-      VLists and their defining string can also be used to provide configuration
+      vLists and their defining string can also be used to provide configuration
       parameters for an object such as a Tile: e.g. |TileCfg|AL=UL|Color=Blue|Height=23|
 
-      Because VLists and their constIDs are defined by strings, they can be used to
+      Because vLists and their vIDs are defined by strings, they can be used to
       pass data between machines or foreign tiles.  They can efficiently represent the
       data of diverse objects, e.g. user record
       "User|Name:Doe1234|FullName:John Doe:Email:scintillion@gmail.com|Value:123.96|Phone:16055551414|"
 
-      Once passed to an object, a VList can be left AS IS, without deliberately
+      Once passed to an object, a vList can be left AS IS, without deliberately
       parsing and expanding its data, because the individual elements are quickly
       accessed, each time as needed, using highly efficient string search.
 
-      The constID for a list element returns the Name and Desc fields (strings),
-      along with the ID (the index within the VList, which is fixed), and the
+      The vID for a list element returns the Name and Desc fields (strings),
+      along with the ID (the index within the vList, which is fixed), and the
       Value field which is a number (if Desc is a number, Value will be set).
 
-      A special case of a VList is a RefList, which is a list of indexes referring
-      to a fully defined VList, with the form "VListName|1|5|23|" where the
-      RefList includes elements #1, #5, #23 from the VList named "VListName".
-      Note that if a constID is selected from the RefList, in this case, #2, it would
+      A special case of a vList is a RefList, which is a list of indexes referring
+      to a fully defined vList, with the form "vListName|1|5|23|" where the
+      RefList includes elements #1, #5, #23 from the vList named "vListName".
+      Note that if a vID is selected from the RefList, in this case, #2, it would
       select the second element in the list, whose name is "5".  Since there is no
       name terminator ':', we know this is a reflist element with no description field,
       but for consistency, we set the description field to match the name "5".  And the
-      Value field for the constID is set to the numeric value of its name/descriptor = 5.
+      Value field for the vID is set to the numeric value of its name/descriptor = 5.
 
-      By using a complete VList along with a RefList defining a subset of its
+      By using a complete vList along with a RefList defining a subset of its
       elements, we can create lists of elements to display to the user.  The ToLine
-      function of the constID creates such a line, with the Description in the first
+      function of the vID creates such a line, with the Description in the first
       part of the line (readable by the user), and (if delimiter is provided), a
       second portion of the string defining the index/ID and the Name.
 
@@ -195,7 +195,7 @@ export namespace RS1 {
 		Str: string;
 		Value: IValue = new IValue();
 		Num = 0;
-		List: VList | undefined;
+		List: vList | undefined;
 		Arr: number[] | undefined;
 
 		/*  Input Formats, defined by ]FormatStr[
@@ -657,12 +657,12 @@ export namespace RS1 {
 		//  TileDefElement, for defining Tiles
 		level = 0;
 		tileID: TileID | undefined;
-		List: VList | undefined;
-		Childs: VList[] | undefined;
-		aList: VList | undefined;
-		sList: VList | undefined;
-		vList: VList | undefined;
-		jList: VList | undefined;
+		List: vList | undefined;
+		Childs: vList[] | undefined;
+		aList: vList | undefined;
+		sList: vList | undefined;
+		vList: vList | undefined;
+		jList: vList | undefined;
 
 		nLists = 0;
 		parent = 0;
@@ -671,10 +671,10 @@ export namespace RS1 {
 		first = 0;
 		last = 0;
 
-		constructor(Str: string, List1: VList | undefined = undefined) {
+		constructor(Str: string, List1: vList | undefined = undefined) {
 			super();
 
-			if (Str) List1 = new VList(Str);
+			if (Str) List1 = new vList(Str);
 
 			if (List1) {
 				this.List = List1;
@@ -706,7 +706,7 @@ export namespace RS1 {
 	export class TileList extends RSData {
 		tiles: TDE[] = [];
 
-		constructor(Str: string[] | string, List: VList | undefined = undefined) {
+		constructor(Str: string[] | string, List: vList | undefined = undefined) {
 			let limit, count = 0;
 
 			super();
@@ -883,7 +883,7 @@ export namespace RS1 {
 	}
 
 	export class TileCache {
-		First: VList | undefined;
+		First: vList | undefined;
 
 		constructor(ListStrs: string[]) {
 			// 'Name:Addr|TileName1|..|TileNameN|"  ("*" is ALL)
@@ -892,7 +892,7 @@ export namespace RS1 {
 			for (let i = 0; i < limit; ) {
 				let Str = ListStrs[i++].trim();
 
-				let List = new VList(Str, this.First);
+				let List = new vList(Str, this.First);
 				if (!this.First) this.First = List;
 			}
 		}
@@ -904,16 +904,16 @@ export namespace RS1 {
 		}
 	}
 
-	export class constID extends RSData {
-		// often abbreviated as CID
-		List: VList;
+	export class vID extends RSData {
+		// often abbreviated as VID
+		List: vList;
 		Values: number[] = [];
 
 		get ID() {
 			return this.List ? this.List.IDByName(this.Name) : 0;
 		}
 
-		constructor(Str: string, List1: VList) {
+		constructor(Str: string, List1: vList) {
 			super();
 			let Desc1, NameEnd = Str.indexOf(NameDelim);
 
@@ -974,13 +974,13 @@ export namespace RS1 {
 
 		/*		
 
-		Copy(List1: VList): constID {
+		Copy(List1: vList): vID {
 			if (!List1) {
 				List1 = this.List;
 			}
 
-			if (this.Fmt) return new constID(this.Name, this.Fmt.ToStr() + this.Desc, List1);
-			return new constID(this.Name, this.Desc, List1);
+			if (this.Fmt) return new vID(this.Name, this.Fmt.ToStr() + this.Desc, List1);
+			return new vID(this.Name, this.Desc, List1);
 		}
 */
 
@@ -1048,18 +1048,18 @@ export namespace RS1 {
 			// Should raise exception!
 			return undefined;
 		}
-	} // class constID
+	} // class vID
 
-	export class VList extends RSData {
+	export class vList extends RSData {
 		_Type = 'List';
 		protected _Delim = PrimeDelim;
 		private _FirstDelim = 0;
 		protected _Count = 0;
-		protected _Next: VList | undefined;
+		protected _Next: vList | undefined;
 		protected _IDs: number[] | undefined;
 		_NameIDs = '';
 		LType: CLType = CLType.None;
-		protected _Childs: VList[] | undefined;
+		protected _Childs: vList[] | undefined;
 		protected _Indent = 0;
 
 		get Count() {
@@ -1089,7 +1089,7 @@ export namespace RS1 {
 			return this._Indent;
 		}
 
-		get IDs(): constID[] | undefined {
+		get IDs(): vID[] | undefined {
 			return this.IDs;
 		} // only sensible for RefList, returns undefined if not
 		get Next() {
@@ -1098,11 +1098,11 @@ export namespace RS1 {
 		get Delim() {
 			return this._Delim;
 		}
-		get FirstChild(): VList | undefined {
+		get FirstChild(): vList | undefined {
 			if (this._Childs) return this._Childs[0];
 		}
 
-		Merge(AddList: VList | undefined): boolean {
+		Merge(AddList: vList | undefined): boolean {
 			let DestStrs = this._Str.split(this._Delim);
 			DestStrs.length = DestStrs.length - 1;
 			let Destlimit = DestStrs.length;
@@ -1175,32 +1175,32 @@ export namespace RS1 {
 			return true;
 		}
 
-		private CIDByPos(Pos1: number): constID | undefined {
+		private VIDByPos(Pos1: number): vID | undefined {
 			if (Pos1 < 0) return undefined;
 
 			let EndPos = this._Str.indexOf(this._Delim, Pos1);
 			if (EndPos < 0) return undefined;
 
 			let FoundStr = this._Str.slice(Pos1, EndPos);
-			return new constID(FoundStr, this);
+			return new vID(FoundStr, this);
 		}
 
-		SortCIDs(CIDs: constID[]) {
-			let limit = CIDs.length;
-			var Temp: constID;
+		SortVIDs(VIDs: vID[]) {
+			let limit = VIDs.length;
+			var Temp: vID;
 
 			for (let i = 0; ++i < limit; ) {
 				for (let j = i; --j >= 0; ) {
-					if (CIDs[j].Desc > CIDs[j + 1].Desc) {
-						Temp = CIDs[j];
-						CIDs[j] = CIDs[j + 1];
-						CIDs[j + 1] = Temp;
+					if (VIDs[j].Desc > VIDs[j + 1].Desc) {
+						Temp = VIDs[j];
+						VIDs[j] = VIDs[j + 1];
+						VIDs[j + 1] = Temp;
 					} else break;
 				}
 			}
 		}
 
-		ByIDs(IDs: number[], Sort: boolean = false): constID[] | undefined {
+		ByIDs(IDs: number[], Sort: boolean = false): vID[] | undefined {
 			if (!IDs) {
 				// copy all in list
 				let i = this._Count;
@@ -1208,15 +1208,15 @@ export namespace RS1 {
 				while (--i >= 0) IDs[i] = i + 1;
 			}
 
-			let CIDs: constID[] = [];
+			let VIDs: vID[] = [];
 			for (let i = IDs.length; --i >= 0; ) {
-				let CID = this.GetCID(IDs[i]);
-				if (CID) CIDs.push(CID);
+				let VID = this.GetVID(IDs[i]);
+				if (VID) VIDs.push(VID);
 			}
 
-			if (Sort) this.SortCIDs(CIDs);
+			if (Sort) this.SortVIDs(VIDs);
 
-			return CIDs;
+			return VIDs;
 		}
 
 		NameList(UseList = 1): string {
@@ -1360,7 +1360,7 @@ export namespace RS1 {
 			if (this._FirstDelim < 0) this._FirstDelim = Str1.indexOf(Delim1, NamePos);
 
 			if (Delim1 < ' ') {
-				// special case, embedded VLists!
+				// special case, embedded vLists!
 				this._Count = 0;
 				this.LType = CLType.Pack;
 
@@ -1374,7 +1374,7 @@ export namespace RS1 {
 				for (let i = 0; ++i < limit; ) {
 					if (Strs[i][0] === '/' || !Strs[i].trim()) continue; //	ignore comment lines
 
-					let Child: VList = new VList(Strs[i]);
+					let Child: vList = new vList(Strs[i]);
 					if (Child) {
 						if (!this._Childs) this._Childs = [];
 						this._Childs.push(Child);
@@ -1408,7 +1408,7 @@ export namespace RS1 {
 			//			console.log ('InitList ' + this._Name + ' Indent = ' + this._Indent.toString () + ' #C =' +
 			//				this.ChildCount.toString () + ' Count = ' + this.Count.toString () + ' Str=' + this._Str);
 
-			if (Delim1 < ' ') return; // done processing, VList with kids...
+			if (Delim1 < ' ') return; // done processing, vList with kids...
 
 			let FirstChar = Str1[this._FirstDelim + 1];
 
@@ -1433,7 +1433,7 @@ export namespace RS1 {
 			this.NameList();
 		}
 
-		constructor(Str1: string | string[], First: VList | undefined = undefined) {
+		constructor(Str1: string | string[], First: vList | undefined = undefined) {
 			super();
 
 			this.InitList(Str1);
@@ -1446,7 +1446,7 @@ export namespace RS1 {
 				while (Last._Next && Last._Next._Name != this._Name) Last = Last._Next;
 
 				this._Next = Last._Next;
-				Last._Next = this; // add our VList to the list of VLists
+				Last._Next = this; // add our vList to the list of vLists
 			}
 		}
 
@@ -1482,13 +1482,13 @@ export namespace RS1 {
 			return undefined;
 		}
 
-		UpdateCID(CID: constID, Delete = false) {
-			if (!CID) return;
+		UpdateVID(VID: vID, Delete = false) {
+			if (!VID) return;
 
 			let Delim = this._Delim;
 			let Str = this._Str;
 
-			let SearchStr = Delim + CID.Name;
+			let SearchStr = Delim + VID.Name;
 			let Pos = Str.indexOf(SearchStr + Delim, this._FirstDelim);
 			if (Pos < 0) {
 				Pos = Str.indexOf(SearchStr + NameDelim, this._FirstDelim);
@@ -1502,19 +1502,19 @@ export namespace RS1 {
 				//if (EndPos < Str.length - 1) {
 				// not the last element in list!
 				if (Delete) Str = Str.slice(0, Pos) + Str.slice(EndPos);
-				else Str = Str.slice(0, Pos + 1) + CID.ToStr() + Str.slice(EndPos);
+				else Str = Str.slice(0, Pos + 1) + VID.ToStr() + Str.slice(EndPos);
 
 				/*
 				} else {
 					if (Delete) Str = Str.slice(0, Pos + 1);
-					else Str = Str.slice(0, Pos + 1) + CID.ToStr() + Delim;
+					else Str = Str.slice(0, Pos + 1) + VID.ToStr() + Delim;
 				}
 				*/
 			} else {
 				if (Delete) return; //	ABORT, should not happen!
 
-				// CID not found, we must add to the end!
-				Str += CID.ToStr() + Delim;
+				// VID not found, we must add to the end!
+				Str += VID.ToStr() + Delim;
 			}
 
 			this.InitList(Str);
@@ -1599,7 +1599,7 @@ export namespace RS1 {
 			this.InitList(NewStr);
 		}
 
-		GetCID(IDorName: string | number): constID | undefined {
+		GetVID(IDorName: string | number): vID | undefined {
 			let SearchStr;
 
 			let Name: string = typeof IDorName !== 'number' ? IDorName : this.NameByID(IDorName);
@@ -1607,7 +1607,7 @@ export namespace RS1 {
 
 			if (Pos1 >= 0) {
 				// we found it
-				return this.CIDByPos(Pos1 + 1);
+				return this.VIDByPos(Pos1 + 1);
 			} else return undefined;
 		}
 
@@ -1617,7 +1617,7 @@ export namespace RS1 {
 			let Pos1 = this._Str.indexOf(SearchStr, this._FirstDelim);
 			if (Pos1 >= 0) {
 				for (let i = Pos1; --i > 0; ) {
-					if (this._Str[i] === this._Delim) return this.CIDByPos(i + 1);
+					if (this._Str[i] === this._Delim) return this.VIDByPos(i + 1);
 				}
 
 				return undefined;
@@ -1650,11 +1650,11 @@ export namespace RS1 {
 		}
 
 		GetLine(ID: any, Delim1: string = ''): string {
-			let CID: constID | undefined = this.GetCID(ID);
-			return CID ? CID.ToLine(Delim1) : '';
+			let VID: vID | undefined = this.GetVID(ID);
+			return VID ? VID.ToLine(Delim1) : '';
 		}
 
-		IDsToRefList(IDs: number[]): VList | undefined {
+		IDsToRefList(IDs: number[]): vList | undefined {
 			if (IDs) {
 				let Delim = this._Delim;
 				let Ret = this._Name + Delim;
@@ -1662,24 +1662,24 @@ export namespace RS1 {
 					Ret += IDs[i].toString() + Delim;
 				}
 
-				return new VList(Ret);
+				return new vList(Ret);
 			}
 			return undefined;
 		}
 
-		CIDsToRefList(CIDs: constID[] | undefined): VList | undefined {
-			if (CIDs) {
-				let IDs: number[] = new Array(CIDs.length);
+		VIDsToRefList(VIDs: vID[] | undefined): vList | undefined {
+			if (VIDs) {
+				let IDs: number[] = new Array(VIDs.length);
 
-				for (let i = CIDs.length; --i >= 0; ) {
-					IDs[i] = CIDs[i].ID;
+				for (let i = VIDs.length; --i >= 0; ) {
+					IDs[i] = VIDs[i].ID;
 				}
 
 				return this.IDsToRefList(IDs);
 			} else return undefined;
 		}
 
-		IDsToCIDs(IDs: number[] | undefined): constID[] {
+		IDsToVIDs(IDs: number[] | undefined): vID[] {
 			if (!IDs) {
 				// if undefined, use every element (IDs 1..N)
 				let limit = this._Count;
@@ -1687,69 +1687,69 @@ export namespace RS1 {
 				for (let i = limit; --i >= 0; IDs[i] = i + 1);
 			}
 
-			let CIDs: constID[] = new Array(IDs.length);
-			let CID: constID | undefined;
+			let VIDs: vID[] = new Array(IDs.length);
+			let VID: vID | undefined;
 
 			for (let i = IDs.length; --i >= 0; ) {
-				CID = this.GetCID(IDs[i]);
-				if (CID) CIDs[i] = CID;
+				VID = this.GetVID(IDs[i]);
+				if (VID) VIDs[i] = VID;
 			}
 
-			return CIDs;
+			return VIDs;
 		}
 
-		ToSortedCIDs(): constID[] {
-			let CIDs = this.IDsToCIDs(undefined);
-			this.SortCIDs(CIDs);
-			return CIDs;
+		ToSortedVIDs(): vID[] {
+			let VIDs = this.IDsToVIDs(undefined);
+			this.SortVIDs(VIDs);
+			return VIDs;
 		}
 
-		RefListToCIDs(Ref: VList): constID[] | undefined {
-			if (Ref._IDs) return this.IDsToCIDs(Ref._IDs);
+		RefListToVIDs(Ref: vList): vID[] | undefined {
+			if (Ref._IDs) return this.IDsToVIDs(Ref._IDs);
 			return undefined;
 		}
 
 		IDsToLines(IDs: number[], Delim: string): string[] {
 			let i = IDs.length;
 			let Lines: string[] = new Array(i);
-			let CID: constID | undefined;
+			let VID: vID | undefined;
 
 			while (--i >= 0) {
-				CID = this.GetCID(IDs[i]);
-				Lines[i] = CID ? CID.ToLine(Delim) : '';
+				VID = this.GetVID(IDs[i]);
+				Lines[i] = VID ? VID.ToLine(Delim) : '';
 			}
 
 			return Lines;
 		}
 
-		CIDsToLines(CIDs: constID[], Delim: string): string[] {
-			let i = CIDs.length;
+		VIDsToLines(VIDs: vID[], Delim: string): string[] {
+			let i = VIDs.length;
 			let Lines: string[] = new Array(i);
 
-			while (--i >= 0) Lines[i] = CIDs[i].ToLine(Delim);
+			while (--i >= 0) Lines[i] = VIDs[i].ToLine(Delim);
 
 			return Lines;
 		}
 
 		ToDC(): string {
-			let CIDs = this.ToSortedCIDs();
-			let limit = CIDs.length, FmtStr = '';
+			let VIDs = this.ToSortedVIDs();
+			let limit = VIDs.length, FmtStr = '';
 
 			let LineStr = '// ' + this._Name + NameDelim + this._Desc + '="' + this._Str + '"\n';
 			let Line = 'export const ';
 			for (let i = 0; i < limit; ++i) {
-				Line += CIDs[i].ToDC(this._Name) + ',';
+				Line += VIDs[i].ToDC(this._Name) + ',';
 
-				let CID = CIDs[i];
-				if (CID.Fmt) {
+				let VID = VIDs[i];
+				if (VID.Fmt) {
 					// print out format
-					FmtStr += '//\t' + CID.Name + ' ~' + CID.Fmt.Ch;
+					FmtStr += '//\t' + VID.Name + ' ~' + VID.Fmt.Ch;
 
-					if (CID.Fmt.Str) FmtStr += ' Str="' + CID.Fmt.Str + '"';
+					if (VID.Fmt.Str) FmtStr += ' Str="' + VID.Fmt.Str + '"';
 
-					if (CID.Fmt.Num) FmtStr += ' Num=' + CID.Fmt.Num.toString();
+					if (VID.Fmt.Num) FmtStr += ' Num=' + VID.Fmt.Num.toString();
 
-					if (CID.Fmt.Type) FmtStr += ' Type=' + CID.Fmt.Type.toString();
+					if (VID.Fmt.Type) FmtStr += ' Type=' + VID.Fmt.Type.toString();
 
 					FmtStr += '\n';
 				}
@@ -1771,14 +1771,14 @@ export namespace RS1 {
 		}
 
 		ToSelect(Select: HTMLSelectElement | HTMLOListElement | HTMLUListElement) {
-			let CIDs = this.IDsToCIDs(undefined);
-			let CIDLen = CIDs.length;
+			let VIDs = this.IDsToVIDs(undefined);
+			let VIDLen = VIDs.length;
 
 			if (Select instanceof HTMLSelectElement) {
 				Select.options.length = 0;
-				for (let i = 0; i < CIDLen; ) CIDs[i++].ToSelect(Select);
+				for (let i = 0; i < VIDLen; ) VIDs[i++].ToSelect(Select);
 			} else if (Select instanceof HTMLOListElement || Select instanceof HTMLUListElement) {
-				for (let i = 0; i < CIDLen; ) CIDs[i++].ToList(Select);
+				for (let i = 0; i < VIDLen; ) VIDs[i++].ToList(Select);
 			}
 		}
 
@@ -1789,7 +1789,7 @@ export namespace RS1 {
 			e.style.display = 'none';
 			e.click();
 		}
-	} // VList
+	} // vList
 
 	export class IOType {
 		type: number = 0;
@@ -1804,26 +1804,26 @@ export namespace RS1 {
 	}
 
 	export class ListOfLists {
-		Lists: VList[] = [];
+		Lists: vList[] = [];
 
-		ListByName(Name: string): VList | undefined {
+		ListByName(Name: string): vList | undefined {
 			for (const L of this.Lists)
 				if (L.Name === Name) return L;
 		}
 
-		Add(ListStr: string | string[]): VList | undefined {
+		Add(ListStr: string | string[]): vList | undefined {
 			let ListStrs: string[] = (typeof ListStr === 'string') ? [ListStr] : ListStr;
 			let List;
 
 			for (const L of ListStrs) {
-				this.Lists.push (List = new VList(L));
+				this.Lists.push (List = new vList(L));
 			}
 
 			if (ListStrs.length <= 1)
 				return List;
 		}
 
-		Merge(AOL: VList[]) {
+		Merge(AOL: vList[]) {
 			let ListLimit = this.Lists.length;
 			if (!ListLimit) {
 				//	empty list
@@ -1849,13 +1849,13 @@ export namespace RS1 {
 		async Defines(FileName: string = 'Consts.ts') {
 			let DocStr = '\n\n\n/*  Documentation Names/Desc\t___________________\n\n';
 
-			let DefineStr = '/*\tDefines for VLists\t*/\n\n';
+			let DefineStr = '/*\tDefines for vLists\t*/\n\n';
 
 			let AB = new ArrayBuffer(16);
 			let ABBool = AB instanceof ArrayBuffer;
 
 			DefineStr += 'AB = ' + typeof AB + (ABBool ? 'true' : 'false') + '\n';
-			let CList = VList;
+			let CList = vList;
 			DefineStr += 'CList = ' + typeof CList + '\n';
 
 			let limit = this.Lists.length;
@@ -1864,30 +1864,30 @@ export namespace RS1 {
 
 				DefineStr += List.ToDC();
 				DocStr += '\n\nList ' + List.Name + '(' + List.Desc + ')\t' + List.Str + '\n';
-				let CIDs = List.ToSortedCIDs();
-				for (let i = 0; i < CIDs.length; ++i) {
-					let CID = CIDs[i];
-					DocStr += CID.Name + '\t';
-					if (CID.Fmt)
+				let VIDs = List.ToSortedVIDs();
+				for (let i = 0; i < VIDs.length; ++i) {
+					let VID = VIDs[i];
+					DocStr += VID.Name + '\t';
+					if (VID.Fmt)
 						DocStr +=
 							'[' +
-							CID.Fmt.Ch +
-							(CID.Fmt.Num ? CID.Fmt.Num.toString() : '') +
-							CID.Fmt.Str +
+							VID.Fmt.Ch +
+							(VID.Fmt.Num ? VID.Fmt.Num.toString() : '') +
+							VID.Fmt.Str +
 							']' +
 							'\t';
-					let ID = CID.List.IDByName(CID.Name); // CID.ID;
+					let ID = VID.List.IDByName(VID.Name); // VID.ID;
 					// if (isNaN (ID))
 					//   ID = 999;
 
-					DocStr += CID.Desc + '\tID[' + CID.Name + ']==' + ID.toString() + '\n';
+					DocStr += VID.Desc + '\tID[' + VID.Name + ']==' + ID.toString() + '\n';
 				}
 
 				DocStr += 'NameList=' + List.NameList() + '\t' + List.Count + '\n';
 			}
 
 			console.log('Reading NewTileStrings!');
-			let NewTileList = new VList(NewTileStrings);
+			let NewTileList = new vList(NewTileStrings);
 			if (NewTileList) NewTileList.Dump('');
 			console.log('Finished reading NewTileStrings');
 
@@ -1902,7 +1902,7 @@ export namespace RS1 {
 
 			if (RS1.CL.LT && RS1.CL.AC) RS1.CL.LT.Merge(RS1.CL.AC);
 
-			let LongList = new VList(TileStrings.join('\n') + '\n');
+			let LongList = new vList(TileStrings.join('\n') + '\n');
 
 			DocStr += '\n Dump of LongList...\n' + LongList.Str + '\n End of LongList Dump.  \n';
 			DocStr += 'LongList Name=' + LongList.Name + ' Desc=' + LongList.Desc + '\n\n';
@@ -1968,7 +1968,7 @@ export namespace RS1 {
 			console.log ('Check1/2 = ' + Check1.toString () + ' ' + Check2.toString ());
 		}
 
-		ToVList(): VList | undefined {
+		TovList(): vList | undefined {
 			let limit = this.Lists.length;
 
 			let LStrs: string[] = ['LL:ListOfLists'];
@@ -1985,11 +1985,11 @@ export namespace RS1 {
 
 			LStrs = LStrs.sort();
 
-			return new VList(LStrs.join(PrimeDelim) + PrimeDelim);
+			return new vList(LStrs.join(PrimeDelim) + PrimeDelim);
 		}
 
 		ToSelect(Select: HTMLSelectElement) {
-			let List = this.ToVList();
+			let List = this.TovList();
 
 			if (List) List.ToSelect(Select);
 		}
@@ -2069,20 +2069,20 @@ export namespace RS1 {
 			let RetStr = '';
 			let Invalid = true;
 
-			let ListCID: constID | undefined = CL.FM ? CL.FM.GetCID(this.ListType) : undefined;
-			if (ListCID) {
-				let List: VList | undefined = CL.ListByName(ListCID.Name);
+			let ListVID: vID | undefined = CL.FM ? CL.FM.GetVID(this.ListType) : undefined;
+			if (ListVID) {
+				let List: vList | undefined = CL.ListByName(ListVID.Name);
 
 				if (List) {
-					let CID: constID | undefined = List.GetCID(this.ID);
+					let VID: vID | undefined = List.GetVID(this.ID);
 
-					RetStr = ListCID.Name + NameDelim + ListCID.Desc;
+					RetStr = ListVID.Name + NameDelim + ListVID.Desc;
 
-					if (CID) {
-						RetStr += ' = ' + CID.Name + NameDelim + CID.Desc;
+					if (VID) {
+						RetStr += ' = ' + VID.Name + NameDelim + VID.Desc;
 						Invalid = false;
 					} else RetStr += ' = Bad ID #' + this.ID.toString();
-				} else RetStr = 'Cannot find Listname ' + ListCID.Name + ' # ' + ListCID.ID.toString;
+				} else RetStr = 'Cannot find Listname ' + ListVID.Name + ' # ' + ListVID.ID.toString;
 			} else RetStr = 'Bad List #' + this.ListType.toString();
 
 			if (Invalid) {
@@ -3025,7 +3025,7 @@ export namespace RS1 {
 
 	export const sql = new SQL ();
 
-	/*	Defines for VLists	*/
+	/*	Defines for vLists	*/
 
 	// FM:FM="FM|Num|Int|Dollar|Ord|Range|Pair|Nums|Member|Set|Str|Strs|Upper|"
 	export const FMDollar = 3,

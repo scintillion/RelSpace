@@ -1,17 +1,17 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { Editor } from '$lib/VListEditor';
-	import { RS1 } from '../../lib/VList';
+	import { Editor } from '$lib/vListEditor';
+	import { RS1 } from '../../lib/vList';
 
 	export let CLString: string = '';
 
-	const list1: RS1.VList = new RS1.VList(
+	const list1: RS1.vList = new RS1.vList(
 		'Test1|Test1Name:[%=Jane]Your Name|ListNum:[#=1]The List Number|'
 	);
-	const list2: RS1.VList = new RS1.VList(
+	const list2: RS1.vList = new RS1.vList(
 		'Test2|Test2Name:[%=John]Your Name|ListNum:[#=2]The List Number|'
 	);
-	const list3: RS1.VList = new RS1.VList(
+	const list3: RS1.vList = new RS1.vList(
 		'Test3|Test3Name:[%=Jacob]Your Name|ListNum:[#=3]The List Number|'
 	);
 	const LoL: RS1.ListOfLists = new RS1.ListOfLists();
@@ -25,7 +25,7 @@
 		) as HTMLDivElement | null;
 
 		if (container) {
-			const list: RS1.VList = new RS1.VList(CLString);
+			const list: RS1.vList = new RS1.vList(CLString);
 			const edit: Editor = new Editor(container, list, LoL);
 			edit.Populate();
 		}
@@ -35,7 +35,7 @@
 <div class="editor">
 	<div id="cledit">
 		<div class="selectContainer" />
-		<div class="cidOperations">
+		<div class="VIDOperations">
 			<div class="functions" id="Line1">
 				<label for="name">Name: </label>
 				<input type="text" name="name" placeholder="No Use Unless You Add" />
@@ -75,7 +75,7 @@
 </div>
 
 <style lang="scss">
-	.cidOperations {
+	.VIDOperations {
 		width: 100%;
 		display: flex;
 		align-items: center;
