@@ -2258,81 +2258,60 @@ export namespace RSLst {
 		private _data : PFData = NILAB;
 		private _error = '';
 		private _AB = NILAB;
-		private _buf = NILArray;
 
 		get Type () { return this._type; }
 		get Name () { return this._name; }
 		get Str () { return (this._type === tStr) ? this._data as string : ''; }
 		get Num () { return (this._type === tNum) ? this._data as number : NaN; }
 
-		get Size () { return this._AB.byteLength; }
 		get AB () { return this._AB; }
-		get Buf () { return this._buf; }
 		get Pack () { return (this._type == tPack) ? this._data as BufPack : NILPack; }
 		get Error () { return this._error; }
 		get Data () { return this._data; }
 
-		private toAB () : Int8Array {
+		toAB () {
 			let AB : ArrayBuffer;
-			switch (this.Type) {
+			switch (this._type) {
 				case tNum : AB = num2ab (this.Num); break;
 				case tStr : AB = str2ab (this.Str); break;
-				case tAB :
-					AB = this._AB.slice (0); 	// make a copy, don't pass pointer to original
-					break;			
-
+				case tAB : return this._AB;
 				case tPack : AB = (this._data as BufPack).BufOut (); break;
 				default : AB = NILAB; this._error = 'toArray Error, Type =' + this.Type + '.';
 			}
 
-			return new Int8Array (AB);
+			return this._AB = AB;
 		}
 
-		private _setHard (D : PFData, Type1 : string, AB : ArrayBuffer) {
-			this._data = D;
-			this._type = Type1;
-			this._buf = new Uint8Array (this._AB = AB);
-		}
-
-		setFast (D : PFData, Type1 : string) {
+		get Size () {
 			let AB;
 
-			switch (Type1) {
-				case tStr : AB = str2ab (D as string); break;
-				case tNum : AB = num2ab (D as number); break;
-				case tAB : AB = D as ArrayBuffer; break;
-				case tPack : AB = (D as BufPack).BufOut (); break;
-				default :
-						Type1 = tAB;
-						D = AB = NILAB;
-				}
+			if (!(AB = this._AB))
+				AB = this.toAB ();
 
-			this._setHard (D, Type1, AB);
+			return AB ? AB.byteLength : 0;
 		}
 
 		setData (D : PFData) {
+			let Type;
+			this._data = D;
 			switch (typeof (D)) {
-				case 'string' : this.setFast (D, tStr); break;
-				case 'number' : this.setFast (D, tNum); break;
+				case 'string' : Type = tStr; break;
+				case 'number' : Type = tNum; break;
 				default :
-					if (D instanceof ArrayBuffer)
-						this._setHard (D,tAB,D as ArrayBuffer);
+					if (D instanceof BufPack)
+						Type = tPack;
 					else {
-						let AB, Type;
-
-						if (D instanceof BufPack) {
-							AB = (D as BufPack).BufOut ();
-							Type = tAB;
-						}
+						Type = tAB;
+						if (D instanceof ArrayBuffer)
+							this._AB = D as ArrayBuffer;
 						else {
-							Type = tAB;
-							AB = NILAB;
+							this._data = NILAB;
 							if (D)	// not null, but BAD type
 								this._error = 'BAD_DATATYPE';
 						}
-						this._setHard (D, Type, AB);
 					}
 			}
+			this._type = Type;
 		}
 
 		private setByAB (AB : ArrayBuffer,Type1 : string) {
@@ -2349,7 +2328,8 @@ export namespace RSLst {
 					break;
 			}
 
-			this._setHard (D, Type1, AB);
+			this._data = D;
+			this._type = Type1;
 		}
 
 		private _setByBuf (Type : string, InBuffer : Int8Array | ArrayBuffer, Start = -1, nBytes = -1) {
@@ -2403,15 +2383,22 @@ export namespace RSLst {
 			return Str;
 		}
 
+
 		Equal (Ref : PackField) : boolean {
-			if ((this._type === Ref._type)  &&  (this.Size === Ref.Size)) {
+			if (this._type === Ref._type) {
 				switch (this._type) {
 					case tNum : return this.Num === Ref.Num;
 					case tStr : return this.Str === Ref.Str;
 					case tAB :
-						let limit = this.Buf.byteLength;
+						let limit = this._AB.byteLength;
+						if (Ref._AB.byteLength != limit)
+							return false;
+
+						let B = new Uint8Array (this._AB);
+						let R = new Uint8Array (Ref._AB);
+
 						for (let i = limit; --i >= 0;) {
-							if (this.Buf[i] !== Ref.Buf[i])
+							if (B[i] !== R[i])
 								return false;
 						}
 						return true;	// no mismatch, equal.
@@ -2437,9 +2424,6 @@ export namespace RSLst {
 				default : Str += ' DEFAULT AB, Type =' + this._type + ' ' + this.Size.toString () + ' bytes'; break;
 			}
 
-			if (this.Buf === NILArray)
-				Str += ' *** Buf === NILArray!\n';
-
 			if (this._error)
 				Str += ' ***ERROR*** ' + this._error;
 
@@ -2462,6 +2446,15 @@ export namespace RSLst {
 			// trim ] and trailing text to avoid errors
 
 			this.Details = _Details;
+		}
+
+		toABs ()
+		{
+			for (const F of this.Cs)
+				F.toAB ();
+
+			for (const F of this.Ds)
+				F.toAB ();
 		}
 
 		Update (N : string, V : any) {
@@ -2487,9 +2480,9 @@ export namespace RSLst {
 			}
 		}
 
-		Data(Name: string): ArrayBuffer {
+		Data(Name: string): PFData {
 			let F = this.Field(Name);
-			return F ? F.AB : NILAB;
+			return F ? F.Data : NILAB;
 		}
 
 		Str(Name: string) {
@@ -2609,10 +2602,9 @@ export namespace RSLst {
 		}
 
 		private GetPrefix(): string {
-			let PFs = this.Cs.concat (this.Ds);
+			this.toABs ();
 
-			// for (let PF of PFs)
-			//	console.log (PF.Name + ':' + PF.Type + ' ' + PF.Size.toString ());
+			let PFs = this.Cs.concat (this.Ds);
 
 			let Prefix = '    ';
 			if (this.Type1) {
@@ -2625,8 +2617,6 @@ export namespace RSLst {
 				//	console.log ('  Prefix add Name ' + PF.Name + ' Type ' + PF.Type + ' Size ' + PF.Size.toString ());
 				Prefix += ',' + PF.Type + PF.Name + ':' + PF.Size.toString();
 			}
-
-			// console.log('GetPrefix = ' + Prefix.length.toString () + ' chars = ' + Prefix + '.\n');
 			return Prefix;
 		}
 
@@ -2656,11 +2646,22 @@ export namespace RSLst {
 			let Pos = PAB.byteLength;
 
 			for (let F of Fields) {
-				BA.set (F.Buf, Pos);
+				BA.set (new Uint8Array (F.AB), Pos);
 				// console.log ('  BufOut Name:' + F.Name + ' Size ' + F.Size.toString () + ' ' + F.Type);
-				Pos += F.Size;
+				Pos += F.AB.byteLength;
 			}
 
+			console.log ('BufOut: PBytes ' + PAB.byteLength.toString () + '/' + Bytes.toString () + 
+				' Prefix:' + Prefix + '!');
+
+			if (Bytes <= PAB.byteLength)
+				throw 'BufOUT';
+
+			console.log ('Checking BufIn!');
+			let TestBP = new BufPack ('?');
+			TestBP.BufIn (AB);
+			console.log ('Test Prefix=' + TestBP.GetPrefix ());
+			
 			return AB;
 		}
 
@@ -2686,9 +2687,9 @@ export namespace RSLst {
 
 			let BA = new Uint8Array (AB);
 
-			let NumBuf = BA.slice (0, 8);
-			let NumStr = ab2str (NumBuf);
-			let PBytes = Number (NumStr.slice (0,4));
+			let NumBuf = AB.slice (0, 8);
+			let PStr = ab2str (NumBuf);
+			let PBytes = Number (PStr.slice (0,4));
 			let Num;
 
 			let PBuf = BA.slice (0,PBytes);
@@ -2727,9 +2728,12 @@ export namespace RSLst {
 
 			let Offset = PBytes;
 
+			console.log ('BufIn: pBytes = ' + PBytes.toString () + '/' + AB.byteLength.toString () + 
+				' Prefix:' + Prefix + '! PStr=' + PStr + '.');
+
+
 			let TPos;
 			let SPos;
-			NumStr = '';
 			let EndPos;
 			let Name;
 			let DBuf;
@@ -2742,16 +2746,22 @@ export namespace RSLst {
 					Type = Prefix[NPos];
 					Name = Prefix.slice(NPos + 1, SPos);
 
-					NumStr = Prefix.slice(++SPos, SPos + 12);
+					let NumStr = Prefix.slice(++SPos, SPos + 12);
 					if ((EndPos = NumStr.indexOf(',')) >= 0)
 						NumStr = NumStr.slice(0, EndPos);
 
 					nBytes = Number(NumStr);
 
+					console.log (Type + Name +':Offset = ' + Offset.toString () + 
+					' NumStr =' + NumStr + '. nBytes =' + nBytes.toString () );
+
+
 					DBuf = AB.slice(Offset, Offset + nBytes);
 
-					if (DBuf.byteLength !== nBytes)
+					if (DBuf.byteLength !== nBytes) {
+						console.log ('  !! DBuf bytes = ' + DBuf.byteLength.toString ());
 						throw "LimitError!";
+					}
 
 					let NewFld = new PackField (Name,DBuf,Type);
 
@@ -2765,7 +2775,7 @@ export namespace RSLst {
 					//console.log('  BufIn C/D = ' + this.Cs.length.toString () + '/' +
 					//	this.Ds.length.toString () + ' ' + NewFld.Desc());
 
-					Offset += NewFld.Size;
+					Offset += nBytes;	//	NewFld.Size, should be same!
 					NPos = SPos;
 				}
 			}
