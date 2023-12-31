@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { Plotter } from '$lib/Plotter';
-	import { RS1 } from '$lib/vList';
+	import { RS1 } from '$lib/RS';
 
 	const TileStrings: string[] = [
 		'T\ta|name:Full|\ts|display:flex|column:1|align-items:center|background:black|width:100vw|height:100vh|\t',

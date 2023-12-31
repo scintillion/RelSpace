@@ -24,7 +24,7 @@ let Thing;
 
   import Button from './Span.svelte';
 
-  import { RS1 } from "../../lib/vList"
+  import { RS1 } from "../../lib/RS"
 
   // import { DBKit }  from "../../lib/DBKit/Main"
 

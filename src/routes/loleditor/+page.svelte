@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { LOLEditor } from '$lib/vListEditor';
-	import { RS1 } from '../../lib/vList';
+	import { LOLEditor } from '$lib/ConstListEditor';
+	import { RS1 } from '../../lib/RS';
 
 	onMount(() => {
 		const container: HTMLDivElement = document.getElementById(

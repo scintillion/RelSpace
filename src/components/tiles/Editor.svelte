@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { Editor } from '$lib/vListEditor';
-	import { RS1 } from '../../lib/vList';
+	import { Editor } from '$lib/ConstListEditor';
+	import { RS1 } from '../../lib/RS';
 
 	export let CLString: string = '';
 
