@@ -67,7 +67,7 @@ class DBKit {
 				newBPs.BufIn (Pack.BufOut ());
 			}
 		else {
-			console.log ('Dumping dbResponse after run');
+			// console.log ('Dumping dbResponse after run');
 			dbResponse = statement.run (Params);
 			Pack.objectIn (dbResponse);
 
@@ -85,8 +85,15 @@ class DBKit {
 const DBK = new DBKit('tile.sqlite3');
 
 async function ReqPack (InPack : RSLst.BufPack) : Promise<RSLst.BufPack> {
+	let Serial = InPack.Num ('#');
+	if (!Serial)
+		throw "No Client Serial!";
+	console.log ('Receive Client Request #' + Serial.toString ());
+
 	let Params = RSLst.sql.buildQ (InPack);
 	let OutPack = DBK.execQ (InPack, Params);
+
+	OutPack.Add (['#',Serial]);
 
 	console.log ('ServerResult BP:\n' + OutPack.Desc ());
 	return OutPack;
@@ -105,10 +112,7 @@ export const POST = (async ({ request, url }) => {
 
 	const ClientAB = await request.arrayBuffer();
 
-	console.log ('---\n---\n---\n---\n---\nServer receives INCOMING Client Request AB bytes = ' + ClientAB.byteLength.toString ());
-
 	let ServerAB = await RSLst.ReqAB (ClientAB);
-	console.log ('ServerAB Bytes Sent to Client= ' + ServerAB.byteLength.toString ());
 
 	return new Response(ServerAB);
 }) satisfies RequestHandler;

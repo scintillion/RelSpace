@@ -96,8 +96,8 @@ export namespace RSLst {
 		let BP = new BufPack ();
 		BP.Add ([StrType,Query]);
 	
-		console.log ('strRequest BP on client:\n' + BP.Desc ());
-		console.log ('BP.BufOut length = ' + BP.BufOut ().byteLength.toString ());
+		// console.log ('strRequest BP on client:\n' + BP.Desc ());
+		// console.log ('BP.BufOut length = ' + BP.BufOut ().byteLength.toString ());
 	
 		let BPReply = await ReqPack (BP);
 	
@@ -2282,6 +2282,7 @@ export namespace RSLst {
 			return this._AB = AB;
 		}
 
+	/*
 		get Size () {
 			let AB;
 
@@ -2290,6 +2291,7 @@ export namespace RSLst {
 
 			return AB ? AB.byteLength : 0;
 		}
+	*/
 
 		setData (D : PFData) {
 			let Type;
@@ -2370,14 +2372,16 @@ export namespace RSLst {
 				case tNum : Str += this.Num.toString (); break;
 				case tStr : Str += this.Str; break;
 				case tPack : case tAB :
-					 Str += '(' + this.Size.toString () + 'b)';
+					 Str += '(' ;
 					 if (this._type === tPack) {
 						let Pack = this.Pack;
 
-						Str += 'C:'+Pack.Cs.length.toString() + ' D:' + Pack.Ds.length.toString ();
+						Str += 'C:'+Pack.Cs.length.toString() + ' D:' + Pack.Ds.length.toString () + ')';
 					 }
+					 else	Str += this._AB.byteLength.toString () + ')';
+
 					 break;
-				default : Str += 'BADTYPE=' + this._type + ' ' + this.Size.toString () + ' bytes';
+				default : Str += 'BADTYPE=' + this._type + ' ' + this.AB.byteLength.toString () + ' bytes';
 			}
 
 			return Str;
@@ -2421,7 +2425,7 @@ export namespace RSLst {
 					break;
 				case tAB : break;
 
-				default : Str += ' DEFAULT AB, Type =' + this._type + ' ' + this.Size.toString () + ' bytes'; break;
+				default : Str += ' DEFAULT AB, Type =' + this._type + ' ' + this._AB.byteLength.toString () + ' bytes'; break;
 			}
 
 			if (this._error)
@@ -2547,7 +2551,7 @@ export namespace RSLst {
 				return;		// must always be matching pairs (Name/Data), odd params not allowed
 
 
-			console.log ('BufPack.Add Incoming:');
+			// console.log ('BufPack.Add Incoming:');
 			if (NotNull)
 				console.log (this.Desc ());
 
@@ -2615,7 +2619,7 @@ export namespace RSLst {
 
 			for (let PF of PFs) {
 				//	console.log ('  Prefix add Name ' + PF.Name + ' Type ' + PF.Type + ' Size ' + PF.Size.toString ());
-				Prefix += ',' + PF.Type + PF.Name + ':' + PF.Size.toString();
+				Prefix += ',' + PF.Type + PF.Name + ':' + PF.AB.byteLength.toString();
 			}
 			return Prefix;
 		}
@@ -2635,11 +2639,11 @@ export namespace RSLst {
 			let limit = Fields.length;
 
 			for (let F of Fields)
-				Bytes += F.Size;
+				Bytes += F.AB.byteLength;
 
 			let AB = new ArrayBuffer (Bytes);
 
-			console.log ('AB = ' + AB + ' bytes = ' + AB.byteLength.toString ());
+			// console.log ('AB = ' + AB + ' bytes = ' + AB.byteLength.toString ());
 
 			let BA = new Uint8Array (AB);
 			BA.set (PAB);
@@ -2651,17 +2655,20 @@ export namespace RSLst {
 				Pos += F.AB.byteLength;
 			}
 
-			console.log ('BufOut: PBytes ' + PAB.byteLength.toString () + '/' + Bytes.toString () + 
-				' Prefix:' + Prefix + '!');
+			// console.log ('BufOut: PBytes ' + PAB.byteLength.toString () + '/' + Bytes.toString () + 
+			//	' Prefix:' + Prefix + '!');
 
 			if (Bytes <= PAB.byteLength)
 				throw 'BufOUT';
 
-			console.log ('Checking BufIn!');
+			// console.log ('BufOut Prefix:' + Prefix);
 			let TestBP = new BufPack ('?');
 			TestBP.BufIn (AB);
-			console.log ('Test Prefix=' + TestBP.GetPrefix ());
-			
+			let TestPrefix = TestBP.GetPrefix ();
+			// console.log (' BufIn Prefix:' + TestPrefix);
+			if (Prefix.slice (4) !== TestPrefix.slice (4))
+				throw "Prefix Mismatch!";
+
 			return AB;
 		}
 
@@ -2688,8 +2695,8 @@ export namespace RSLst {
 			let BA = new Uint8Array (AB);
 
 			let NumBuf = AB.slice (0, 8);
-			let PStr = ab2str (NumBuf);
-			let PBytes = Number (PStr.slice (0,4));
+			let PStr = ab2str (NumBuf).slice (0,4);
+			let PBytes = Number (PStr);
 			let Num;
 
 			let PBuf = BA.slice (0,PBytes);
@@ -2728,8 +2735,8 @@ export namespace RSLst {
 
 			let Offset = PBytes;
 
-			console.log ('BufIn: pBytes = ' + PBytes.toString () + '/' + AB.byteLength.toString () + 
-				' Prefix:' + Prefix + '! PStr=' + PStr + '.');
+			// console.log ('BufIn: pBytes = ' + PBytes.toString () + '/' + AB.byteLength.toString () + 
+			//	' Prefix:' + Prefix + '! PStr=' + PStr + '.');
 
 
 			let TPos;
@@ -2752,8 +2759,8 @@ export namespace RSLst {
 
 					nBytes = Number(NumStr);
 
-					console.log (Type + Name +':Offset = ' + Offset.toString () + 
-					' NumStr =' + NumStr + '. nBytes =' + nBytes.toString () );
+					// console.log (Type + Name +':Offset = ' + Offset.toString () + 
+					// ' NumStr =' + NumStr + '. nBytes =' + nBytes.toString () );
 
 
 					DBuf = AB.slice(Offset, Offset + nBytes);
@@ -2843,7 +2850,7 @@ export namespace RSLst {
 		objectIn (O : Object) {
 			this.Clear ();
 			
-			console.log ('ObjectIn:Adding entries!');
+			// console.log ('ObjectIn:Adding entries!');
 
 			let entries = Object.entries (O);
 			let AddArray = Array(entries.length << 1);
@@ -2857,7 +2864,7 @@ export namespace RSLst {
 			}
 
 			this.Add (AddArray);
-			console.log ('ObjectIn Resultant BP:' + '\n' + this.Desc ());
+			// console.log ('ObjectIn Resultant BP:' + '\n' + this.Desc ());
 		}
 
 		objectOut () : Object {
