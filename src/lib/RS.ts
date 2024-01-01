@@ -425,7 +425,7 @@ export namespace RS1 {
 
 		Fmt: IFmt | undefined;
 
-		constructor (P = NILPack) {
+		LoadPack(P: BufPack) {
 			if (P === NILPack)
 				return;
 
@@ -437,6 +437,10 @@ export namespace RS1 {
 			this.ID = P.num ('!ID');
 			this.Details = P.str ('details');
 			this.Data = P.data ('data');
+		}
+
+		constructor (P = NILPack) {
+			this.LoadPack (P);
 		}
 
 		InitPack() {
@@ -458,15 +462,6 @@ export namespace RS1 {
 			let P = this.InitPack ();
 			this.SaveFunc (P);
 			return ReqPack (P);
-		}
-
-		LoadPack(P: BufPack) {
-			this.Name = P.str('name');
-			this.Desc = P.str('desc');
-			this.Type = P.str('type');
-			this.ID = P.num('!ID');
-			this.Tile = P.str('!T');
-			this.Str = P.str('str');
 		}
 
 		ToValue() {
@@ -2874,7 +2869,7 @@ export namespace RS1 {
 				switch (F.Type) {
 					case tNum : Values[nValues++] = F.Num; break;
 					case tStr : Values[nValues++] = F.Str; break;
-					default : Values[nValues++] = F.AB;
+					default : Values[nValues++] = new Int8Array (F.AB);
 				}								
 			}
 			Values = Values.slice (0,nValues);
