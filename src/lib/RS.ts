@@ -70,6 +70,9 @@ export namespace RS1 {
 		Pack
 	}
 
+	interface PackFunc { (Pack : BufPack) : BufPack }
+	function NullPackFunc (P : BufPack) { return P; }
+
 	interface ABReq { (AB : ArrayBuffer) : Promise<ArrayBuffer> }
 	interface StrReq { (Query : string) : Promise<RS1.BufPack> }
 	interface PackReq { (Pack : BufPack) : Promise<BufPack> }
@@ -111,6 +114,15 @@ export namespace RS1 {
 	}
 	
 	
+
+	export function Download(filename: string, text: string) {
+		var e = document.createElement('a');
+		e.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+		e.setAttribute('download', filename);
+		e.style.display = 'none';
+		e.click();
+	}
+
 	export function isDigit(ch: string): boolean {
 		ch = ch[0];
 		if ((ch <= '9')  &&  ch.length)
@@ -405,6 +417,8 @@ export namespace RS1 {
 		protected _Details = '';
 		protected _Data: any;
 
+		SaveFunc = NullPackFunc;
+
 		protected _NameBufs: NameBuffer[] | undefined;
 
 		Fmt: IFmt | undefined;
@@ -422,19 +436,25 @@ export namespace RS1 {
 				this._Tile,
 				'str',
 				this._Str,
-				'!id',
+				'!ID',
 				this._ID,
 			]);
 
 			return P;
 		}
 
+		Save () {
+			let P = this.InitPack ();
+			this.SaveFunc (P);
+			return ReqPack (P);
+		}
+
 		LoadPack(P: BufPack) {
 			this._Name = P.str('name');
 			this._Desc = P.str('desc');
 			this._Type = P.str('type');
-			this._ID = P.num('!id');
-			this._Tile = P.str('!table');
+			this._ID = P.num('!ID');
+			this._Tile = P.str('!T');
 			this._Str = P.str('str');
 		}
 
@@ -1013,24 +1033,6 @@ export namespace RS1 {
 			return this.ToFmtStr() + this.Name + ':' + this.ID.toString();
 		}
 
-		/*
-		ToSelect(Select: HTMLSelectElement | null) {
-			if (!Select) {
-				return;
-			} else if (!(Select instanceof HTMLSelectElement)) {
-				return;
-			}
-
-			let Option: HTMLOptionElement = Select.ownerDocument.createElement(
-				'option'
-			) as HTMLOptionElement;
-
-			Option.text = this.Name;
-			Option.value = this.Name;
-			Select.options.add(Option);
-		}
-*/
-
 		ToList(Select: HTMLOListElement | HTMLUListElement | null) {
 			if (!Select) {
 				return;
@@ -1200,7 +1202,7 @@ export namespace RS1 {
 			}
 		}
 
-		ByIDs(IDs: number[], Sort: boolean = false): vID[] | undefined {
+		ByIDs(IDs: number[], Sort: boolean = false): vID[] {
 			if (!IDs) {
 				// copy all in list
 				let i = this._Count;
@@ -1781,14 +1783,6 @@ export namespace RS1 {
 				for (let i = 0; i < VIDLen; ) VIDs[i++].ToList(Select);
 			}
 		}
-
-		Download(filename: string, text: string) {
-			var e = document.createElement('a');
-			e.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
-			e.setAttribute('download', filename);
-			e.style.display = 'none';
-			e.click();
-		}
 	} // vList
 
 	export class IOType {
@@ -1851,10 +1845,6 @@ export namespace RS1 {
 
 			let DefineStr = '/*\tDefines for vLists\t*/\n\n';
 
-			let AB = new ArrayBuffer(16);
-			let ABBool = AB instanceof ArrayBuffer;
-
-			DefineStr += 'AB = ' + typeof AB + (ABBool ? 'true' : 'false') + '\n';
 			let CList = vList;
 			DefineStr += 'CList = ' + typeof CList + '\n';
 
@@ -1913,7 +1903,7 @@ export namespace RS1 {
 
 			DefineStr += DocStr;
 
-			if (this.Lists[0]) this.Lists[0].Download(FileName, DefineStr);
+			if (this.Lists[0]) RS1.Download (FileName, DefineStr);
 
 			for (let i = 0; i < CL.Lists.length; ++i) {
 				let List = CL.Lists[i];
@@ -2289,16 +2279,18 @@ export namespace RS1 {
 				case 'string' : Type = tStr; break;
 				case 'number' : Type = tNum; break;
 				default :
-					if (D instanceof BufPack)
-						Type = tPack;
-					else {
+					if (!D) {
+						this._data = NILAB;
 						Type = tAB;
-						if (D instanceof ArrayBuffer)
-							this._AB = D as ArrayBuffer;
+					} else
+					{
+						let CName = D.constructor.name;
+						if (CName === 'BufPack')
+							Type = tPack;
 						else {
+							Type = tAB;
+							this._AB = (CName === 'ArrayBuffer') ? (D as ArrayBuffer) : NILAB;
 							this._data = NILAB;
-							if (D)	// not null, but BAD type
-								this._error = 'BAD_DATATYPE';
 						}
 					}
 			}
@@ -2334,7 +2326,7 @@ export namespace RS1 {
 				nBytes = 999999999;
 
 
-			if (InBuffer instanceof ArrayBuffer) {
+			if (InBuffer.constructor.name === 'ArrayBuffer') {
 				ABuf = (InBuffer as ArrayBuffer).slice (Start, Start + nBytes);
 				IBuf = new Int8Array (ABuf);
 			}
@@ -2880,17 +2872,15 @@ export namespace RS1 {
 	export class SQL {
 		buildQ (QBuf : BufPack) : any[] {
 			// select, insert, update, delete
-			console.log ('buildQ QBuf=\n' + QBuf.desc);
+			console.log ('SQL buildQ QBuf=\n' + QBuf.desc);
 
 			let Tile, qType = '', ID, QF;
 
 			for (const C of QBuf.Cs) {
-				let N = C.Name;
-
-				switch (N) {
-					case '!I' : ID = C.Num; break;
+				switch (C.Name.toUpperCase ()) {
+					case '!I' : case '!ID' : ID = C.Num; break;
 					case '!Q' : QF = C; qType = C.Str; break;
-					case '!T' : Tile = C.Str; break;
+					case '!T' : case 'TILE' : case 'TABLE' : Tile = C.Str; break;
 				}
 			}
 
