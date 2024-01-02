@@ -419,11 +419,11 @@ export namespace RS1 {
 		Details = '';
 		Data: any;
 
-		SaveFunc = NullPackFunc;
-
 		NameBufs: NameBuffer[] | undefined;
 
 		Fmt: IFmt | undefined;
+
+		PostLoad (P : BufPack) {}
 
 		LoadPack(P: BufPack) {
 			if (P === NILPack)
@@ -437,14 +437,19 @@ export namespace RS1 {
 			this.ID = P.num ('!ID');
 			this.Details = P.str ('details');
 			this.Data = P.data ('data');
+
+			this.PostLoad (P);
 		}
 
 		constructor (P = NILPack) {
 			this.LoadPack (P);
 		}
 
-		InitPack() {
-			let P = new BufPack();
+		PostSave (P : BufPack) {}
+		SavePack (P : BufPack = NILPack) {
+			if (P === NILPack)
+				P = new BufPack ();
+
 			P.add([	'name',	this.Name,
 				'desc',	this.Desc,
 				'type',	this.Type,
@@ -455,13 +460,8 @@ export namespace RS1 {
 				'data',	this.Data
 			]);
 
+			this.PostSave (P);
 			return P;
-		}
-
-		Save () {
-			let P = this.InitPack ();
-			this.SaveFunc (P);
-			return ReqPack (P);
 		}
 
 		ToValue() {
@@ -1048,6 +1048,10 @@ export namespace RS1 {
 
 			return Strs.join(this._Delim) + this._Delim;
 		}
+
+		PostSave (P : BufPack) { P.add (['data', this.getStr]); console.log ('PostSave vList'); }
+		PostLoad (P : BufPack) { this.Data = P.str ('data'); console.log ('PostLoad vList'); }
+
 
 		get Indent() {
 			return this._Indent;
@@ -1869,7 +1873,7 @@ export namespace RS1 {
 
 			for (let i = 0; i < CL.Lists.length; ++i) {
 				let List = CL.Lists[i];
-				let Pack = List.InitPack ();
+				let Pack = List.SavePack ();
 				Pack.add (['!Q','I']);
 				RS1.sql.bInsUpd (Pack);
 			}
@@ -1878,11 +1882,11 @@ export namespace RS1 {
 			let List = CL.LT;
 
 			if (List) {
-				let Pack = List.InitPack();
+				let Pack = List.SavePack();
 				// Add code here to save List to the database
 				// using "Pack"
 
-				console.log ('LT InitPack List:' + '\n' + Pack.desc);
+				console.log ('LT SavePack List:' + '\n' + Pack.desc);
 
 				Pack.add (['!Q','S']);
 				RS1.sql.buildQ (Pack);
