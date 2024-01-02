@@ -12,7 +12,7 @@
 
 		console.log ('Insert Requests:');
 		for (const List of RS1.CL.Lists) {
-				let Pack = List.InitPack ();
+				let Pack = List.SavePack ();
 				Pack.add (['!Q','I']);
 				let InsBP = await RS1.ReqPack (Pack);
 				console.log (InsBP.desc);
