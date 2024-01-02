@@ -551,6 +551,15 @@ export namespace RS1 {
 		GetData(Name: string) {}
 	}
 
+	export function PackToData (P : BufPack) : RSData {
+		let Type = P.str ('type');
+
+		switch (Type) {
+			case 'List' : return new vList (P);
+		}
+		return new RSData (P);
+	}
+
 	export function DataToSelect(Data: RSData[], Select: SelectArgs) {}
 
 	export function SelectToData(Select: SelectArgs): RSData[] {
@@ -1401,10 +1410,22 @@ export namespace RS1 {
 			this.NameList();
 		}
 
-		constructor(Str1: string | string[], First: vList | undefined = undefined) {
-			super();
-
-			this.InitList(Str1);
+		constructor(Str1: string | string[] | BufPack, First: vList | undefined = undefined) {
+			let Str, Strs, BP;
+			
+			if ((typeof Str1) === 'string') {
+				super ();
+				this.InitList (Str1 as string);
+			}
+			else if (Array.isArray (Str1)) {
+				super ();
+				this.InitList (Str1 as string[]);
+			}
+			else {
+				let BP = Str1 as BufPack;
+				super (BP);
+				this.InitList (BP.str ('data'));
+			}
 
 			if (First) {
 				let Last = First;
