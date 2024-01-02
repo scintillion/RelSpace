@@ -522,6 +522,13 @@ export namespace RS1 {
 			return undefined;
 		}
 
+		async toDB () {
+			let P = this.SavePack ();
+			P.add (['!Q',this.ID ? 'U' : 'I']);
+			P = await RS1.ReqPack (P);
+			return P.num ('changes') > 0;
+		}
+
 		SetBuffer(Name: string, DType: string, Buf: IOArgs) {
 			let Bufs = this.NameBufs;
 			if (!Bufs) {
@@ -547,8 +554,6 @@ export namespace RS1 {
 				}
 			}
 		}
-
-		GetData(Name: string) {}
 	}
 
 	export function PackToData (P : BufPack) : RSData {

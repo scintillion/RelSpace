@@ -12,10 +12,8 @@
 
 		console.log ('Insert Requests:');
 		for (const List of RS1.CL.Lists) {
-				let Pack = List.SavePack ();
-				Pack.add (['!Q','I']);
-				let InsBP = await RS1.ReqPack (Pack);
-				console.log (InsBP.desc);
+			let Write = await List.toDB ();
+			console.log ('Write=' + Write + ' Name:' + List.Name + ' Str=' + List.Str);
 			}
 
 		let BP = await RS1.ReqStr ('SELECT * from S;');	//	('SELECT name from sqlite_master;');
