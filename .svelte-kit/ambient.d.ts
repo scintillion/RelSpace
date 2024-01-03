@@ -28,6 +28,8 @@
 declare module '$env/static/private' {
 	export const ALLUSERSPROFILE: string;
 	export const APPDATA: string;
+	export const ASM_HOME: string;
+	export const CENTRICITY_PATH: string;
 	export const ChocolateyInstall: string;
 	export const ChocolateyLastPathUpdate: string;
 	export const COLOR: string;
@@ -37,25 +39,32 @@ declare module '$env/static/private' {
 	export const ComSpec: string;
 	export const DriverData: string;
 	export const EDITOR: string;
+	export const FP_NO_HOST_CHECK: string;
+	export const FSHARPINSTALLDIR: string;
 	export const HOME: string;
 	export const HOMEDRIVE: string;
 	export const HOMEPATH: string;
 	export const INIT_CWD: string;
+	export const JAVA_HOME: string;
 	export const LOCALAPPDATA: string;
 	export const LOGONSERVER: string;
+	export const MC3JAVA: string;
+	export const MERGE_INI: string;
+	export const MOZ_PLUGIN_PATH: string;
 	export const NODE: string;
 	export const NODE_ENV: string;
 	export const NODE_EXE: string;
 	export const NPM_CLI_JS: string;
 	export const npm_command: string;
 	export const npm_config_cache: string;
+	export const npm_config_fund: string;
 	export const npm_config_globalconfig: string;
 	export const npm_config_global_prefix: string;
 	export const npm_config_init_module: string;
 	export const npm_config_local_prefix: string;
+	export const npm_config_metrics_registry: string;
 	export const npm_config_node_gyp: string;
 	export const npm_config_noproxy: string;
-	export const npm_config_npm_version: string;
 	export const npm_config_prefix: string;
 	export const npm_config_userconfig: string;
 	export const npm_config_user_agent: string;
@@ -70,9 +79,11 @@ declare module '$env/static/private' {
 	export const NUMBER_OF_PROCESSORS: string;
 	export const OneDrive: string;
 	export const OneDriveConsumer: string;
+	export const OPENSSL_CONF: string;
 	export const OS: string;
 	export const Path: string;
 	export const PATHEXT: string;
+	export const PLAT_HOME: string;
 	export const PROCESSOR_ARCHITECTURE: string;
 	export const PROCESSOR_IDENTIFIER: string;
 	export const PROCESSOR_LEVEL: string;
@@ -83,6 +94,8 @@ declare module '$env/static/private' {
 	export const PROMPT: string;
 	export const PSModulePath: string;
 	export const PUBLIC: string;
+	export const QTDIR: string;
+	export const QtMsBuild: string;
 	export const RIAHELPER_JAVA_HOME: string;
 	export const SESSIONNAME: string;
 	export const SystemDrive: string;
@@ -93,7 +106,11 @@ declare module '$env/static/private' {
 	export const USERDOMAIN_ROAMINGPROFILE: string;
 	export const USERNAME: string;
 	export const USERPROFILE: string;
+	export const VS140COMNTOOLS: string;
+	export const VS90COMNTOOLS: string;
 	export const windir: string;
+	export const windows_tracing_flags: string;
+	export const windows_tracing_logfile: string;
 }
 
 /**
@@ -125,6 +142,8 @@ declare module '$env/dynamic/private' {
 	export const env: {
 		ALLUSERSPROFILE: string;
 		APPDATA: string;
+		ASM_HOME: string;
+		CENTRICITY_PATH: string;
 		ChocolateyInstall: string;
 		ChocolateyLastPathUpdate: string;
 		COLOR: string;
@@ -134,25 +153,32 @@ declare module '$env/dynamic/private' {
 		ComSpec: string;
 		DriverData: string;
 		EDITOR: string;
+		FP_NO_HOST_CHECK: string;
+		FSHARPINSTALLDIR: string;
 		HOME: string;
 		HOMEDRIVE: string;
 		HOMEPATH: string;
 		INIT_CWD: string;
+		JAVA_HOME: string;
 		LOCALAPPDATA: string;
 		LOGONSERVER: string;
+		MC3JAVA: string;
+		MERGE_INI: string;
+		MOZ_PLUGIN_PATH: string;
 		NODE: string;
 		NODE_ENV: string;
 		NODE_EXE: string;
 		NPM_CLI_JS: string;
 		npm_command: string;
 		npm_config_cache: string;
+		npm_config_fund: string;
 		npm_config_globalconfig: string;
 		npm_config_global_prefix: string;
 		npm_config_init_module: string;
 		npm_config_local_prefix: string;
+		npm_config_metrics_registry: string;
 		npm_config_node_gyp: string;
 		npm_config_noproxy: string;
-		npm_config_npm_version: string;
 		npm_config_prefix: string;
 		npm_config_userconfig: string;
 		npm_config_user_agent: string;
@@ -167,9 +193,11 @@ declare module '$env/dynamic/private' {
 		NUMBER_OF_PROCESSORS: string;
 		OneDrive: string;
 		OneDriveConsumer: string;
+		OPENSSL_CONF: string;
 		OS: string;
 		Path: string;
 		PATHEXT: string;
+		PLAT_HOME: string;
 		PROCESSOR_ARCHITECTURE: string;
 		PROCESSOR_IDENTIFIER: string;
 		PROCESSOR_LEVEL: string;
@@ -180,6 +208,8 @@ declare module '$env/dynamic/private' {
 		PROMPT: string;
 		PSModulePath: string;
 		PUBLIC: string;
+		QTDIR: string;
+		QtMsBuild: string;
 		RIAHELPER_JAVA_HOME: string;
 		SESSIONNAME: string;
 		SystemDrive: string;
@@ -190,7 +220,11 @@ declare module '$env/dynamic/private' {
 		USERDOMAIN_ROAMINGPROFILE: string;
 		USERNAME: string;
 		USERPROFILE: string;
+		VS140COMNTOOLS: string;
+		VS90COMNTOOLS: string;
 		windir: string;
+		windows_tracing_flags: string;
+		windows_tracing_logfile: string;
 		[key: `PUBLIC_${string}`]: undefined;
 		[key: `${string}`]: string | undefined;
 	}
