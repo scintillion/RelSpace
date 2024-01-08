@@ -127,25 +127,34 @@ export namespace RS1 {
 		return Names;
 	}
 	
-	export async function waiter (P : Promise<any>) : Promise<any> {
-		await tick ();
-		await tick ();
-		return P;
-	}
+	export const waiter = (ms : number) => new Promise(res => setTimeout(res, ms));
 
-	export async function ReqNames (Tile = 'S', Type = '') : Promise<RSData[]> {
-		let QStr = 'SELECT id,name,desc FROM ' + Tile;
-		if (Type)
-			QStr += ' WHERE type=\'' + Type + '\';';
-		else QStr += ';';
+	export async function ReqNames (Tile = 'S', Type = '', Sub = '') : Promise<RSData[]> {
+		let QStr = 'SELECT id,name,desc FROM ' + Tile + ' ';
+		let TypeXP = Type ? ('type=\'' + Type + '\'') : '';
+		let SubXP = Sub ? ('sub=\'' + Sub + '\'') : '';
+		let WhereXP = ';';
+
+		if (TypeXP && SubXP)
+			WhereXP = TypeXP + ' AND ' + SubXP + ';';
+		else if (TypeXP)
+			WhereXP = TypeXP + ';'
+		else if (SubXP)
+			WhereXP = SubXP + ';'
+
+		QStr += WhereXP;
 		
 		let BP = await ReqStr  (QStr);
+		// await waiter (500);
 		console.log ('BP Promised!' + BP.desc);
 		
 		if (!BP.multi)
 			return [];
+		// await waiter (500);
 
 		let BPs = BP.unpack ();
+
+		// await waiter (500);
 
 		// console.log ('ReqNames/BP=' + BP.expand ());
 
@@ -155,10 +164,11 @@ export namespace RS1 {
 		{
 			let D = new RSData ();
 
+			console.log ('  P.name = ' + P.str ('name'));
+
 			D.LoadPack (P);
 			Data[i++] = D;
-			console.log ('  ReqName:' + D.ID.toString () + '  ' + D.Name + '  '
-						 + D.Desc);
+			// console.log ('  ReqName:' + D.ID.toString () + '  ' + D.Name + '  '					 + D.Desc);
 		}
 
 		console.log ('  ' + i.toString () + ' names.');
@@ -467,6 +477,7 @@ export namespace RS1 {
 		Desc = '';
 		Type = '';
 		Tile = 'S';
+		Sub = '';
 		Str = '';
 		ID = 0;
 		Details = '';
@@ -487,6 +498,7 @@ export namespace RS1 {
 			this.Type = P.str ('type');
 			this.Tile = P.str ('!T');
 			this.Str = P.str ('str');
+			this.Sub = P.str ('sub');
 			this.ID = P.num ('!ID');
 			if (!this.ID)
 				this.ID = P.num ('id');
@@ -510,6 +522,7 @@ export namespace RS1 {
 				'type',	this.Type,
 				'!T',	this.Tile,
 				'str',	this.Str,
+				'sub', this.Sub,
 				'details',	this.Details,
 				'!ID',	this.ID,
 				'data',	this.Data
@@ -584,6 +597,7 @@ export namespace RS1 {
 			return P.num ('changes') > 0;
 		}
 
+		/*
 		SetBuffer(Name: string, DType: string, Buf: IOArgs) {
 			let Bufs = this.NameBufs;
 			if (!Bufs) {
@@ -609,6 +623,7 @@ export namespace RS1 {
 				}
 			}
 		}
+		*/
 	}
 
 	export function PackToData (P : BufPack) : RSData {
