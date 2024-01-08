@@ -24,7 +24,7 @@
 
 		let Tables = await RS1.ReqTiles ();
 
-		let Names = await RS1.ReqNames ();
+		let Names = await RS1.ReqNames ('S','List');
 	});
 
 

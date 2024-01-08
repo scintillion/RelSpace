@@ -15,9 +15,9 @@ async function ABRequest (AB : ArrayBuffer): Promise<ArrayBuffer> {
             },
         }
     );
+
     const response = await req.arrayBuffer();
 
-    // console.log ('AB received by Client, bytes = ' + response.byteLength.toString ());
     return response;
 }
 
@@ -28,13 +28,9 @@ async function packRequest (BP : RS1.BufPack) : Promise<RS1.BufPack>{
   let AB = BP.bufOut ();
   console.log ('Sending Client Request #' + Serial.toString ());
 
-  // console.log ('  CheckBuf Outgoing = ' + RS1.ChkBuf (AB).toString ());
+  let recvAB = await RS1.ReqAB (AB);
 
-  AB = await RS1.ReqAB (AB);
-
-  // console.log ('   CheckBuf Incoming = ' + RS1.ChkBuf (AB).toString ());
-  
-  BP.bufIn (AB);
+  BP.bufIn (recvAB);
 
   console.log (' Received Server reply #' + BP.num ('#').toString ());
 

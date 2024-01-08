@@ -134,14 +134,14 @@ export namespace RS1 {
 	}
 
 	export async function ReqNames (Tile = 'S', Type = '') : Promise<RSData[]> {
-		let BP = await ReqStr  ('SELECT id,name,desc FROM ' + Tile + ';');
-		// let BPromise = ReqStr  ('SELECT id,name,desc FROM ' + Tile + ';');
-		// let BP = await waiter (BPromise);
+		let QStr = 'SELECT id,name,desc FROM ' + Tile;
+		if (Type)
+			QStr += ' WHERE type=\'' + Type + '\';';
+		else QStr += ';';
+		
+		let BP = await ReqStr  (QStr);
 		console.log ('BP Promised!' + BP.desc);
 		
-		await tick ();
-		// console.log ('ReqNamesBP:' + BP.expand ());
-
 		if (!BP.multi)
 			return [];
 
@@ -1084,7 +1084,7 @@ export namespace RS1 {
 	} // class vID
 
 	export class vList extends RSData {
-		_Type = 'List';
+		Type = 'List';
 		protected _Delim = PrimeDelim;
 		private _FirstDelim = 0;
 		protected _Count = 0;
