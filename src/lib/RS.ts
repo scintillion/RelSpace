@@ -107,12 +107,49 @@ export namespace RS1 {
 		return BPReply;
 	}
 
-	export async function ReqTables () : Promise<RS1.BufPack> {
+	export async function ReqTiles () : Promise<string[]> {
 		let BP = await RS1.ReqStr ('SELECT name from sqlite_master;');
-		console.log ('ReqTables:\n' + BP.expand ());
-		return BP;
+
+		let SQStr = "sqlite_";
+		let SQLen = SQStr.length;
+
+		let BPs = BP.unpack ();
+		let Names : string[] = [];
+		for (const P of BPs) {
+			let Name = P.str ('name');
+			if (Name.slice (0,SQLen) !== SQStr) {
+				Names.push (Name);
+				console.log ('  ' + Name);
+			}
+		}
+		return Names;
 	}
 	
+	export async function ReqNames (Tile = 'S', Type = '') : Promise<RSData[]> {
+		let BP = await ReqStr  ('SELECT id,name,desc FROM ' + Tile + ';');
+		if (!BP.multi)
+			return [];
+
+		// console.log ('ReqNamesBP=' + BP.desc);
+		// console.log ('ReqNames/BP=' + BP.expand ());
+
+		let BPs = await BP.unpack ();
+		let Data = new Array<RSData> (BPs.length);
+		let i = 0;
+		for (const P of BPs)
+		{
+			let D = new RSData ();
+
+			D.LoadPack (P);
+			Data[i++] = D;
+			console.log ('  ReqName:' + D.ID.toString () + '  ' + D.Name + '  ' + D.Desc);
+		}
+
+		console.log ('  ' + i.toString () + ' names.');
+
+		return Data;
+	}
+
 	
 
 	export function Download(filename: string, text: string) {
@@ -435,6 +472,8 @@ export namespace RS1 {
 			this.Tile = P.str ('!T');
 			this.Str = P.str ('str');
 			this.ID = P.num ('!ID');
+			if (!this.ID)
+				this.ID = P.num ('id');
 			this.Details = P.str ('details');
 			this.Data = P.data ('data');
 
@@ -2602,11 +2641,11 @@ export namespace RS1 {
 			let PAB = str2ab (Prefix);
 			let Bytes = PAB.byteLength;
 			let ByteStr = Bytes.toString ();
-			//	console.log ('FirstPAB ' + PAB.byteLength.toString ());
+			// console.log ('FirstPAB ' + PAB.byteLength.toString ());
 
 			Prefix = ByteStr + Prefix.slice (ByteStr.length);
 			PAB = str2ab (Prefix);
-			//	console.log ('SecondPAB ' + PAB.byteLength.toString ());
+			// console.log ('SecondPAB ' + PAB.byteLength.toString ());
 
 			let Fields = this.Cs.concat (this.Ds);
 			let limit = Fields.length;
@@ -2628,10 +2667,7 @@ export namespace RS1 {
 				Pos += F.AB.byteLength;
 			}
 
-			// console.log ('BufOut: PBytes ' + PAB.byteLength.toString () + '/' + Bytes.toString () + 
-			//	' Prefix:' + Prefix + '!');
-
-			if (Bytes <= PAB.byteLength)
+			if (Bytes < PAB.byteLength)
 				throw 'BufOUT';
 
 			// console.log ('BufOut Prefix:' + Prefix);

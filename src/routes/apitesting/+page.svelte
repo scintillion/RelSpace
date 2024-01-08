@@ -21,10 +21,10 @@
 
 
 		BP = await RS1.ReqStr ('SELECT name from sqlite_master;');
-		console.log ('Select Tables\n' + BP.expand ());
 
-		console.log ('Calling ReqTables!');
-		BP = await RS1.ReqTables ();
+		let Tables = await RS1.ReqTiles ();
+
+		let Names = await RS1.ReqNames ();
 	});
 
 
