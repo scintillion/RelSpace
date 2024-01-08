@@ -1,3 +1,5 @@
+import { tick } from "svelte";
+ 
 export namespace RS1 {
 
 	/*
@@ -125,15 +127,28 @@ export namespace RS1 {
 		return Names;
 	}
 	
+	export async function waiter (P : Promise<any>) : Promise<any> {
+		await tick ();
+		await tick ();
+		return P;
+	}
+
 	export async function ReqNames (Tile = 'S', Type = '') : Promise<RSData[]> {
 		let BP = await ReqStr  ('SELECT id,name,desc FROM ' + Tile + ';');
+		// let BPromise = ReqStr  ('SELECT id,name,desc FROM ' + Tile + ';');
+		// let BP = await waiter (BPromise);
+		console.log ('BP Promised!' + BP.desc);
+		
+		await tick ();
+		// console.log ('ReqNamesBP:' + BP.expand ());
+
 		if (!BP.multi)
 			return [];
 
-		// console.log ('ReqNamesBP=' + BP.desc);
+		let BPs = BP.unpack ();
+
 		// console.log ('ReqNames/BP=' + BP.expand ());
 
-		let BPs = await BP.unpack ();
 		let Data = new Array<RSData> (BPs.length);
 		let i = 0;
 		for (const P of BPs)
@@ -142,7 +157,8 @@ export namespace RS1 {
 
 			D.LoadPack (P);
 			Data[i++] = D;
-			console.log ('  ReqName:' + D.ID.toString () + '  ' + D.Name + '  ' + D.Desc);
+			console.log ('  ReqName:' + D.ID.toString () + '  ' + D.Name + '  '
+						 + D.Desc);
 		}
 
 		console.log ('  ' + i.toString () + ' names.');
