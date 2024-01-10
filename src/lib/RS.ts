@@ -136,11 +136,11 @@ export namespace RS1 {
 		let WhereXP = ';';
 
 		if (TypeXP && SubXP)
-			WhereXP = TypeXP + ' AND ' + SubXP + ';';
+			WhereXP = 'WHERE ' + TypeXP + ' AND ' + SubXP + ';';
 		else if (TypeXP)
-			WhereXP = TypeXP + ';'
+			WhereXP = 'WHERE ' + TypeXP + ';'
 		else if (SubXP)
-			WhereXP = SubXP + ';'
+			WhereXP = 'WHERE ' + SubXP + ';'
 
 		QStr += WhereXP;
 		
