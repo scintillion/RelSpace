@@ -2484,7 +2484,77 @@ export namespace RS1 {
 		Type1 = '';
 		Details = '';
 
-		constructor(_Type = '', _Details = '') {
+		add(Args: any[]) {
+			let limit = Args.length;
+			let NotNull = this.Cs.length || this.Ds.length;
+
+			let TypeCh,Size,Bytes;
+			let NewBuf : ArrayBuffer;
+			let PList = PL;
+
+			if (!PList) return;
+
+			if (Args.length & 1)
+				return;		// must always be matching pairs (Name/Data), odd params not allowed
+
+
+			// console.log ('BufPack.Add Incoming:');
+			if (NotNull)
+				console.log (this.desc);
+
+			for (let i = 0; i < limit; )
+			{
+				let FldName = Args[i++] as string;
+				let DF = !FldName  || (FldName[0] >= '0');
+				let Fs = DF ? this.Ds : this.Cs;
+				let Data = Args[i++];
+
+				let NewField = new PackField(FldName,Data);
+
+				// console.log ('   ...Adding ' + (DF ? 'D:' : 'C:') +  FldName + ' DESC:' + NewField.Desc () + '\n');
+
+				if (NotNull)
+				{
+					let Found = false;
+
+					/*
+					for (var F of Fs) {
+						if (F.Name === FldName) {
+							F = NewField;
+							Found = true;
+							break;
+						}
+					*/
+
+					for (let j = Fs.length; --j >= 0;)
+						if (Fs[j].Name === FldName) {
+							Fs[j] = NewField;
+							if (DF)
+								this.Ds[j] = NewField;
+							else this.Cs[j] = NewField;
+							Found = true;
+							break;
+						}
+
+					if (Found)
+						continue;
+
+				}
+
+
+				if (DF)
+					this.Ds.push (NewField);
+				else this.Cs.push (NewField);
+
+//				console.log ('Adding ' + FldName + '=' + NewField.Str + '\n' + NewField.Desc());
+			}
+
+//			console.log ('BufPack.Add Outgoing:\n' + this.Desc ());
+		}
+
+
+
+		constructor(_Type = '', _Details = '', Args : any[]=[]) {
 			this.Type1 = _Type;
 			//	console.log ('constructor SetType =' + _Type);
 
@@ -2493,6 +2563,9 @@ export namespace RS1 {
 			// trim ] and trailing text to avoid errors
 
 			this.Details = _Details;
+
+			if (Args.length)
+				this.add (Args);
 		}
 
 		toABs ()
@@ -2578,74 +2651,6 @@ export namespace RS1 {
 			}
 
 			return Lines.join ('\n');
-		}
-
-		 add(Args: any[]) {
-			let limit = Args.length;
-			let NotNull = this.Cs.length || this.Ds.length;
-
-			let TypeCh,Size,Bytes;
-			let NewBuf : ArrayBuffer;
-			let PList = PL;
-
-			if (!PList) return;
-
-			if (Args.length & 1)
-				return;		// must always be matching pairs (Name/Data), odd params not allowed
-
-
-			// console.log ('BufPack.Add Incoming:');
-			if (NotNull)
-				console.log (this.desc);
-
-			for (let i = 0; i < limit; )
-			{
-				let FldName = Args[i++] as string;
-				let DF = !FldName  || (FldName[0] >= '0');
-				let Fs = DF ? this.Ds : this.Cs;
-				let Data = Args[i++];
-
-				let NewField = new PackField(FldName,Data);
-
-				// console.log ('   ...Adding ' + (DF ? 'D:' : 'C:') +  FldName + ' DESC:' + NewField.Desc () + '\n');
-
-				if (NotNull)
-				{
-					let Found = false;
-
-					/*
-					for (var F of Fs) {
-						if (F.Name === FldName) {
-							F = NewField;
-							Found = true;
-							break;
-						}
-					*/
-
-					for (let j = Fs.length; --j >= 0;)
-						if (Fs[j].Name === FldName) {
-							Fs[j] = NewField;
-							if (DF)
-								this.Ds[j] = NewField;
-							else this.Cs[j] = NewField;
-							Found = true;
-							break;
-						}
-
-					if (Found)
-						continue;
-
-				}
-
-
-				if (DF)
-					this.Ds.push (NewField);
-				else this.Cs.push (NewField);
-
-//				console.log ('Adding ' + FldName + '=' + NewField.Str + '\n' + NewField.Desc());
-			}
-
-//			console.log ('BufPack.Add Outgoing:\n' + this.Desc ());
 		}
 
 		private getPrefix(): string {
