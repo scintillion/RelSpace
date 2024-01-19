@@ -1,5 +1,3 @@
-import { tick } from "svelte";
- 
 export namespace RS1 {
 
 	/*
@@ -58,6 +56,8 @@ export namespace RS1 {
 
     */
 
+	
+	const sleep=async (ms=1)=>await new Promise((r)=>setTimeout(r,ms));
 	type StoreBuffer = string | ArrayBuffer | Function | undefined;
 
 	export const NameDelim = ':',PrimeDelim = '|',TabDelim = '\t',LineDelim = '\n',FormDelim = '\f';
@@ -111,7 +111,8 @@ export namespace RS1 {
 
 	export async function ReqTiles () : Promise<string[]> {
 		let BP = await RS1.ReqStr ('SELECT name from sqlite_master;');
-
+		sleep (1);
+		
 		let SQStr = "sqlite_";
 		let SQLen = SQStr.length;
 
@@ -127,8 +128,6 @@ export namespace RS1 {
 		return Names;
 	}
 	
-	export const waiter = (ms : number) => new Promise(res => setTimeout(res, ms));
-
 	export async function ReqNames (Tile = 'S', Type = '', Sub = '') : Promise<RSData[]> {
 		let QStr = 'SELECT id,name,desc FROM ' + Tile + ' ';
 		let TypeXP = Type ? ('type=\'' + Type + '\'') : '';
@@ -145,16 +144,16 @@ export namespace RS1 {
 		QStr += WhereXP;
 		
 		let BP = await ReqStr  (QStr);
-		// await waiter (500);
+		sleep (3); 
 		console.log ('BP Promised!' + BP.desc);
 		
 		if (!BP.multi)
 			return [];
-		// await waiter (500);
+		sleep (3); 
 
 		let BPs = BP.unpack ();
 
-		// await waiter (500);
+		sleep (3);
 
 		// console.log ('ReqNames/BP=' + BP.expand ());
 
