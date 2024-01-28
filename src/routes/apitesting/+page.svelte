@@ -23,8 +23,10 @@
 		BP = await RS1.ReqStr ('SELECT name from sqlite_master;');
 
 		let Tables = await RS1.ReqTiles ();
+		console.log ('ReqTiles returns=' + Tables + '.');
 
 		let Names = await RS1.ReqNames ('S','List');
+		
 	});
 
 

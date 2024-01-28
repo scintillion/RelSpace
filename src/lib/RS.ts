@@ -112,6 +112,8 @@ export namespace RS1 {
 	export async function ReqTiles () : Promise<string[]> {
 		let BP = await RS1.ReqStr ('SELECT name from sqlite_master;');
 		sleep (1);
+
+		console.log ('ReqTiles.BP = ' + BP.desc)
 		
 		let SQStr = "sqlite_";
 		let SQLen = SQStr.length;
@@ -120,9 +122,10 @@ export namespace RS1 {
 		let Names : string[] = [];
 		for (const P of BPs) {
 			let Name = P.str ('name');
+			// console.log ('P = ' + P.desc + 'Name=' + Name);
 			if (Name.slice (0,SQLen) !== SQStr) {
 				Names.push (Name);
-				console.log ('  ' + Name);
+				console.log ('  ReqTiles push:' + Name);
 			}
 		}
 		return Names;
