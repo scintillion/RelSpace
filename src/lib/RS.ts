@@ -79,12 +79,40 @@ export namespace RS1 {
 	interface StrReq { (Query : string) : Promise<RS1.BufPack> }
 	interface PackReq { (Pack : BufPack) : Promise<BufPack> }
 	
-	export var ReqAB : ABReq;
-	export var ReqPack : PackReq;
+	export var _ReqAB : ABReq;
+	var _ReqPack : PackReq;
+
+	const InitStr = 'InitReq must be called before Request Operations!';
+
+	export async function ReqAB (AB : ArrayBuffer): Promise<ArrayBuffer> {
+		if (_ReqAB) {
+			let response = await _ReqAB (AB);
+			sleep (3);
+			console.log ('ReqAB.response bytes = ' + response.byteLength.toString ());
+			return response;
+		}
+		else {
+			throw InitStr;
+			return NILAB;
+		}
+	}
+	
+	export async function ReqPack (BP : RS1.BufPack) : Promise<RS1.BufPack>{
+	  if (_ReqPack) {
+		  let returnBP = await _ReqPack (BP);
+		  sleep (3);
+		  console.log ('ReqPack.BP = ' + BP.desc);
+		  return returnBP;
+	  }
+	  else {
+		  throw InitStr;
+		  return NILPack;
+	  }
+	}
 	
 	export function InitReq (AB : ABReq, Pack : PackReq) {
-		ReqAB = AB;
-		ReqPack = Pack;
+		_ReqAB = AB;
+		_ReqPack = Pack;
 		console.log ('Functions Assigned!');
 		return true;
 	}
@@ -128,7 +156,6 @@ export namespace RS1 {
 		}
 		return Names;
 	}
-	
 	
 	export async function ReqNames (Tile = 'S', Type = '', Sub = '') : Promise<RSData[]> {
 		let QStr = 'SELECT id,name,desc FROM ' + Tile + ' ';
